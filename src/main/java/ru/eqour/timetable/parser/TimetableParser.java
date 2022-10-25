@@ -17,16 +17,12 @@ public class TimetableParser {
     private static final int LESSONS_IN_DAY = 7;
     private static final int LESSON_SIZE = 3;
 
-    public static Week parseTimetable(InputStream inputStream) {
+    public static Week parseTimetable(InputStream inputStream) throws IOException {
         return parseTimetable(readFirstWorkbookSheet(createWorkbook(inputStream)));
     }
 
-    private static Workbook createWorkbook(InputStream inputStream) {
-        try {
-            return WorkbookFactory.create(inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private static Workbook createWorkbook(InputStream inputStream) throws IOException {
+        return WorkbookFactory.create(inputStream);
     }
 
     private static String[][] readFirstWorkbookSheet(Workbook workbook) {
@@ -93,6 +89,9 @@ public class TimetableParser {
     private static Day parseDay(String[][] table, int startRow, int startColumn) {
         Day day = new Day();
         day.date = getTableValue(table, startRow, startColumn);
+        if (day.date.isEmpty()) {
+            return null;
+        }
         day.lessons = new Lesson[LESSONS_IN_DAY];
         for (int i = 0; i < LESSONS_IN_DAY; i++) {
             Lesson lesson = new Lesson();
