@@ -4,7 +4,7 @@ import ru.eqour.timetable.model.Day;
 import ru.eqour.timetable.model.Lesson;
 import ru.eqour.timetable.model.Week;
 import ru.eqour.timetable.notifier.api.GoogleDriveAPI;
-import ru.eqour.timetable.parser.TimetableParser;
+import ru.eqour.timetable.TimetableParser;
 
 import java.io.*;
 import java.util.Scanner;

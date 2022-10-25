@@ -1,4 +1,4 @@
-package ru.eqour.timetable.parser;
+package ru.eqour.timetable;
 
 import org.apache.poi.ss.usermodel.*;
 import ru.eqour.timetable.model.Day;
@@ -18,6 +18,9 @@ public class TimetableParser {
     private static final int LESSON_SIZE = 3;
 
     public static Week parseTimetable(InputStream inputStream) throws IOException {
+        if (inputStream == null) {
+            throw new IllegalArgumentException();
+        }
         return parseTimetable(readFirstWorkbookSheet(createWorkbook(inputStream)));
     }
 

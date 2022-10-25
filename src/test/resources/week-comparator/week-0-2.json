@@ -1,0 +1,43 @@
+[
+  [
+    {
+      "date": "27.10.2022",
+      "lessons": [
+        null,
+        null,
+        {
+          "time": "12:10-13:40",
+          "discipline": "Программная инженерия",
+          "teacher": "Решетников Е.В.",
+          "classroom": "14/1"
+        },
+        {
+          "time": "13:50-15:20",
+          "discipline": "Программная инженерия",
+          "teacher": "Решетников Е.В.",
+          "classroom": "14/1"
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "date": "27.10.2022",
+      "lessons": [
+        null,
+        null,
+        {
+          "time": "12:10-13:40",
+          "discipline": "Программная инженерия",
+          "teacher": "Решетников Е.В.",
+          "classroom": "14/1"
+        },
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  ]
+]

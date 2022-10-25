@@ -1,16 +1,22 @@
-package ru.eqour.timetable.parser;
+package ru.eqour.timetable;
 
 import org.apache.poi.ooxml.POIXMLException;
 import ru.eqour.timetable.model.Week;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.eqour.timetable.parser.util.ResourceLoader;
+import ru.eqour.timetable.util.ResourceLoader;
 
 import java.io.IOException;
 
 public class TimetableParserTests {
 
     private final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
+
+    @Test
+    public void whenArgumentNullThenThrowIllegalArgumentException() {
+        //noinspection ConstantConditions
+        Assert.assertThrows(IllegalArgumentException.class, () -> TimetableParser.parseTimetable(null));
+    }
 
     @Test
     public void whenValidExcelFileThenReturnValidWeek() throws IOException {

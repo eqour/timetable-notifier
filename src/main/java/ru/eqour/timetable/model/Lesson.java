@@ -9,6 +9,16 @@ public class Lesson {
     public String teacher;
     public String classroom;
 
+    public Lesson() {
+    }
+
+    public Lesson(Lesson other) {
+        time = other.time;
+        discipline = other.discipline;
+        teacher = other.teacher;
+        classroom = other.classroom;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

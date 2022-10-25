@@ -8,6 +8,21 @@ public class Day {
     public String date;
     public Lesson[] lessons;
 
+    public Day() {
+    }
+
+    public Day(Day other) {
+        date = other.date;
+        lessons = new Lesson[other.lessons.length];
+        for (int i = 0; i < other.lessons.length; i++) {
+            if (other.lessons[i] == null) {
+                lessons[i] = null;
+            } else {
+                lessons[i] = new Lesson(other.lessons[i]);
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
