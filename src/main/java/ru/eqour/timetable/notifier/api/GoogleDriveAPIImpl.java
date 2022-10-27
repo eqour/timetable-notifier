@@ -18,17 +18,17 @@ import java.io.*;
 import java.util.Collections;
 import java.util.List;
 
-public class GoogleDriveAPI {
+public class GoogleDriveAPIImpl implements GoogleDriveApi {
 
     private static final String APPLICATION_NAME = "TimetableNotifier";
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
-    private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_READONLY);
-    private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+    private final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
+    private final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_READONLY);
+    private final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 
-    private static Credential getCredentials() throws IOException {
-        InputStream inputStream = GoogleDriveAPI.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+    private Credential getCredentials() throws IOException {
+        InputStream inputStream = GoogleDriveAPIImpl.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (inputStream == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
@@ -42,26 +42,39 @@ public class GoogleDriveAPI {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    public static File getFileMetadata(String fileId) throws IOException {
-        Drive drive = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials())
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+    public FileMetadata getFileMetadata(String fileId) {
+        try {
+            Drive drive = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials())
+                    .setApplicationName(APPLICATION_NAME)
+                    .build();
 
-        return drive.files().get(fileId)
-                .setFields("version")
-                .execute();
+            File file = drive.files().get(fileId)
+                    .setFields("version")
+                    .execute();
+
+            FileMetadata fileMetadata = new FileMetadata();
+            fileMetadata.version = file.getVersion();
+
+            return fileMetadata;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static ByteArrayOutputStream exportFile(String fileId, String mimeType) throws IOException {
-        Drive drive = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials())
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+    public ByteArrayOutputStream exportFile(String fileId, String mimeType) {
+        try {
+            Drive drive = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials())
+                    .setApplicationName(APPLICATION_NAME)
+                    .build();
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        drive.files().export(fileId, mimeType)
-                .executeMediaAndDownloadTo(outputStream);
+            drive.files().export(fileId, mimeType)
+                    .executeMediaAndDownloadTo(outputStream);
 
-        return outputStream;
+            return outputStream;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
