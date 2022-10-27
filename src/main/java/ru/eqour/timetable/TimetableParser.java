@@ -1,6 +1,12 @@
 package ru.eqour.timetable;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.hssf.usermodel.HSSFWorkbookFactory;
+import org.apache.poi.ooxml.POIXMLException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory;
 import ru.eqour.timetable.model.Day;
 import ru.eqour.timetable.model.Lesson;
 import ru.eqour.timetable.model.Week;
@@ -25,7 +31,21 @@ public class TimetableParser {
     }
 
     private static Workbook createWorkbook(InputStream inputStream) throws IOException {
-        return WorkbookFactory.create(inputStream);
+        try {
+            return new XSSFWorkbookFactory().create(inputStream);
+        } catch (POIXMLException e) {
+            throw e;
+        } catch (Exception ignore) {
+        }
+        try {
+            return new XSSFWorkbookFactory().create(inputStream);
+        } catch (Exception ignore) {
+        }
+        try {
+            return new HSSFWorkbookFactory().create(inputStream);
+        } catch (Exception ignore) {
+        }
+        throw new IOException();
     }
 
     private static String[][] readFirstWorkbookSheet(Workbook workbook) {
