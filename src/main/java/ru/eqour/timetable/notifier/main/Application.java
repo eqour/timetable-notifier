@@ -1,28 +1,26 @@
 package ru.eqour.timetable.notifier.main;
 
+import ru.eqour.timetable.TimetableParser;
 import ru.eqour.timetable.model.Day;
 import ru.eqour.timetable.model.Lesson;
 import ru.eqour.timetable.model.Week;
-import ru.eqour.timetable.notifier.api.GoogleDriveAPIImpl;
-import ru.eqour.timetable.TimetableParser;
-import ru.eqour.timetable.notifier.api.GoogleDriveApi;
+import ru.eqour.timetable.notifier.api.FileActualizer;
+import ru.eqour.timetable.notifier.api.google.GoogleDriveApiImpl;
+import ru.eqour.timetable.notifier.api.google.GoogleDriveExcelFileActualizer;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class Application {
-
-    private static final String XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    private static final GoogleDriveApi googleDriveApi = new GoogleDriveAPIImpl();
-
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите ID файла: ");
         String fileId = scanner.nextLine();
-        String fileVersion = googleDriveApi.getFileMetadata(fileId).version.toString();
-        System.out.println("Версия файла: " + fileVersion);
-        try (ByteArrayOutputStream outputStream = googleDriveApi.exportFile(fileId, XLSX_MIME_TYPE)) {
-            try (InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray())) {
+        FileActualizer actualizer = new GoogleDriveExcelFileActualizer(fileId, new GoogleDriveApiImpl());
+        if (actualizer.actualize()) {
+            try (InputStream inputStream = new ByteArrayInputStream(actualizer.getActualFile())) {
                 Week week = TimetableParser.parseTimetable(inputStream);
                 System.out.println("Получена информация о расписании:");
                 printTimetableWeek(week);
