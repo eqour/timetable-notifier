@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import ru.eqour.timetable.model.Day;
 import ru.eqour.timetable.model.Lesson;
 import ru.eqour.timetable.model.Week;
-import ru.eqour.timetable.notifier.api.GoogleDriveAPI;
+import ru.eqour.timetable.notifier.api.FileActualizer;
+import ru.eqour.timetable.notifier.api.google.GoogleDriveApiImpl;
+import ru.eqour.timetable.notifier.api.google.GoogleDriveExcelFileActualizer;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -18,11 +20,11 @@ import java.util.List;
 
 public class DemoApp {
 
-    private static final String XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String FILE_ID = "19LhM5qwpqU42Wqlxfwf6Esdq2qejI7_Fnc1w9-4r1eM";
     private static final Path DATA_PATH = Paths.get(System.getProperty("user.dir"), "data.json");
 
     private final Gson GSON = new Gson().newBuilder().setPrettyPrinting().create();
+    private final FileActualizer actualizer = new GoogleDriveExcelFileActualizer(FILE_ID, new GoogleDriveApiImpl());
 
     private AppData data;
 
@@ -51,9 +53,8 @@ public class DemoApp {
     private void actualize() {
         System.out.println("Загрузка сохранённых данных");
         loadData();
-        System.out.println("Получение версии файла");
-        Long actualVersion = getFileVersion();
-        if (actualVersion != data.version) {
+        System.out.println("Поиск обновлений");
+        if (actualizer.actualize()) {
             System.out.println("Получение файла с обновлённым расписанием");
             Week actualWeek = getActualWeek();
             if (data.savedWeek != null) {
@@ -63,7 +64,6 @@ public class DemoApp {
                     sendMessage(data.telegramToken, formatChangesString(differences));
                 }
             }
-            data.version = actualVersion;
             data.savedWeek = actualWeek;
             System.out.println("Сохранение данных");
             saveData();
@@ -142,18 +142,9 @@ public class DemoApp {
         return builder.toString();
     }
 
-    private Long getFileVersion() {
-        try {
-            return GoogleDriveAPI.getFileMetadata(FILE_ID).getVersion();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private Week getActualWeek() {
         try {
-            ByteArrayOutputStream outputStream = GoogleDriveAPI.exportFile(FILE_ID, XLSX_MIME_TYPE);
-            try (ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray())) {
+            try (ByteArrayInputStream inputStream = new ByteArrayInputStream(actualizer.getActualFile())) {
                 return TimetableParser.parseTimetable(inputStream);
             }
         } catch (IOException e) {
@@ -180,7 +171,6 @@ public class DemoApp {
     }
 
     public static class AppData {
-        public long version;
         public Week savedWeek;
         public String telegramToken;
         public String telegramUserId;
