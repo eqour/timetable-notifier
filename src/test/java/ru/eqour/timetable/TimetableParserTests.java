@@ -1,9 +1,12 @@
 package ru.eqour.timetable;
 
 import org.apache.poi.ooxml.POIXMLException;
-import ru.eqour.timetable.model.Week;
 import org.junit.Assert;
 import org.junit.Test;
+import ru.eqour.timetable.model.Day;
+import ru.eqour.timetable.model.Group;
+import ru.eqour.timetable.model.Lesson;
+import ru.eqour.timetable.model.Week;
 import ru.eqour.timetable.util.ResourceLoader;
 
 import java.io.IOException;
@@ -20,9 +23,9 @@ public class TimetableParserTests {
 
     @Test
     public void whenValidExcelFileThenReturnValidWeek() throws IOException {
-        Week expected = ResourceLoader.loadWeekFromResources(getParsedTimetablePath(0));
+        Week expected = ResourceLoader.loadFromResources(getParsedTimetablePath(0), Week.class);
         Week actual = TimetableParser.parseTimetable(CLASS_LOADER.getResourceAsStream(getTimetablePath(0)));
-        Assert.assertEquals(expected, actual);
+        compareWeeks(expected, actual);
     }
 
     @Test
@@ -33,23 +36,22 @@ public class TimetableParserTests {
 
     @Test
     public void whenExcelFileWithDateCellsThenReturnValidWeek() throws IOException {
-        Week expected = ResourceLoader.loadWeekFromResources(getParsedTimetablePath(0));
+        Week expected = ResourceLoader.loadFromResources(getParsedTimetablePath(0), Week.class);
         Week actual = TimetableParser.parseTimetable(CLASS_LOADER.getResourceAsStream(getTimetablePath(1)));
-        Assert.assertEquals(expected, actual);
+        compareWeeks(expected, actual);
     }
 
     @Test
-    public void whenEmptyExcelFileThenReturnValidWeekWithNullDays() throws IOException {
-        Week expected = ResourceLoader.loadWeekFromResources(getParsedTimetablePath(1));
+    public void whenEmptyExcelFileThenReturnNull() throws IOException {
         Week actual = TimetableParser.parseTimetable(CLASS_LOADER.getResourceAsStream(getTimetablePath(2)));
-        Assert.assertEquals(expected, actual);
+        Assert.assertNull(actual);
     }
 
     @Test
     public void whenExcel97_2003FileThenReturnValidWeek() throws IOException {
-        Week expected = ResourceLoader.loadWeekFromResources(getParsedTimetablePath(0));
+        Week expected = ResourceLoader.loadFromResources(getParsedTimetablePath(0), Week.class);
         Week actual = TimetableParser.parseTimetable(CLASS_LOADER.getResourceAsStream("timetable-parser/timetable-3.xls"));
-        Assert.assertEquals(expected, actual);
+        compareWeeks(expected, actual);
     }
 
     @Test
@@ -64,5 +66,41 @@ public class TimetableParserTests {
 
     private String getParsedTimetablePath(int index) {
         return "timetable-parser/timetable-parsed-" + index + ".json";
+    }
+
+    private void compareWeeks(Week a, Week b) {
+        Assert.assertEquals(a.period, b.period);
+        Assert.assertEquals(a.groups.length, b.groups.length);
+        for (int i = 0; i < a.groups.length; i++) {
+            compareGroups(a.groups[i], b.groups[i]);
+        }
+    }
+
+    private void compareGroups(Group a, Group b) {
+        Assert.assertEquals(a.name, b.name);
+        Assert.assertEquals(a.days.length, b.days.length);
+        for (int i = 0; i < a.days.length; i++) {
+            compareDays(a.days[i], b.days[i]);
+        }
+    }
+
+    private void compareDays(Day a, Day b) {
+        Assert.assertEquals(a.date, b.date);
+        Assert.assertEquals(a.lessons.length, b.lessons.length);
+        for (int i = 0; i < a.lessons.length; i++) {
+            compareLessons(a.lessons[i], b.lessons[i]);
+        }
+    }
+
+    private void compareLessons(Lesson a, Lesson b) {
+        if (a != null || b != null) {
+            if (a == null || b == null) {
+                Assert.fail();
+            }
+            Assert.assertEquals(a.time, b.time);
+            Assert.assertEquals(a.discipline, b.discipline);
+            Assert.assertEquals(a.teacher, b.teacher);
+            Assert.assertEquals(a.classroom, b.classroom);
+        }
     }
 }

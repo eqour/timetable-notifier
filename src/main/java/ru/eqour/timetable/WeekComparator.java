@@ -1,19 +1,39 @@
 package ru.eqour.timetable;
 
 import ru.eqour.timetable.model.Day;
+import ru.eqour.timetable.model.Group;
 import ru.eqour.timetable.model.Week;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class WeekComparator {
 
-    public static List<Day[]> findDifferences(Week w1, Week w2) {
+    public static Map<String, List<Day[]>> findDifferences(Week w1, Week w2) {
         if (w1 == null || w2 == null) {
             throw new IllegalArgumentException();
         }
-        return findDifferences(w1.days, w2.days);
+        Map<String, List<Day[]>> ans = new HashMap<>();
+        Map<String, Group> weekMap1 = new HashMap<>();
+        Map<String, Group> weekMap2 = new HashMap<>();
+        for (Group g : w1.groups) {
+            weekMap1.put(g.name, g);
+        }
+        for (Group g : w2.groups) {
+            weekMap2.put(g.name, g);
+        }
+        for (String key : weekMap1.keySet()) {
+            if (weekMap2.containsKey(key)) {
+                ans.put(key, findDifferences(weekMap1.get(key), weekMap2.get(key)));
+            }
+        }
+        return ans;
+    }
+
+    public static List<Day[]> findDifferences(Group g1, Group g2) {
+        if (g1 == null || g2 == null) {
+            throw new IllegalArgumentException();
+        }
+        return findDifferences(g1.days, g2.days);
     }
 
     private static List<Day[]> findDifferences(Day[] d1, Day[] d2) {

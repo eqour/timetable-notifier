@@ -3,23 +3,23 @@ package ru.eqour.timetable.model;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Week {
+public class Group {
 
-    public String period;
-    public Group[] groups;
+    public String name;
+    public Day[] days;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Week that = (Week) o;
-        return period.equals(that.period) && Arrays.equals(groups, that.groups);
+        Group group = (Group) o;
+        return name.equals(group.name) && Arrays.equals(days, group.days);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(period);
-        result = 31 * result + Arrays.hashCode(groups);
+        int result = Objects.hash(name);
+        result = 31 * result + Arrays.hashCode(days);
         return result;
     }
 }

@@ -3,6 +3,7 @@ package ru.eqour.timetable.notifier.main;
 import ru.eqour.timetable.TimetableParser;
 import ru.eqour.timetable.model.Day;
 import ru.eqour.timetable.model.Lesson;
+import ru.eqour.timetable.model.Group;
 import ru.eqour.timetable.model.Week;
 import ru.eqour.timetable.notifier.api.FileActualizer;
 import ru.eqour.timetable.notifier.api.google.GoogleDriveApiImpl;
@@ -23,13 +24,13 @@ public class Application {
             try (InputStream inputStream = new ByteArrayInputStream(actualizer.getActualFile())) {
                 Week week = TimetableParser.parseTimetable(inputStream);
                 System.out.println("Получена информация о расписании:");
-                printTimetableWeek(week);
+                printTimetableWeek(week.groups[0]);
             }
         }
     }
 
-    private static void printTimetableWeek(Week week) {
-        for (Day day : week.days) {
+    private static void printTimetableWeek(Group group) {
+        for (Day day : group.days) {
             printTimetableDay(day);
         }
     }

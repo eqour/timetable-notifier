@@ -9,13 +9,16 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory;
 import ru.eqour.timetable.model.Day;
 import ru.eqour.timetable.model.Lesson;
+import ru.eqour.timetable.model.Group;
 import ru.eqour.timetable.model.Week;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class TimetableParser {
 
@@ -27,7 +30,7 @@ public class TimetableParser {
         if (inputStream == null) {
             throw new IllegalArgumentException();
         }
-        return parseTimetable(readFirstWorkbookSheet(createWorkbook(inputStream)));
+        return parseTimetable(readWorkbookSheet(createWorkbook(inputStream)));
     }
 
     private static Workbook createWorkbook(InputStream inputStream) throws IOException {
@@ -48,8 +51,37 @@ public class TimetableParser {
         throw new IOException();
     }
 
-    private static String[][] readFirstWorkbookSheet(Workbook workbook) {
-        return readWorkbookSheet(workbook.getSheetAt(0));
+    private static TimetableSheet readWorkbookSheet(Workbook workbook) {
+        Sheet sheet = workbook.getSheet(getLastPeriod(getWorkbookSheets(workbook)));
+        TimetableSheet timetableSheet = new TimetableSheet();
+        timetableSheet.name = sheet.getSheetName();
+        timetableSheet.table = readWorkbookSheet(sheet);
+        return timetableSheet;
+    }
+
+    private static String getLastPeriod(String[] periods) {
+        List<String> sorted = Arrays.stream(periods)
+                .sorted((p1, p2) -> {
+                    try {
+                        String firstDate1 = p1.split("-")[0];
+                        String firstDate2 = p2.split("-")[0];
+                        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                        dateFormat.setLenient(false);
+                        Date date1 = dateFormat.parse(firstDate1);
+                        Date date2 = dateFormat.parse(firstDate2);
+                        return date1.compareTo(date2);
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+        return sorted.isEmpty() ? null : sorted.get(sorted.size() - 1);
+    }
+
+    private static String[] getWorkbookSheets(Workbook workbook) {
+        List<String> ans = new ArrayList<>();
+        workbook.forEach(sheet -> ans.add(sheet.getSheetName()));
+        return ans.toArray(new String[0]);
     }
 
     private static String[][] readWorkbookSheet(Sheet sheet) {
@@ -100,30 +132,48 @@ public class TimetableParser {
         return  maxWidth;
     }
 
-    private static Week parseTimetable(String[][] table) {
-        Week week = new Week();
-        week.days = new Day[6];
-        for (int i = 0; i < DAYS_IN_WEEK; i++) {
-            week.days[i] = parseDay(table, LESSONS_IN_DAY * LESSON_SIZE * i, 0);
+    private static Week parseTimetable(TimetableSheet sheet) {
+        try {
+            int columnOffset = 2;
+            int groupsNumber = sheet.table[0].length - columnOffset;
+            Week week = new Week();
+            week.period = sheet.name;
+            week.groups = new Group[groupsNumber];
+            for (int i = 0; i < groupsNumber; i++) {
+                week.groups[i] = parseGroup(sheet.table, columnOffset + i);
+            }
+            return week;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
         }
-        return week;
     }
 
-    private static Day parseDay(String[][] table, int startRow, int startColumn) {
+    private static Group parseGroup(String[][] table,  int column) {
+        int rowOffset = 1;
+        Group group = new Group();
+        group.name = getTableValue(table, 0, column);
+        group.days = new Day[6];
+        for (int i = 0; i < DAYS_IN_WEEK; i++) {
+            group.days[i] = parseDay(table, rowOffset + LESSONS_IN_DAY * LESSON_SIZE * i, column);
+        }
+        return group;
+    }
+
+    private static Day parseDay(String[][] table, int startRow, int column) {
         Day day = new Day();
-        day.date = getTableValue(table, startRow, startColumn);
-        if (day.date.isEmpty()) {
+        day.date = getTableValue(table, startRow, 0);
+        if (day.date == null) {
             return null;
         }
         day.lessons = new Lesson[LESSONS_IN_DAY];
         for (int i = 0; i < LESSONS_IN_DAY; i++) {
             Lesson lesson = new Lesson();
             int row = startRow + LESSON_SIZE * i;
-            lesson.time = getTableValue(table, row, startColumn + 1);
-            lesson.discipline = getTableValue(table, row, startColumn + 2);
-            lesson.teacher = getTableValue(table, row + 1, startColumn + 2);
-            lesson.classroom = getTableValue(table, row + 2, startColumn + 2);
-            if (lesson.teacher.isEmpty() && lesson.discipline.isEmpty() && lesson.classroom.isEmpty()) {
+            lesson.time = getTableValue(table, row, 1);
+            lesson.discipline = getTableValue(table, row, column);
+            lesson.teacher = getTableValue(table, row + 1, column);
+            lesson.classroom = getTableValue(table, row + 2, column);
+            if (lesson.teacher == null && lesson.discipline == null && lesson.classroom == null) {
                 day.lessons[i] = null;
             } else {
                 day.lessons[i] = lesson;
@@ -134,9 +184,15 @@ public class TimetableParser {
 
     private static String getTableValue(String[][] table, int row, int column) {
         if (row < table.length && column < table[row].length) {
-            return table[row][column];
+            String value = table[row][column];
+            return Objects.equals(value, "") ? null : value;
         } else {
             return "";
         }
+    }
+
+    private static class TimetableSheet {
+        public String name;
+        public String[][] table;
     }
 }
