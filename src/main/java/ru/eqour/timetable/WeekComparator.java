@@ -9,7 +9,7 @@ import java.util.*;
 public class WeekComparator {
 
     public static Map<String, List<Day[]>> findDifferences(Week w1, Week w2) {
-        if (w1 == null || w2 == null) {
+        if (w1 == null || w2 == null || w1.groups == null || w2.groups == null) {
             throw new IllegalArgumentException();
         }
         Map<String, List<Day[]>> ans = new HashMap<>();
@@ -23,13 +23,16 @@ public class WeekComparator {
         }
         for (String key : weekMap1.keySet()) {
             if (weekMap2.containsKey(key)) {
-                ans.put(key, findDifferences(weekMap1.get(key), weekMap2.get(key)));
+                List<Day[]> differences = findDifferences(weekMap1.get(key), weekMap2.get(key));
+                if (!differences.isEmpty()) {
+                    ans.put(key, differences);
+                }
             }
         }
         return ans;
     }
 
-    public static List<Day[]> findDifferences(Group g1, Group g2) {
+    private static List<Day[]> findDifferences(Group g1, Group g2) {
         if (g1 == null || g2 == null) {
             throw new IllegalArgumentException();
         }

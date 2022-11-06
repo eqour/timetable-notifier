@@ -10,6 +10,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 public class ResourceLoader {
 
@@ -30,12 +31,12 @@ public class ResourceLoader {
         }
     }
 
-    public static List<Day[]> loadWeeksDifferencesFromResources(String path) {
+    public static Map<String, List<Day[]>> loadWeeksDifferencesFromResources(String path) {
         try {
             URL resource = CLASS_LOADER.getResource(path);
             if (resource != null) {
                 String json = new String(Files.readAllBytes(Paths.get(resource.toURI())));
-                return GSON.fromJson(json, new TypeToken<List<Day[]>>(){}.getType());
+                return GSON.fromJson(json, new TypeToken<Map<String, List<Day[]>>>(){}.getType());
             } else {
                 throw new RuntimeException();
             }
