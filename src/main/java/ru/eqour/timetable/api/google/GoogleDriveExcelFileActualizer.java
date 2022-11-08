@@ -1,7 +1,7 @@
-package ru.eqour.timetable.notifier.api.google;
+package ru.eqour.timetable.api.google;
 
-import ru.eqour.timetable.notifier.api.FileActualizer;
-import ru.eqour.timetable.notifier.api.FileMetadata;
+import ru.eqour.timetable.api.FileActualizer;
+import ru.eqour.timetable.api.FileMetadata;
 
 import java.util.Objects;
 

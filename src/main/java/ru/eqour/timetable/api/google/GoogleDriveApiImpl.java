@@ -1,4 +1,4 @@
-package ru.eqour.timetable.notifier.api.google;
+package ru.eqour.timetable.api.google;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -13,7 +13,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
-import ru.eqour.timetable.notifier.api.FileMetadata;
+import ru.eqour.timetable.api.FileMetadata;
 
 import java.io.*;
 import java.util.Collections;

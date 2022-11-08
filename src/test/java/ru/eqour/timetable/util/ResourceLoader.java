@@ -11,15 +11,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ResourceLoader {
-
-    private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
     private static final Gson GSON = new Gson();
 
     public static <T> T loadFromResources(String path, Class<T> type) {
         try {
-            URL resource = CLASS_LOADER.getResource(path);
+            URL resource = ResourceLoader.class.getResource(path);
             if (resource != null) {
                 String json = new String(Files.readAllBytes(Paths.get(resource.toURI())));
                 return GSON.fromJson(json, type);
@@ -33,7 +32,7 @@ public class ResourceLoader {
 
     public static Map<String, List<Day[]>> loadWeeksDifferencesFromResources(String path) {
         try {
-            URL resource = CLASS_LOADER.getResource(path);
+            URL resource = ResourceLoader.class.getResource(path);
             if (resource != null) {
                 String json = new String(Files.readAllBytes(Paths.get(resource.toURI())));
                 return GSON.fromJson(json, new TypeToken<Map<String, List<Day[]>>>(){}.getType());
@@ -43,5 +42,9 @@ public class ResourceLoader {
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String getFullPathToResource(String path) {
+        return Objects.requireNonNull(ResourceLoader.class.getResource(path)).getPath();
     }
 }

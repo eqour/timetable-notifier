@@ -1,4 +1,4 @@
-package ru.eqour.timetable.notifier.api;
+package ru.eqour.timetable.api;
 
 public interface FileActualizer {
 

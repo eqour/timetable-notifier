@@ -1,4 +1,4 @@
-package ru.eqour.timetable.notifier.api.google;
+package ru.eqour.timetable.api.google;
 
 public enum FileMimeType {
 

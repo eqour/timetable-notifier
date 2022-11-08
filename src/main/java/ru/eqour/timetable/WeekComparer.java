@@ -6,7 +6,7 @@ import ru.eqour.timetable.model.Week;
 
 import java.util.*;
 
-public class WeekComparator {
+public class WeekComparer {
 
     public static Map<String, List<Day[]>> findDifferences(Week w1, Week w2) {
         if (w1 == null || w2 == null || w1.groups == null || w2.groups == null) {

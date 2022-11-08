@@ -3,8 +3,8 @@ package ru.eqour.timetable;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.eqour.timetable.mock.GoogleDriveApiMock;
-import ru.eqour.timetable.notifier.api.FileActualizer;
-import ru.eqour.timetable.notifier.api.google.GoogleDriveExcelFileActualizer;
+import ru.eqour.timetable.api.FileActualizer;
+import ru.eqour.timetable.api.google.GoogleDriveExcelFileActualizer;
 
 public class GoogleDriveExcelFileActualizerTests {
 

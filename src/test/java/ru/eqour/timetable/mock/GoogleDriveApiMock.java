@@ -1,9 +1,9 @@
 package ru.eqour.timetable.mock;
 
-import ru.eqour.timetable.notifier.api.FileMetadata;
-import ru.eqour.timetable.notifier.api.google.FileMimeType;
-import ru.eqour.timetable.notifier.api.google.GoogleDriveApi;
-import ru.eqour.timetable.notifier.api.google.GoogleDriveApiException;
+import ru.eqour.timetable.api.FileMetadata;
+import ru.eqour.timetable.api.google.FileMimeType;
+import ru.eqour.timetable.api.google.GoogleDriveApi;
+import ru.eqour.timetable.api.google.GoogleDriveApiException;
 
 import java.io.*;
 import java.util.Objects;

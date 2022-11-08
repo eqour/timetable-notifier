@@ -10,29 +10,29 @@ import ru.eqour.timetable.util.ResourceLoader;
 import java.util.List;
 import java.util.Map;
 
-public class WeekComparatorTests {
+public class WeekComparerTests {
 
     @Test
     public void whenFirstArgumentNullThenThrowIllegalArgumentException() {
         //noinspection ConstantConditions
-        Assert.assertThrows(IllegalArgumentException.class, () -> WeekComparator.findDifferences(null, new Week()));
+        Assert.assertThrows(IllegalArgumentException.class, () -> WeekComparer.findDifferences(null, new Week()));
     }
 
     @Test
     public void whenSecondArgumentNullThenThrowIllegalArgumentException() {
         //noinspection ConstantConditions
-        Assert.assertThrows(IllegalArgumentException.class, () -> WeekComparator.findDifferences(new Week(), null));
+        Assert.assertThrows(IllegalArgumentException.class, () -> WeekComparer.findDifferences(new Week(), null));
     }
 
     @Test
     public void whenAllArgumentsNullThenThrowIllegalArgumentException() {
         //noinspection ConstantConditions
-        Assert.assertThrows(IllegalArgumentException.class, () -> WeekComparator.findDifferences(null, null));
+        Assert.assertThrows(IllegalArgumentException.class, () -> WeekComparer.findDifferences(null, null));
     }
 
     @Test
     public void whenWeeksDaysNullThenThrowIllegalArgumentException() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> WeekComparator.findDifferences(new Week(), new Week()));
+        Assert.assertThrows(IllegalArgumentException.class, () -> WeekComparer.findDifferences(new Week(), new Week()));
     }
 
     @Test
@@ -55,11 +55,31 @@ public class WeekComparatorTests {
         runFindDifferencesTest(3);
     }
 
+    @Test
+    public void whenNullDaysOnNextWeekThenThrowInvalidArgumentException() {
+        Assert.assertThrows(IllegalArgumentException.class, () -> runFindDifferencesTest(4));
+    }
+
+    @Test
+    public void whenEmptyDaysOnNextWeekThenThrowInvalidArgumentException() {
+        Assert.assertThrows(IllegalArgumentException.class, () -> runFindDifferencesTest(5));
+    }
+
+    @Test
+    public void whenValidArgumentsAndDisciplineAddedThenReturnEmptyResult() {
+        runFindDifferencesTest(6);
+    }
+
+    @Test
+    public void whenValidArgumentsAndDisciplineRemovedThenReturnEmptyResult() {
+        runFindDifferencesTest(7);
+    }
+
     private void runFindDifferencesTest(int testIndex) {
         Week w1 = ResourceLoader.loadFromResources(getWeekPath(testIndex, 0), Week.class);
         Week w2 = ResourceLoader.loadFromResources(getWeekPath(testIndex, 1), Week.class);
         Map<String, List<Day[]>> expected = ResourceLoader.loadWeeksDifferencesFromResources(getWeekPath(testIndex, 2));
-        Map<String, List<Day[]>> actual = WeekComparator.findDifferences(w1, w2);
+        Map<String, List<Day[]>> actual = WeekComparer.findDifferences(w1, w2);
         Assert.assertNotNull(actual);
         Assert.assertEquals(expected.keySet().size(), actual.keySet().size());
         for (String expectedKey : expected.keySet()) {
@@ -76,6 +96,6 @@ public class WeekComparatorTests {
     }
 
     private String getWeekPath(int index, int subIndex) {
-        return "week-comparator/week-" + index + "-" + subIndex + ".json";
+        return "/week-comparer/week-" + index + "-" + subIndex + ".json";
     }
 }
