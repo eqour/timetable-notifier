@@ -45,6 +45,10 @@ public class ResourceLoader {
     }
 
     public static String getFullPathToResource(String path) {
-        return Objects.requireNonNull(ResourceLoader.class.getResource(path)).getPath();
+        try {
+            return Paths.get(Objects.requireNonNull(ResourceLoader.class.getResource(path)).toURI()).toString();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
