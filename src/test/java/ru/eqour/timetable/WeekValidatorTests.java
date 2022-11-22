@@ -7,7 +7,8 @@ import ru.eqour.timetable.model.Day;
 import ru.eqour.timetable.model.Group;
 import ru.eqour.timetable.model.Lesson;
 import ru.eqour.timetable.model.Week;
-import ru.eqour.timetable.util.ResourceLoader;
+import ru.eqour.timetable.util.JsonFileHelper;
+import ru.eqour.timetable.util.ResourceHelper;
 
 import java.util.function.Consumer;
 
@@ -145,6 +146,7 @@ public class WeekValidatorTests {
     }
 
     private Week getValidWeek() {
-        return ResourceLoader.loadFromResources("/week-validator/valid-week.json", Week.class);
+        return JsonFileHelper.loadFromFile(
+                ResourceHelper.getFullPathToResource("/week-validator/valid-week.json").toString(), Week.class);
     }
 }

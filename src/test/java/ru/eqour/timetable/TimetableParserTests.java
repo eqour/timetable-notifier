@@ -5,7 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.eqour.timetable.model.Week;
 import ru.eqour.timetable.util.Compare;
-import ru.eqour.timetable.util.ResourceLoader;
+import ru.eqour.timetable.util.JsonFileHelper;
+import ru.eqour.timetable.util.ResourceHelper;
 
 import java.io.IOException;
 
@@ -19,7 +20,7 @@ public class TimetableParserTests {
 
     @Test
     public void whenValidExcelFileThenReturnValidWeek() throws IOException {
-        Week expected = ResourceLoader.loadFromResources(getParsedTimetablePath(0), Week.class);
+        Week expected = JsonFileHelper.loadFromFile(getParsedTimetablePath(0), Week.class);
         Week actual = TimetableParser.parseTimetable(getClass().getResourceAsStream(getTimetablePath(0)));
         Compare.compareWeeks(expected, actual);
     }
@@ -32,7 +33,7 @@ public class TimetableParserTests {
 
     @Test
     public void whenExcelFileWithDateCellsThenReturnValidWeek() throws IOException {
-        Week expected = ResourceLoader.loadFromResources(getParsedTimetablePath(0), Week.class);
+        Week expected = JsonFileHelper.loadFromFile(getParsedTimetablePath(0), Week.class);
         Week actual = TimetableParser.parseTimetable(getClass().getResourceAsStream(getTimetablePath(1)));
         Compare.compareWeeks(expected, actual);
     }
@@ -45,7 +46,7 @@ public class TimetableParserTests {
 
     @Test
     public void whenExcel97_2003FileThenReturnValidWeek() throws IOException {
-        Week expected = ResourceLoader.loadFromResources(getParsedTimetablePath(0), Week.class);
+        Week expected = JsonFileHelper.loadFromFile(getParsedTimetablePath(0), Week.class);
         Week actual = TimetableParser.parseTimetable(getClass().getResourceAsStream("/timetable-parser/timetable-3.xls"));
         Compare.compareWeeks(expected, actual);
     }
@@ -61,6 +62,6 @@ public class TimetableParserTests {
     }
 
     private String getParsedTimetablePath(int index) {
-        return "/timetable-parser/timetable-parsed-" + index + ".json";
+        return ResourceHelper.getFullPathToResource("/timetable-parser/timetable-parsed-" + index + ".json").toString();
     }
 }

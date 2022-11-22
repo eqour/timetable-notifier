@@ -5,7 +5,7 @@ import org.junit.Test;
 import ru.eqour.timetable.exception.RepositoryException;
 import ru.eqour.timetable.repository.SimpleSubscriberRepository;
 import ru.eqour.timetable.repository.SubscriberRepository;
-import ru.eqour.timetable.util.ResourceLoader;
+import ru.eqour.timetable.util.ResourceHelper;
 
 public class SimpleSubscriberRepositoryTests {
 
@@ -14,7 +14,7 @@ public class SimpleSubscriberRepositoryTests {
 
     @Test
     public void whenValidFileThenReturnNotNull() {
-        String path = ResourceLoader.getFullPathToResource("/simple-subscriber-repository/subscribers-0.json");
+        String path = ResourceHelper.getFullPathToResource("/simple-subscriber-repository/subscribers-0.json").toString();
         SubscriberRepository repository = new SimpleSubscriberRepository(path);
         Assert.assertNotNull(repository.getSubscribers(GROUP_1));
         Assert.assertNotNull(repository.getSubscribers(GROUP_2));

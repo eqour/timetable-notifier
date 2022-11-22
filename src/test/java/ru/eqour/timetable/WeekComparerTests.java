@@ -1,11 +1,13 @@
 package ru.eqour.timetable;
 
+import com.google.common.reflect.TypeToken;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.eqour.timetable.model.Day;
 import ru.eqour.timetable.model.Week;
 import ru.eqour.timetable.util.Compare;
-import ru.eqour.timetable.util.ResourceLoader;
+import ru.eqour.timetable.util.JsonFileHelper;
+import ru.eqour.timetable.util.ResourceHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -76,9 +78,10 @@ public class WeekComparerTests {
     }
 
     private void runFindDifferencesTest(int testIndex) {
-        Week w1 = ResourceLoader.loadFromResources(getWeekPath(testIndex, 0), Week.class);
-        Week w2 = ResourceLoader.loadFromResources(getWeekPath(testIndex, 1), Week.class);
-        Map<String, List<Day[]>> expected = ResourceLoader.loadWeeksDifferencesFromResources(getWeekPath(testIndex, 2));
+        Week w1 = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 0), Week.class);
+        Week w2 = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 1), Week.class);
+        Map<String, List<Day[]>> expected = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 2),
+                new TypeToken<Map<String, List<Day[]>>>(){}.getType());
         Map<String, List<Day[]>> actual = WeekComparer.findDifferences(w1, w2);
         Assert.assertNotNull(actual);
         Assert.assertEquals(expected.keySet().size(), actual.keySet().size());
@@ -96,6 +99,6 @@ public class WeekComparerTests {
     }
 
     private String getWeekPath(int index, int subIndex) {
-        return "/week-comparer/week-" + index + "-" + subIndex + ".json";
+        return ResourceHelper.getFullPathToResource("/week-comparer/week-" + index + "-" + subIndex + ".json").toString();
     }
 }

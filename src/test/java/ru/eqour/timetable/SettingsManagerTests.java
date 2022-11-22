@@ -4,7 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.eqour.timetable.actualizer.Settings;
 import ru.eqour.timetable.actualizer.SettingsManager;
-import ru.eqour.timetable.util.ResourceLoader;
+import ru.eqour.timetable.util.JsonFileHelper;
+import ru.eqour.timetable.util.ResourceHelper;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -24,9 +25,10 @@ public class SettingsManagerTests {
 
     @Test
     public void whenLoadAndFileExistsThenReturnValidResult() {
-        String path = ResourceLoader.getFullPathToResource("/settings-manager/settings-0.json");
+        String path = ResourceHelper.getFullPathToResource("/settings-manager/settings-0.json").toString();
         SettingsManager settingsManager = new SettingsManager(path);
-        Settings expected = ResourceLoader.loadFromResources("/settings-manager/settings-0.json", Settings.class);
+        Settings expected = JsonFileHelper.loadFromFile(
+                ResourceHelper.getFullPathToResource("/settings-manager/settings-0.json").toString(), Settings.class);
         Settings actual = settingsManager.load();
         Assert.assertEquals(expected, actual);
     }
@@ -48,7 +50,8 @@ public class SettingsManagerTests {
         SettingsManager settingsManager = new SettingsManager(path);
         Settings settings = createSettings();
         settingsManager.save(settings);
-        Settings actual = ResourceLoader.loadFromResources("/settings-manager/settings.json", Settings.class);
+        Settings actual = JsonFileHelper.loadFromFile(
+                ResourceHelper.getFullPathToResource("/settings-manager/settings.json").toString(), Settings.class);
         Assert.assertEquals(settings, actual);
         Files.deleteIfExists(Paths.get(path));
     }
