@@ -18,7 +18,7 @@ public class SettingsManagerTests {
 
     @Test
     public void whenLoadAndFileNotFoundThenReturnNull() {
-        SettingsManager settingsManager = new SettingsManager("settings.json");
+        SettingsManager settingsManager = new SettingsManager("settings-temp.json");
         Settings actual = settingsManager.load();
         Assert.assertNull(actual);
     }

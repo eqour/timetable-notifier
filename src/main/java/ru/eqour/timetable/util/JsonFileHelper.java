@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 public class JsonFileHelper {
 
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new Gson().newBuilder().setPrettyPrinting().create();
 
     public static <T> T loadFromFile(String path, Class<T> type) {
         return loadFromFile(path, json -> GSON.fromJson(json, type));

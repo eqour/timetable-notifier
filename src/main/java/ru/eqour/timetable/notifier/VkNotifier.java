@@ -1,9 +1,14 @@
 package ru.eqour.timetable.notifier;
 
+import java.util.Random;
+
 public class VkNotifier extends SimpleWebRequestNotifier {
+
+    private final Random random;
 
     public VkNotifier(String token) {
         super(token);
+        random = new Random();
     }
 
     @Override
@@ -13,6 +18,8 @@ public class VkNotifier extends SimpleWebRequestNotifier {
                 "&message=" +
                 message +
                 "&access_token=" +
-                token;
+                token +
+                "&random_id=" +
+                random.nextInt();
     }
 }

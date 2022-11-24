@@ -8,7 +8,7 @@ public class TelegramNotifier extends SimpleWebRequestNotifier {
 
     @Override
     protected String buildSendMessageURL(String token, String recipient, String message) {
-        return "https://api.telegram.org/bot/" +
+        return "https://api.telegram.org/bot" +
                 token +
                 "/sendMessage?chat_id=" +
                 recipient +

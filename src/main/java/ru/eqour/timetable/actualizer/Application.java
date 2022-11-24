@@ -1,8 +1,12 @@
 package ru.eqour.timetable.actualizer;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.eqour.timetable.TimetableParser;
 import ru.eqour.timetable.WeekComparer;
 import ru.eqour.timetable.api.FileActualizer;
+import ru.eqour.timetable.exception.NotifierException;
 import ru.eqour.timetable.model.Lesson;
 import ru.eqour.timetable.util.factory.FileActualizerFactory;
 import ru.eqour.timetable.model.Day;
@@ -19,6 +23,10 @@ import java.util.Map;
 
 public class Application {
 
+    private static final int PERIOD_IN_MILLISECONDS = 10 * 1000;
+    private static final int MAX_PERIOD_AFTER_CHANGE = 5;
+    private final Logger LOG = LogManager.getLogger();
+
     private final SettingsManager settingsManager;
     private final FileActualizer actualizer;
     private final SubscriberRepository subscriberRepository;
@@ -32,37 +40,50 @@ public class Application {
     }
 
     public void start() {
+        int period = -1;
         long timer = System.currentTimeMillis();
         //noinspection InfiniteLoopStatement
         while (true) {
             long current = System.currentTimeMillis();
-            if (current > timer + 30000) {
+            if (current > timer + PERIOD_IN_MILLISECONDS) {
                 timer = current;
-                actualize();
+                if (actualizer.actualize()) {
+                    period = 0;
+                } else if (period >= 0) {
+                    period++;
+                }
+                LOG.log(Level.INFO, "Период: " + period);
+                if (period >= MAX_PERIOD_AFTER_CHANGE) {
+                    period = -1;
+                    actualize();
+                }
             } else {
-                Thread.yield();
+                try {
+                    //noinspection BusyWait
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     private void actualize() {
-        if (actualizer.actualize()) {
+        try {
+            LOG.log(Level.INFO, "Актуализация расписания");
             Week actualWeek = getActualWeek(actualizer);
             if (settings.savedWeek != null) {
                 Map<String, List<Day[]>> differences = WeekComparer.findDifferences(settings.savedWeek, actualWeek);
                 if (!differences.isEmpty()) {
-                    for (Map.Entry<String, List<Day[]>> entry : differences.entrySet()) {
-                        for (Subscriber subscriber : subscriberRepository.getSubscribers(entry.getKey())) {
-                            for (Notifier notifier : NotifierFactory.createNotifierForSubscriber(subscriber, settings)) {
-                                notifier.sendMessage(NotifierFactory.createTokenForNotifier(notifier, subscriber),
-                                        formatChangesString(entry.getValue()));
-                            }
-                        }
-                    }
+                    LOG.log(Level.INFO, "Рассылка уведомлений");
+                    sendNotifications(differences);
                 }
             }
+            LOG.log(Level.INFO, "Сохранение настроек");
             settings.savedWeek = actualWeek;
             settingsManager.save(settings);
+        } catch (Exception e) {
+            LOG.log(Level.ERROR, "При актуализации расписания возникло исключение: " + e.getMessage());
         }
     }
 
@@ -75,6 +96,22 @@ public class Application {
             throw new RuntimeException(e);
         }
     }
+
+    private void sendNotifications(Map<String, List<Day[]>> differences) {
+        for (Map.Entry<String, List<Day[]>> entry : differences.entrySet()) {
+            for (Subscriber subscriber : subscriberRepository.getSubscribers(entry.getKey())) {
+                for (Notifier notifier : NotifierFactory.createNotifiersForSubscriber(subscriber, settings)) {
+                    String recipient = NotifierFactory.getRecipientIdForNotifier(notifier, subscriber);
+                    try {
+                        notifier.sendMessage(recipient, formatChangesString(entry.getValue()));
+                    } catch (NotifierException e) {
+                        LOG.log(Level.ERROR, "Не удалось отправить сообщение. Получатель: " + recipient + ". Исключение: " + e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+
     private String formatChangesString(List<Day[]> days) {
         StringBuilder builder = new StringBuilder();
         builder.append("Изменения в расписании:\n\n");
