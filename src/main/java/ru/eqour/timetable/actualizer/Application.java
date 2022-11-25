@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.eqour.timetable.TimetableParser;
 import ru.eqour.timetable.WeekComparer;
+import ru.eqour.timetable.WeekValidator;
 import ru.eqour.timetable.api.FileActualizer;
 import ru.eqour.timetable.exception.NotifierException;
 import ru.eqour.timetable.model.Lesson;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 public class Application {
 
-    private static final int PERIOD_IN_MILLISECONDS = 10 * 1000;
+    private static final int PERIOD_IN_MILLISECONDS = 60 * 1000;
     private static final int MAX_PERIOD_AFTER_CHANGE = 5;
     private final Logger LOG = LogManager.getLogger();
 
@@ -31,12 +32,14 @@ public class Application {
     private final FileActualizer actualizer;
     private final SubscriberRepository subscriberRepository;
     private final Settings settings;
+    private final WeekValidator validator;
 
     public Application(SettingsManager settingsManager, SubscriberRepository subscriberRepository) {
         this.settingsManager = settingsManager;
         settings = settingsManager.load();
         this.actualizer = FileActualizerFactory.create(FileActualizerFactory.FileActualizerType.GOOGLE_DRIVE, settings);
         this.subscriberRepository = subscriberRepository;
+        validator = new WeekValidator();
     }
 
     public void start() {
@@ -72,6 +75,7 @@ public class Application {
         try {
             LOG.log(Level.INFO, "Актуализация расписания");
             Week actualWeek = getActualWeek(actualizer);
+            validator.validate(actualWeek);
             if (settings.savedWeek != null) {
                 Map<String, List<Day[]>> differences = WeekComparer.findDifferences(settings.savedWeek, actualWeek);
                 if (!differences.isEmpty()) {
