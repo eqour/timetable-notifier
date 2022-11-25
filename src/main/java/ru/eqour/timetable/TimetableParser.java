@@ -173,7 +173,9 @@ public class TimetableParser {
             lesson.discipline = getTableValue(table, row, column);
             lesson.teacher = getTableValue(table, row + 1, column);
             lesson.classroom = getTableValue(table, row + 2, column);
-            if (lesson.teacher == null && lesson.discipline == null && lesson.classroom == null) {
+            if ((lesson.teacher == null || lesson.teacher.isEmpty())
+                    && (lesson.classroom == null || lesson.classroom.isEmpty())
+                    && (lesson.discipline == null || lesson.discipline.isEmpty())) {
                 day.lessons[i] = null;
             } else {
                 day.lessons[i] = lesson;
