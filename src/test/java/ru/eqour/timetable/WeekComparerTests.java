@@ -43,7 +43,7 @@ public class WeekComparerTests {
     }
 
     @Test
-    public void whenValidArgumentsAndLessonDateChangedThenThrowInvalidArgumentException() {
+    public void whenValidArgumentsAndLessonDateChangedToNullThenThrowInvalidArgumentException() {
         Assert.assertThrows(IllegalArgumentException.class, () -> runFindDifferencesTest(1));
     }
 
@@ -73,8 +73,13 @@ public class WeekComparerTests {
     }
 
     @Test
-    public void whenValidArgumentsAndDisciplineRemovedThenReturnEmptyResult() {
+    public void whenValidArgumentsAndGroupRemovedThenReturnEmptyResult() {
         runFindDifferencesTest(7);
+    }
+
+    @Test
+    public void whenValidArgumentsAndLessonDateChangedThenReturnEmptyResult() {
+        runFindDifferencesTest(8);
     }
 
     private void runFindDifferencesTest(int testIndex) {

@@ -91,4 +91,13 @@ public class TimeBasedUpdaterTests {
             updater.update(-MILLISECONDS_IN_MINUTE);
         });
     }
+
+    @Test
+    public void whenTimetableChangedAnd0MinutesPassedAndPeriodIs0ThenRunnableCalledOnce() {
+        FileActualizerMock mockActualizer = new FileActualizerMock(Collections.singletonList(0));
+        AtomicInteger numberOfCalls = new AtomicInteger();
+        TimeBasedUpdater updater = new TimeBasedUpdater(mockActualizer::actualize, numberOfCalls::incrementAndGet, 0);
+        updater.update(0);
+        Assert.assertEquals(numberOfCalls.get(), 1);
+    }
 }

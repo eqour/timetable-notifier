@@ -45,8 +45,11 @@ public class WeekComparer {
         }
         List<Day[]> ans = new ArrayList<>();
         for (int i = 0; i < d1.length; i++) {
-            if (!Objects.equals(d1[i].date, d2[i].date) || d1[i].date == null || d2[i].date == null) {
+            if (d1[i].date == null || d2[i].date == null) {
                 throw new IllegalArgumentException();
+            }
+            if (!Objects.equals(d1[i].date, d2[i].date)) {
+                continue;
             }
             if (!Objects.equals(d1[i], d2[i])) {
                 ans.add(new Day[] { new Day(d1[i]), new Day(d2[i]) });

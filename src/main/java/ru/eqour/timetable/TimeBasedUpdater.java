@@ -32,12 +32,13 @@ public class TimeBasedUpdater {
             if (supplier.get()) {
                 timerIsEnabled = true;
                 currentPeriod = 0;
-            } else if (timerIsEnabled) {
-                currentPeriod++;
+            }
+            if (timerIsEnabled) {
                 if (currentPeriod >= maxPeriod) {
                     timerIsEnabled = false;
                     runnable.run();
                 }
+                currentPeriod++;
             }
         }
     }

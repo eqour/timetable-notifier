@@ -3,6 +3,7 @@ package ru.eqour.timetable.actualizer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.eqour.timetable.TimeBasedUpdater;
 import ru.eqour.timetable.TimetableParser;
 import ru.eqour.timetable.WeekComparer;
 import ru.eqour.timetable.WeekValidator;
@@ -24,7 +25,6 @@ import java.util.Map;
 
 public class Application {
 
-    private static final int PERIOD_IN_MILLISECONDS = 60 * 1000;
     private static final int MAX_PERIOD_AFTER_CHANGE = 5;
     private final Logger LOG = LogManager.getLogger();
 
@@ -33,6 +33,7 @@ public class Application {
     private final SubscriberRepository subscriberRepository;
     private final Settings settings;
     private final WeekValidator validator;
+    private final TimeBasedUpdater updater;
 
     public Application(SettingsManager settingsManager, SubscriberRepository subscriberRepository) {
         this.settingsManager = settingsManager;
@@ -40,33 +41,18 @@ public class Application {
         this.actualizer = FileActualizerFactory.create(FileActualizerFactory.FileActualizerType.GOOGLE_DRIVE, settings);
         this.subscriberRepository = subscriberRepository;
         validator = new WeekValidator();
+        updater = new TimeBasedUpdater(actualizer::actualize, this::actualize, MAX_PERIOD_AFTER_CHANGE);
     }
 
     public void start() {
-        int period = -1;
-        long timer = System.currentTimeMillis();
         //noinspection InfiniteLoopStatement
         while (true) {
-            long current = System.currentTimeMillis();
-            if (current > timer + PERIOD_IN_MILLISECONDS) {
-                timer = current;
-                if (actualizer.actualize()) {
-                    period = 0;
-                } else if (period >= 0) {
-                    period++;
-                }
-                LOG.log(Level.INFO, "Период: " + period);
-                if (period >= MAX_PERIOD_AFTER_CHANGE) {
-                    period = -1;
-                    actualize();
-                }
-            } else {
-                try {
-                    //noinspection BusyWait
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+            updater.update(System.currentTimeMillis());
+            try {
+                //noinspection BusyWait
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
