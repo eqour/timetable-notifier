@@ -1,4 +1,4 @@
-package ru.eqour.timetable;
+package ru.eqour.timetable.parser;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbookFactory;
 import org.apache.poi.ooxml.POIXMLException;
@@ -20,20 +20,20 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TimetableParser {
+public class SimpleTimetableParser implements TimetableParser {
 
     private static final int DAYS_IN_WEEK = 6;
     private static final int LESSONS_IN_DAY = 7;
     private static final int LESSON_SIZE = 3;
 
-    public static Week parseTimetable(InputStream inputStream) throws IOException {
+    public Week parseTimetable(InputStream inputStream) throws IOException {
         if (inputStream == null) {
             throw new IllegalArgumentException();
         }
         return parseTimetable(readWorkbookSheet(createWorkbook(inputStream)));
     }
 
-    private static Workbook createWorkbook(InputStream inputStream) throws IOException {
+    private Workbook createWorkbook(InputStream inputStream) throws IOException {
         try {
             return new XSSFWorkbookFactory().create(inputStream);
         } catch (POIXMLException e) {
@@ -51,7 +51,7 @@ public class TimetableParser {
         throw new IOException();
     }
 
-    private static TimetableSheet readWorkbookSheet(Workbook workbook) {
+    private TimetableSheet readWorkbookSheet(Workbook workbook) {
         Sheet sheet = workbook.getSheet(getLastPeriod(getWorkbookSheets(workbook)));
         TimetableSheet timetableSheet = new TimetableSheet();
         timetableSheet.name = sheet.getSheetName();
@@ -59,7 +59,7 @@ public class TimetableParser {
         return timetableSheet;
     }
 
-    private static String getLastPeriod(String[] periods) {
+    private String getLastPeriod(String[] periods) {
         List<String> sorted = Arrays.stream(periods)
                 .sorted((p1, p2) -> {
                     try {
@@ -78,13 +78,13 @@ public class TimetableParser {
         return sorted.isEmpty() ? null : sorted.get(sorted.size() - 1);
     }
 
-    private static String[] getWorkbookSheets(Workbook workbook) {
+    private String[] getWorkbookSheets(Workbook workbook) {
         List<String> ans = new ArrayList<>();
         workbook.forEach(sheet -> ans.add(sheet.getSheetName()));
         return ans.toArray(new String[0]);
     }
 
-    private static String[][] readWorkbookSheet(Sheet sheet) {
+    private String[][] readWorkbookSheet(Sheet sheet) {
         List<List<String>> table = new ArrayList<>();
         for (int i = 0; i <= sheet.getLastRowNum(); i++) {
             Row row = sheet.getRow(i);
@@ -101,7 +101,7 @@ public class TimetableParser {
         return convertToArray(table);
     }
 
-    private static String getCellValue(Cell cell) {
+    private String getCellValue(Cell cell) {
         if (cell != null) {
             switch (cell.getCellType()) {
                 case STRING: return cell.getStringCellValue();
@@ -113,7 +113,7 @@ public class TimetableParser {
         }
     }
 
-    private static String[][] convertToArray(List<List<String>> table) {
+    private String[][] convertToArray(List<List<String>> table) {
         int width = getMaxTableWidth(table);
         String[][] result = new String[table.size()][width];
         for (int i = 0; i < table.size(); i++) {
@@ -124,7 +124,7 @@ public class TimetableParser {
         return result;
     }
 
-    private static int getMaxTableWidth(List<List<String>> table) {
+    private int getMaxTableWidth(List<List<String>> table) {
         int maxWidth = 0;
         for (List<String> row : table) {
             maxWidth = Math.max(maxWidth, row.size());
@@ -132,7 +132,7 @@ public class TimetableParser {
         return  maxWidth;
     }
 
-    private static Week parseTimetable(TimetableSheet sheet) {
+    private Week parseTimetable(TimetableSheet sheet) {
         try {
             int columnOffset = 2;
             int groupsNumber = sheet.table[0].length - columnOffset;
@@ -148,7 +148,7 @@ public class TimetableParser {
         }
     }
 
-    private static Group parseGroup(String[][] table,  int column) {
+    private Group parseGroup(String[][] table,  int column) {
         int rowOffset = 1;
         Group group = new Group();
         group.name = getTableValue(table, 0, column);
@@ -159,7 +159,7 @@ public class TimetableParser {
         return group;
     }
 
-    private static Day parseDay(String[][] table, int startRow, int column) {
+    private Day parseDay(String[][] table, int startRow, int column) {
         Day day = new Day();
         day.date = getTableValue(table, startRow, 0);
         if (day.date == null) {
@@ -184,7 +184,7 @@ public class TimetableParser {
         return day;
     }
 
-    private static String getTableValue(String[][] table, int row, int column) {
+    private String getTableValue(String[][] table, int row, int column) {
         if (row < table.length && column < table[row].length) {
             String value = table[row][column];
             return Objects.equals(value, "") ? null : value;

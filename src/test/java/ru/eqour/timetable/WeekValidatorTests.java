@@ -9,12 +9,14 @@ import ru.eqour.timetable.model.Lesson;
 import ru.eqour.timetable.model.Week;
 import ru.eqour.timetable.util.JsonFileHelper;
 import ru.eqour.timetable.util.ResourceHelper;
+import ru.eqour.timetable.validator.SimpleWeekValidator;
+import ru.eqour.timetable.validator.WeekValidator;
 
 import java.util.function.Consumer;
 
 public class WeekValidatorTests {
 
-    private final WeekValidator weekValidator = new WeekValidator();
+    private final WeekValidator weekValidator = new SimpleWeekValidator();
 
     @Test
     public void whenValidWeekThenNotThrowException() {

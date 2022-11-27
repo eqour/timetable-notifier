@@ -1,6 +1,6 @@
 package ru.eqour.timetable.util.factory;
 
-import ru.eqour.timetable.actualizer.Settings;
+import ru.eqour.timetable.settings.Settings;
 import ru.eqour.timetable.model.Subscriber;
 import ru.eqour.timetable.notifier.Notifier;
 import ru.eqour.timetable.notifier.TelegramNotifier;

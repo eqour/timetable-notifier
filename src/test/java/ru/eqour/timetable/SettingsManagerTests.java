@@ -2,8 +2,9 @@ package ru.eqour.timetable;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.eqour.timetable.actualizer.Settings;
-import ru.eqour.timetable.actualizer.SettingsManager;
+import ru.eqour.timetable.settings.Settings;
+import ru.eqour.timetable.settings.SettingsManager;
+import ru.eqour.timetable.settings.SimpleSettingsManager;
 import ru.eqour.timetable.util.JsonFileHelper;
 import ru.eqour.timetable.util.ResourceHelper;
 
@@ -18,7 +19,7 @@ public class SettingsManagerTests {
 
     @Test
     public void whenLoadAndFileNotFoundThenReturnNull() {
-        SettingsManager settingsManager = new SettingsManager("settings-temp.json");
+        SettingsManager settingsManager = new SimpleSettingsManager("settings-temp.json");
         Settings actual = settingsManager.load();
         Assert.assertNull(actual);
     }
@@ -26,7 +27,7 @@ public class SettingsManagerTests {
     @Test
     public void whenLoadAndFileExistsThenReturnValidResult() {
         String path = ResourceHelper.getFullPathToResource("/settings-manager/settings-0.json").toString();
-        SettingsManager settingsManager = new SettingsManager(path);
+        SettingsManager settingsManager = new SimpleSettingsManager(path);
         Settings expected = JsonFileHelper.loadFromFile(
                 ResourceHelper.getFullPathToResource("/settings-manager/settings-0.json").toString(), Settings.class);
         Settings actual = settingsManager.load();
@@ -36,7 +37,7 @@ public class SettingsManagerTests {
     @Test
     public void whenSaveAndLoadThenReturnValidResult() throws IOException {
         String path = getTempSettingsPath();
-        SettingsManager settingsManager = new SettingsManager(path);
+        SettingsManager settingsManager = new SimpleSettingsManager(path);
         Settings expected = createSettings();
         settingsManager.save(expected);
         Settings actual = settingsManager.load();
@@ -47,7 +48,7 @@ public class SettingsManagerTests {
     @Test
     public void whenSaveThenFileWithSettingsCreated() throws IOException {
         String path = getTempSettingsPath();
-        SettingsManager settingsManager = new SettingsManager(path);
+        SettingsManager settingsManager = new SimpleSettingsManager(path);
         Settings settings = createSettings();
         settingsManager.save(settings);
         Settings actual = JsonFileHelper.loadFromFile(

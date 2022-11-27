@@ -1,4 +1,4 @@
-package ru.eqour.timetable.actualizer;
+package ru.eqour.timetable.settings;
 
 import ru.eqour.timetable.model.Week;
 

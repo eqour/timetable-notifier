@@ -1,4 +1,4 @@
-package ru.eqour.timetable;
+package ru.eqour.timetable.comparer;
 
 import ru.eqour.timetable.model.Day;
 import ru.eqour.timetable.model.Group;
@@ -6,9 +6,9 @@ import ru.eqour.timetable.model.Week;
 
 import java.util.*;
 
-public class WeekComparer {
+public class SimpleWeekComparer implements WeekComparer {
 
-    public static Map<String, List<Day[]>> findDifferences(Week w1, Week w2) {
+    public Map<String, List<Day[]>> findDifferences(Week w1, Week w2) {
         if (w1 == null || w2 == null || w1.groups == null || w2.groups == null) {
             throw new IllegalArgumentException();
         }
@@ -32,14 +32,14 @@ public class WeekComparer {
         return ans;
     }
 
-    private static List<Day[]> findDifferences(Group g1, Group g2) {
+    private List<Day[]> findDifferences(Group g1, Group g2) {
         if (g1 == null || g2 == null) {
             throw new IllegalArgumentException();
         }
         return findDifferences(g1.days, g2.days);
     }
 
-    private static List<Day[]> findDifferences(Day[] d1, Day[] d2) {
+    private List<Day[]> findDifferences(Day[] d1, Day[] d2) {
         if (d1 == null || d2 == null || d1.length != d2.length) {
             throw new IllegalArgumentException();
         }

@@ -26,6 +26,6 @@ public class FileActualizerMock implements FileActualizer {
 
     @Override
     public byte[] getActualFile() {
-        throw new RuntimeException();
+        return new byte[0];
     }
 }

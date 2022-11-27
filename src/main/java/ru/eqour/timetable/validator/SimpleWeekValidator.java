@@ -1,4 +1,4 @@
-package ru.eqour.timetable;
+package ru.eqour.timetable.validator;
 
 import ru.eqour.timetable.exception.WeekValidationException;
 import ru.eqour.timetable.model.Day;
@@ -10,8 +10,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class WeekValidator {
+public class SimpleWeekValidator implements WeekValidator {
 
+    @Override
     public void validate(Week week) throws WeekValidationException {
         if (week.period == null) {
             throw new WeekValidationException("week.period is null");

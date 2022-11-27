@@ -1,7 +1,6 @@
 package ru.eqour.timetable.main;
 
-import ru.eqour.timetable.actualizer.Application;
-import ru.eqour.timetable.actualizer.SettingsManager;
+import ru.eqour.timetable.settings.SimpleSettingsManager;
 import ru.eqour.timetable.repository.SimpleSubscriberRepository;
 
 import java.nio.file.Path;
@@ -15,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         new Application(
-                new SettingsManager(SETTINGS_PATH.toString()),
+                new SimpleSettingsManager(SETTINGS_PATH.toString()),
                 new SimpleSubscriberRepository(SUBSCRIBERS_PATH.toString())
         ).start();
     }

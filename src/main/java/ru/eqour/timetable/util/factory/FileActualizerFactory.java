@@ -1,6 +1,6 @@
 package ru.eqour.timetable.util.factory;
 
-import ru.eqour.timetable.actualizer.Settings;
+import ru.eqour.timetable.settings.Settings;
 import ru.eqour.timetable.api.FileActualizer;
 import ru.eqour.timetable.api.google.GoogleDriveApiImpl;
 import ru.eqour.timetable.api.google.GoogleDriveExcelFileActualizer;
