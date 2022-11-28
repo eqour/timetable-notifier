@@ -13,6 +13,9 @@ public class SimpleWeekComparer implements WeekComparer {
             throw new IllegalArgumentException();
         }
         Map<String, List<Day[]>> ans = new HashMap<>();
+        if (!Objects.equals(w1.period, w2.period)) {
+            return ans;
+        }
         Map<String, Group> weekMap1 = new HashMap<>();
         Map<String, Group> weekMap2 = new HashMap<>();
         for (Group g : w1.groups) {

@@ -34,7 +34,7 @@ public class TimetableParserTests {
     }
 
     @Test
-    public void whenExcelFileWithDateCellsThenReturnValidWeek() throws IOException {
+    public void whenExcelFileWithMergedDaysOfWeekCellsThenReturnValidWeek() throws IOException {
         Week expected = JsonFileHelper.loadFromFile(getParsedTimetablePath(0), Week.class);
         Week actual = parser.parseTimetable(getClass().getResourceAsStream(getTimetablePath(1)));
         Compare.compareWeeks(expected, actual);

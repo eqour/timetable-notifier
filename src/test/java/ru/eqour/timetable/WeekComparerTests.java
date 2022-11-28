@@ -82,6 +82,11 @@ public class WeekComparerTests {
         runFindDifferencesTest(8);
     }
 
+    @Test
+    public void whenValidArgumentsAndPeriodChangedThenReturnEmptyResult() {
+        runFindDifferencesTest(9);
+    }
+
     private void runFindDifferencesTest(int testIndex) {
         Week w1 = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 0), Week.class);
         Week w2 = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 1), Week.class);

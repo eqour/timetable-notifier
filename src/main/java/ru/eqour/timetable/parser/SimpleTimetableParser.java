@@ -15,7 +15,6 @@ import ru.eqour.timetable.model.Week;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,7 +29,8 @@ public class SimpleTimetableParser implements TimetableParser {
         if (inputStream == null) {
             throw new IllegalArgumentException();
         }
-        return parseTimetable(readWorkbookSheet(createWorkbook(inputStream)));
+        TimetableSheet timetableSheet = readWorkbookSheet(createWorkbook(inputStream));
+        return timetableSheet == null ? null : parseTimetable(timetableSheet);
     }
 
     private Workbook createWorkbook(InputStream inputStream) throws IOException {
@@ -52,30 +52,37 @@ public class SimpleTimetableParser implements TimetableParser {
     }
 
     private TimetableSheet readWorkbookSheet(Workbook workbook) {
-        Sheet sheet = workbook.getSheet(getLastPeriod(getWorkbookSheets(workbook)));
-        TimetableSheet timetableSheet = new TimetableSheet();
-        timetableSheet.name = sheet.getSheetName();
-        timetableSheet.table = readWorkbookSheet(sheet);
-        return timetableSheet;
+        try {
+            Period lastPeriod = getLastPeriod(getWorkbookSheets(workbook));
+            if (lastPeriod != null) {
+                Sheet sheet = workbook.getSheet(lastPeriod.stringValue);
+                return new TimetableSheet(lastPeriod, readWorkbookSheet(sheet));
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    private String getLastPeriod(String[] periods) {
-        List<String> sorted = Arrays.stream(periods)
-                .sorted((p1, p2) -> {
-                    try {
-                        String firstDate1 = p1.split("-")[0];
-                        String firstDate2 = p2.split("-")[0];
-                        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-                        dateFormat.setLenient(false);
-                        Date date1 = dateFormat.parse(firstDate1);
-                        Date date2 = dateFormat.parse(firstDate2);
-                        return date1.compareTo(date2);
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
+    private Period getLastPeriod(String[] periods) {
+        List<Period> sorted = Arrays.stream(periods)
+                .map(this::parsePeriod)
+                .sorted(Comparator.comparing(p -> p.startDate))
                 .collect(Collectors.toList());
         return sorted.isEmpty() ? null : sorted.get(sorted.size() - 1);
+    }
+
+    private Period parsePeriod(String periodString) {
+        try {
+            String startDate = periodString.split("-")[0];
+            String endDate = periodString.split("-")[1];
+            DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            dateFormat.setLenient(false);
+            return new Period(periodString, dateFormat.parse(startDate), dateFormat.parse(endDate));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String[] getWorkbookSheets(Workbook workbook) {
@@ -137,10 +144,10 @@ public class SimpleTimetableParser implements TimetableParser {
             int columnOffset = 2;
             int groupsNumber = sheet.table[0].length - columnOffset;
             Week week = new Week();
-            week.period = sheet.name;
+            week.period = sheet.period.stringValue;
             week.groups = new Group[groupsNumber];
             for (int i = 0; i < groupsNumber; i++) {
-                week.groups[i] = parseGroup(sheet.table, columnOffset + i);
+                week.groups[i] = parseGroup(sheet, columnOffset + i);
             }
             return week;
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -148,23 +155,28 @@ public class SimpleTimetableParser implements TimetableParser {
         }
     }
 
-    private Group parseGroup(String[][] table,  int column) {
+    private Group parseGroup(TimetableSheet sheet,  int column) {
         int rowOffset = 1;
         Group group = new Group();
-        group.name = getTableValue(table, 0, column);
+        group.name = getTableValue(sheet.table, 0, column);
         group.days = new Day[6];
         for (int i = 0; i < DAYS_IN_WEEK; i++) {
-            group.days[i] = parseDay(table, rowOffset + LESSONS_IN_DAY * LESSON_SIZE * i, column);
+            group.days[i] = parseDay(sheet.table, rowOffset + LESSONS_IN_DAY * LESSON_SIZE * i, column);
+            group.days[i].date = getDayDate(sheet.period.startDate, i);
         }
         return group;
     }
 
+    private String getDayDate(Date startDate, int dayIndex) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        calendar.add(Calendar.DATE, dayIndex);
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        return format.format(calendar.getTime());
+    }
+
     private Day parseDay(String[][] table, int startRow, int column) {
         Day day = new Day();
-        day.date = getTableValue(table, startRow, 0);
-        if (day.date == null) {
-            return null;
-        }
         day.lessons = new Lesson[LESSONS_IN_DAY];
         for (int i = 0; i < LESSONS_IN_DAY; i++) {
             Lesson lesson = new Lesson();
@@ -194,7 +206,25 @@ public class SimpleTimetableParser implements TimetableParser {
     }
 
     private static class TimetableSheet {
-        public String name;
-        public String[][] table;
+
+        public final SimpleTimetableParser.Period period;
+        public final String[][] table;
+
+        public TimetableSheet(SimpleTimetableParser.Period period, String[][] table) {
+            this.period = period;
+            this.table = table;
+        }
+    }
+
+    private static class Period {
+
+        public final String stringValue;
+        public final Date startDate, endDate;
+
+        public Period(String stringValue, Date startDate, Date endDate) {
+            this.stringValue = stringValue;
+            this.startDate = startDate;
+            this.endDate = endDate;
+        }
     }
 }
