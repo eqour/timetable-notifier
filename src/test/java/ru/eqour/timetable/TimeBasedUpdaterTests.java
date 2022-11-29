@@ -1,6 +1,7 @@
+package ru.eqour.timetable;
+
 import org.junit.Assert;
 import org.junit.Test;
-import ru.eqour.timetable.TimeBasedUpdater;
 import ru.eqour.timetable.mock.FileActualizerMock;
 
 import java.util.Arrays;
