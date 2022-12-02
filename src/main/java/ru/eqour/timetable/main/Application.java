@@ -18,6 +18,8 @@ import ru.eqour.timetable.settings.SettingsManager;
 import ru.eqour.timetable.util.factory.FileActualizerFactory;
 import ru.eqour.timetable.util.factory.NotifierFactory;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 
 public class Application {
@@ -54,6 +56,9 @@ public class Application {
             timetableActualizer.actualize();
         } catch (Exception e) {
             LOG.log(Level.ERROR, "При актуализации расписания возникло исключение: " + e.getMessage());
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            LOG.log(Level.ERROR, errors);
         }
     }
 
@@ -64,7 +69,9 @@ public class Application {
                 notification.notifier.sendMessage(recipient, (notification.message));
             } catch (NotifierException e) {
                 LOG.log(Level.ERROR, "Не удалось отправить сообщение. Получатель: " + recipient + ". Исключение: " + e.getMessage());
-                e.printStackTrace();
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                LOG.log(Level.ERROR, errors);
             }
         }
     }
