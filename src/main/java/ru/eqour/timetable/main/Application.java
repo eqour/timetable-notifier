@@ -31,7 +31,7 @@ public class Application {
 
     public Application(SettingsManager settingsManager, SubscriberRepository subscriberRepository) {
         Settings settings = settingsManager.load();
-        FileActualizer actualizer = FileActualizerFactory.create(FileActualizerFactory.FileActualizerType.GOOGLE_DRIVE, settings);
+        FileActualizer actualizer = FileActualizerFactory.create(FileActualizerFactory.FileActualizerType.GOOGLE_DRIVE_SERVICE, settings);
         WeekValidator validator = new SimpleWeekValidator();
         timetableActualizer = new SimpleTimetableActualizer(settingsManager, actualizer, subscriberRepository,
                 validator, this::sendNotifications, new SimpleTimetableParser(), new SimpleWeekComparer());
