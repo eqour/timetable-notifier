@@ -10,6 +10,7 @@ import ru.eqour.timetable.mock.*;
 import ru.eqour.timetable.model.Day;
 import ru.eqour.timetable.model.Lesson;
 import ru.eqour.timetable.model.Subscriber;
+import ru.eqour.timetable.model.Week;
 import ru.eqour.timetable.settings.Settings;
 
 import java.util.*;
@@ -32,6 +33,19 @@ public class SimpleTimetableActualizerTests {
                 .withDifferences(getDifferences())
                 .withSubscribers(getSubscribersMap())
                 .thenSendNotificationCalls(1)
+                .thenLoadSettingsCallsCalls(1)
+                .thenSaveSettingsCalls(1)
+                .build()
+                .actualize();
+    }
+
+    @Test
+    public void whenValidDataAndHasDifferencesAndHasNullSavedWeekThenNotSendNotifiersAndNotThrowException() throws WeekValidationException {
+        new TestCaseBuilder()
+                .withDifferences(getDifferences())
+                .withSubscribers(getSubscribersMap())
+                .withNullSavedWeek()
+                .thenSendNotificationCalls(0)
                 .thenLoadSettingsCallsCalls(1)
                 .thenSaveSettingsCalls(1)
                 .build()
@@ -168,10 +182,16 @@ public class SimpleTimetableActualizerTests {
         private boolean comparerError;
         private Map<String, List<Subscriber>> subscribers;
         private Map<String, List<Day[]>> differences;
+        private final Settings settings;
         private int sendNotificationsCalls;
         private int loadSettingsCalls;
         private int saveSettingsCalls;
         private Class<? extends Exception> exception;
+
+        public TestCaseBuilder() {
+            settings = new Settings();
+            settings.savedWeek = new Week();
+        }
 
         public TestCaseBuilder withNotificationSenderError() {
             notificationSenderError = true;
@@ -218,6 +238,11 @@ public class SimpleTimetableActualizerTests {
             return this;
         }
 
+        public TestCaseBuilder withNullSavedWeek() {
+            this.settings.savedWeek = null;
+            return this;
+        }
+
         public TestCaseBuilder thenSendNotificationCalls(int amount) {
             sendNotificationsCalls = amount;
             return this;
@@ -241,7 +266,7 @@ public class SimpleTimetableActualizerTests {
         public ActualizerRunnable build() {
             return () -> {
                 NotificationSenderMock senderMock = new NotificationSenderMock(notificationSenderError);
-                SettingsManagerMock settingsManagerMock = new SettingsManagerMock(settingsSaveError, settingsLoadError, new Settings());
+                SettingsManagerMock settingsManagerMock = new SettingsManagerMock(settingsSaveError, settingsLoadError, settings);
                 SimpleTimetableActualizer actualizer = new SimpleTimetableActualizer(
                         settingsManagerMock,
                         new FileActualizerMock(),

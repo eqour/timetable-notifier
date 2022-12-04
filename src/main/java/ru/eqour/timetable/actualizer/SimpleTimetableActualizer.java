@@ -56,7 +56,7 @@ public class SimpleTimetableActualizer {
         Week oldWeek = settings.savedWeek;
         settings.savedWeek = actualWeek;
         settingsManager.save(settings);
-        if (settings.savedWeek != null) {
+        if (settings.savedWeek != null && oldWeek != null) {
             Map<String, List<Day[]>> differences = weekComparer.findDifferences(oldWeek, actualWeek);
             if (!differences.isEmpty()) {
                 LOG.log(Level.INFO, "Sending notifications");
