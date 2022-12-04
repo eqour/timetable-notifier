@@ -49,17 +49,17 @@ public class SimpleTimetableActualizer {
     }
 
     public void actualize() throws WeekValidationException {
-        LOG.log(Level.INFO, "Актуализация расписания");
+        LOG.log(Level.INFO, "Actualizing the timetable");
         Week actualWeek = getActualWeek(actualizer);
         validator.validate(actualWeek);
-        LOG.log(Level.INFO, "Сохранение настроек");
+        LOG.log(Level.INFO, "Saving settings");
         Week oldWeek = settings.savedWeek;
         settings.savedWeek = actualWeek;
         settingsManager.save(settings);
         if (settings.savedWeek != null) {
             Map<String, List<Day[]>> differences = weekComparer.findDifferences(oldWeek, actualWeek);
             if (!differences.isEmpty()) {
-                LOG.log(Level.INFO, "Рассылка уведомлений");
+                LOG.log(Level.INFO, "Sending notifications");
                 sendNotificationsConsumer.accept(collectNotifications(differences));
             }
         }
@@ -93,14 +93,21 @@ public class SimpleTimetableActualizer {
         for (Day[] pair : days) {
             Day day = pair[1];
             builder.append(day.date).append("\n\n");
+            boolean hasLessons = false;
             for (int i = 0; i < day.lessons.length; i++) {
                 Lesson lesson = day.lessons[i];
                 if (lesson != null) {
+                    hasLessons = true;
                     builder.append(i + 1).append(" пара, ").append(lesson.time).append("\n");
                     builder.append(lesson.discipline).append("\n");
                     builder.append(lesson.teacher).append(" ").append(lesson.classroom);
                     if (i != day.lessons.length - 1) {
                         builder.append("\n\n");
+                    }
+                }
+                if (i == day.lessons.length - 1) {
+                    if (!hasLessons) {
+                        builder.append("Занятий нет\n\n");
                     }
                 }
             }

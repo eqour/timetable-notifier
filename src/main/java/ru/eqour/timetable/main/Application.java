@@ -24,7 +24,6 @@ import java.util.List;
 
 public class Application {
 
-    private static final int MAX_PERIOD_AFTER_CHANGE = 5;
     private final Logger LOG = LogManager.getLogger();
     private final TimeBasedUpdater updater;
     private final SimpleTimetableActualizer timetableActualizer;
@@ -35,19 +34,20 @@ public class Application {
         WeekValidator validator = new SimpleWeekValidator();
         timetableActualizer = new SimpleTimetableActualizer(settingsManager, actualizer, subscriberRepository,
                 validator, this::sendNotifications, new SimpleTimetableParser(), new SimpleWeekComparer());
-        updater = new TimeBasedUpdater(actualizer::actualize, this::actualize, MAX_PERIOD_AFTER_CHANGE);
+        updater = new TimeBasedUpdater(actualizer::actualize, this::actualize, settings.maxDelayAfterChange);
     }
 
     public void start() {
-        //noinspection InfiniteLoopStatement
-        while (true) {
-            updater.update(System.currentTimeMillis());
-            try {
+        try {
+            //noinspection InfiniteLoopStatement
+            while (true) {
+                updater.update(System.currentTimeMillis());
                 //noinspection BusyWait
                 Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
+        } catch (Exception e) {
+            LOG.log(Level.ERROR, "An exception occurred while the application was running: " + e.getMessage());
+            logStackTrace(e);
         }
     }
 
@@ -55,10 +55,8 @@ public class Application {
         try {
             timetableActualizer.actualize();
         } catch (Exception e) {
-            LOG.log(Level.ERROR, "При актуализации расписания возникло исключение: " + e.getMessage());
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            LOG.log(Level.ERROR, errors);
+            LOG.log(Level.ERROR, "An exception occurred when actualizing the timetable: " + e.getMessage());
+            logStackTrace(e);
         }
     }
 
@@ -68,11 +66,15 @@ public class Application {
             try {
                 notification.notifier.sendMessage(recipient, (notification.message));
             } catch (NotifierException e) {
-                LOG.log(Level.ERROR, "Не удалось отправить сообщение. Получатель: " + recipient + ". Исключение: " + e.getMessage());
-                StringWriter errors = new StringWriter();
-                e.printStackTrace(new PrintWriter(errors));
-                LOG.log(Level.ERROR, errors);
+                LOG.log(Level.ERROR, "The message could not be sent. Recipient: " + recipient + ". Exception: " + e.getMessage());
+                logStackTrace(e);
             }
         }
+    }
+
+    private void logStackTrace(Exception e) {
+        StringWriter errors = new StringWriter();
+        e.printStackTrace(new PrintWriter(errors));
+        LOG.log(Level.ERROR, errors);
     }
 }
