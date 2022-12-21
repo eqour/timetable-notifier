@@ -37,17 +37,17 @@ public class Application {
         updater = new TimeBasedUpdater(actualizer::actualize, this::actualize, settings.maxDelayAfterChange);
     }
 
-    public void start() {
-        try {
-            //noinspection InfiniteLoopStatement
-            while (true) {
+    public void start() throws InterruptedException {
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            try {
                 updater.update(System.currentTimeMillis());
-                //noinspection BusyWait
-                Thread.sleep(1000);
+            } catch (Exception e) {
+                LOG.log(Level.ERROR, "An exception occurred while the application was running: " + e.getMessage());
+                logStackTrace(e);
             }
-        } catch (Exception e) {
-            LOG.log(Level.ERROR, "An exception occurred while the application was running: " + e.getMessage());
-            logStackTrace(e);
+            //noinspection BusyWait
+            Thread.sleep(1000);
         }
     }
 

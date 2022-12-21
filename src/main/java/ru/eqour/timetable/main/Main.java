@@ -12,7 +12,7 @@ public class Main {
     private static final Path SETTINGS_PATH = Paths.get(APP_PATH.toString(), "settings.json");
     private static final Path SUBSCRIBERS_PATH = Paths.get(APP_PATH.toString(), "subscribers.json");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         new Application(
                 new SimpleSettingsManager(SETTINGS_PATH.toString()),
                 new SimpleSubscriberRepository(SUBSCRIBERS_PATH.toString())
