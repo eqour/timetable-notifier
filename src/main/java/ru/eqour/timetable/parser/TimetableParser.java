@@ -4,8 +4,9 @@ import ru.eqour.timetable.model.Week;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public interface TimetableParser {
 
-    Week parseTimetable(InputStream inputStream) throws IOException;
+    List<Week> parseTimetable(InputStream inputStream) throws IOException;
 }

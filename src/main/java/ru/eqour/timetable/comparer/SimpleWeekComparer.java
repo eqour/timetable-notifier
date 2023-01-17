@@ -8,6 +8,27 @@ import java.util.*;
 
 public class SimpleWeekComparer implements WeekComparer {
 
+    @Override
+    public Map<String, List<Day[]>> findDifferences(List<Week> weeks1, List<Week> weeks2) {
+        if (weeks1 == null || weeks2 == null) {
+            throw new IllegalArgumentException();
+        }
+        Map<String, Week> weekMap = new HashMap<>();
+        for (Week week : weeks1) {
+            if (week != null) {
+                weekMap.put(week.period, week);
+            }
+        }
+        Map<String, List<Day[]>> ans = new HashMap<>();
+        for (Week week : weeks2) {
+            if (weekMap.containsKey(week.period)) {
+                ans.putAll(findDifferences(weekMap.get(week.period), week));
+            }
+        }
+        return ans;
+    }
+
+    @Override
     public Map<String, List<Day[]>> findDifferences(Week w1, Week w2) {
         if (w1 == null || w2 == null || w1.groups == null || w2.groups == null) {
             throw new IllegalArgumentException();
@@ -16,19 +37,15 @@ public class SimpleWeekComparer implements WeekComparer {
         if (!Objects.equals(w1.period, w2.period)) {
             return ans;
         }
-        Map<String, Group> weekMap1 = new HashMap<>();
-        Map<String, Group> weekMap2 = new HashMap<>();
-        for (Group g : w1.groups) {
-            weekMap1.put(g.name, g);
+        Map<String, Group> groupMap = new HashMap<>();
+        for (Group group : w1.groups) {
+            groupMap.put(group.name, group);
         }
-        for (Group g : w2.groups) {
-            weekMap2.put(g.name, g);
-        }
-        for (String key : weekMap1.keySet()) {
-            if (weekMap2.containsKey(key)) {
-                List<Day[]> differences = findDifferences(weekMap1.get(key), weekMap2.get(key));
+        for (Group group : w2.groups) {
+            if (groupMap.containsKey(group.name)) {
+                List<Day[]> differences = findDifferences(groupMap.get(group.name), group);
                 if (!differences.isEmpty()) {
-                    ans.put(key, differences);
+                    ans.put(group.name, differences);
                 }
             }
         }

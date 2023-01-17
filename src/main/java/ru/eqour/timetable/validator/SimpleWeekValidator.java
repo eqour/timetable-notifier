@@ -9,8 +9,16 @@ import ru.eqour.timetable.model.Week;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class SimpleWeekValidator implements WeekValidator {
+
+    @Override
+    public void validate(List<Week> weeks) throws WeekValidationException {
+        for (Week week : weeks) {
+            validate(week);
+        }
+    }
 
     @Override
     public void validate(Week week) throws WeekValidationException {

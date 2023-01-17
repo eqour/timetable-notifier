@@ -3,17 +3,17 @@ package ru.eqour.timetable.actualizer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.eqour.timetable.comparer.WeekComparer;
-import ru.eqour.timetable.parser.TimetableParser;
-import ru.eqour.timetable.validator.WeekValidator;
 import ru.eqour.timetable.api.FileActualizer;
+import ru.eqour.timetable.comparer.WeekComparer;
 import ru.eqour.timetable.exception.WeekValidationException;
 import ru.eqour.timetable.model.*;
 import ru.eqour.timetable.notifier.Notifier;
+import ru.eqour.timetable.parser.TimetableParser;
 import ru.eqour.timetable.repository.SubscriberRepository;
 import ru.eqour.timetable.settings.Settings;
 import ru.eqour.timetable.settings.SettingsManager;
 import ru.eqour.timetable.util.factory.NotifierFactory;
+import ru.eqour.timetable.validator.WeekValidator;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -50,14 +50,14 @@ public class SimpleTimetableActualizer {
 
     public void actualize() throws WeekValidationException {
         LOG.log(Level.INFO, "Actualizing the timetable");
-        Week actualWeek = getActualWeek(actualizer);
-        validator.validate(actualWeek);
+        List<Week> actualWeeks = getActualWeeks(actualizer);
+        validator.validate(actualWeeks);
         LOG.log(Level.INFO, "Saving settings");
-        Week oldWeek = settings.savedWeek;
-        settings.savedWeek = actualWeek;
+        List<Week> oldWeeks = settings.savedWeeks;
+        settings.savedWeeks = actualWeeks;
         settingsManager.save(settings);
-        if (settings.savedWeek != null && oldWeek != null) {
-            Map<String, List<Day[]>> differences = weekComparer.findDifferences(oldWeek, actualWeek);
+        if (settings.savedWeeks != null && oldWeeks != null) {
+            Map<String, List<Day[]>> differences = weekComparer.findDifferences(oldWeeks, actualWeeks);
             if (!differences.isEmpty()) {
                 LOG.log(Level.INFO, "Sending notifications");
                 sendNotificationsConsumer.accept(collectNotifications(differences));
@@ -65,7 +65,7 @@ public class SimpleTimetableActualizer {
         }
     }
 
-    private Week getActualWeek(FileActualizer actualizer) {
+    private List<Week> getActualWeeks(FileActualizer actualizer) {
         try {
             try (ByteArrayInputStream inputStream = new ByteArrayInputStream(actualizer.getActualFile())) {
                 return timetableParser.parseTimetable(inputStream);

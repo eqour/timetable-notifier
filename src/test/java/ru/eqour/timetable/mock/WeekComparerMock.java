@@ -18,7 +18,16 @@ public class WeekComparerMock implements WeekComparer {
     }
 
     @Override
+    public Map<String, List<Day[]>> findDifferences(List<Week> w1, List<Week> w2) {
+        return findDifferences();
+    }
+
+    @Override
     public Map<String, List<Day[]>> findDifferences(Week w1, Week w2) {
+        return findDifferences();
+    }
+
+    private Map<String, List<Day[]>> findDifferences() {
         if (throwException) {
             throw new IllegalArgumentException();
         } else {

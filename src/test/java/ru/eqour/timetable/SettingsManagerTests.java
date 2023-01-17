@@ -59,7 +59,7 @@ public class SettingsManagerTests {
 
     private Settings createSettings() {
         Settings settings = new Settings();
-        settings.savedWeek = null;
+        settings.savedWeeks = null;
         settings.timetableFileId = "id";
         settings.telegramToken = "telegram";
         settings.vkToken = "vk";

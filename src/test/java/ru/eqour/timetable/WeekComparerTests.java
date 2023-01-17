@@ -10,6 +10,7 @@ import ru.eqour.timetable.util.Compare;
 import ru.eqour.timetable.util.JsonFileHelper;
 import ru.eqour.timetable.util.ResourceHelper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,22 @@ public class WeekComparerTests {
 
     @Test
     public void whenAllArgumentsNullThenThrowIllegalArgumentException() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> comparer.findDifferences(null, null));
+        Assert.assertThrows(IllegalArgumentException.class, () -> comparer.findDifferences((Week) null, null));
+    }
+
+    @Test
+    public void whenFirstArgumentAsCollectionNullThenThrowIllegalArgumentException() {
+        Assert.assertThrows(IllegalArgumentException.class, () -> comparer.findDifferences(null, Collections.emptyList()));
+    }
+
+    @Test
+    public void whenSecondArgumentAsCollectionNullThenThrowIllegalArgumentException() {
+        Assert.assertThrows(IllegalArgumentException.class, () -> comparer.findDifferences(Collections.emptyList(), null));
+    }
+
+    @Test
+    public void whenAllArgumentsAsCollectionsNullThenThrowIllegalArgumentException() {
+        Assert.assertThrows(IllegalArgumentException.class, () -> comparer.findDifferences((List<Week>) null, null));
     }
 
     @Test
@@ -87,12 +103,32 @@ public class WeekComparerTests {
         runFindDifferencesTest(9);
     }
 
+    @Test
+    public void whenValidCollectionArgumentsAndLessonChangedInFirstWeekThenReturnValidResult() {
+        runFindDifferencesCollectionTest(10);
+    }
+
     private void runFindDifferencesTest(int testIndex) {
         Week w1 = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 0), Week.class);
         Week w2 = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 1), Week.class);
         Map<String, List<Day[]>> expected = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 2),
                 new TypeToken<Map<String, List<Day[]>>>(){}.getType());
         Map<String, List<Day[]>> actual = comparer.findDifferences(w1, w2);
+        assertDifferences(expected, actual);
+    }
+
+    private void runFindDifferencesCollectionTest(int testIndex) {
+        List<Week> w1 = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 0),
+                new TypeToken<List<Week>>(){}.getType());
+        List<Week> w2 = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 1),
+                new TypeToken<List<Week>>(){}.getType());
+        Map<String, List<Day[]>> expected = JsonFileHelper.loadFromFile(getWeekPath(testIndex, 2),
+                new TypeToken<Map<String, List<Day[]>>>(){}.getType());
+        Map<String, List<Day[]>> actual = comparer.findDifferences(w1, w2);
+        assertDifferences(expected, actual);
+    }
+
+    private void assertDifferences(Map<String, List<Day[]>> expected, Map<String, List<Day[]>> actual) {
         Assert.assertNotNull(actual);
         Assert.assertEquals(expected.keySet().size(), actual.keySet().size());
         for (String expectedKey : expected.keySet()) {

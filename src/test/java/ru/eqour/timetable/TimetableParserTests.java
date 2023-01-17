@@ -10,6 +10,7 @@ import ru.eqour.timetable.util.JsonFileHelper;
 import ru.eqour.timetable.util.ResourceHelper;
 
 import java.io.IOException;
+import java.util.List;
 
 public class TimetableParserTests {
 
@@ -23,7 +24,7 @@ public class TimetableParserTests {
     @Test
     public void whenValidExcelFileThenReturnValidWeek() throws IOException {
         Week expected = JsonFileHelper.loadFromFile(getParsedTimetablePath(0), Week.class);
-        Week actual = parser.parseTimetable(getClass().getResourceAsStream(getTimetablePath(0)));
+        Week actual = parser.parseTimetable(getClass().getResourceAsStream(getTimetablePath(0))).get(0);
         Compare.compareWeeks(expected, actual);
     }
 
@@ -36,20 +37,20 @@ public class TimetableParserTests {
     @Test
     public void whenExcelFileWithMergedDaysOfWeekCellsThenReturnValidWeek() throws IOException {
         Week expected = JsonFileHelper.loadFromFile(getParsedTimetablePath(0), Week.class);
-        Week actual = parser.parseTimetable(getClass().getResourceAsStream(getTimetablePath(1)));
+        Week actual = parser.parseTimetable(getClass().getResourceAsStream(getTimetablePath(1))).get(0);
         Compare.compareWeeks(expected, actual);
     }
 
     @Test
-    public void whenEmptyExcelFileThenReturnNull() throws IOException {
-        Week actual = parser.parseTimetable(getClass().getResourceAsStream(getTimetablePath(2)));
-        Assert.assertNull(actual);
+    public void whenEmptyExcelFileThenReturnEmptyList() throws IOException {
+        List<Week> actual = parser.parseTimetable(getClass().getResourceAsStream(getTimetablePath(2)));
+        Assert.assertTrue(actual.isEmpty());
     }
 
     @Test
     public void whenExcel97_2003FileThenReturnValidWeek() throws IOException {
         Week expected = JsonFileHelper.loadFromFile(getParsedTimetablePath(0), Week.class);
-        Week actual = parser.parseTimetable(getClass().getResourceAsStream("/timetable-parser/timetable-3.xls"));
+        Week actual = parser.parseTimetable(getClass().getResourceAsStream("/timetable-parser/timetable-3.xls")).get(0);
         Compare.compareWeeks(expected, actual);
     }
 

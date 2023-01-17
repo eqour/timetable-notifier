@@ -8,5 +8,6 @@ import java.util.Map;
 
 public interface WeekComparer {
 
+    Map<String, List<Day[]>> findDifferences(List<Week> w1, List<Week> w2);
     Map<String, List<Day[]>> findDifferences(Week w1, Week w2);
 }

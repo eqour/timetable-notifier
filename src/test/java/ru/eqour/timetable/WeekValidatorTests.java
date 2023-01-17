@@ -12,6 +12,7 @@ import ru.eqour.timetable.util.ResourceHelper;
 import ru.eqour.timetable.validator.SimpleWeekValidator;
 import ru.eqour.timetable.validator.WeekValidator;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class WeekValidatorTests {
@@ -127,6 +128,24 @@ public class WeekValidatorTests {
     @Test
     public void whenWeekWithIncorrectPeriodThenThrowException() {
         executeTestWithChangedWeekAndExpectException(w -> w.period = "45.34.7655-34.65.5645");
+    }
+
+    @Test
+    public void whenValidWeeksThenNotThrowException() {
+        try {
+            weekValidator.validate(Arrays.asList(getValidWeek(), getValidWeek()));
+        } catch (WeekValidationException e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void whenOneWeekInvalidThenThrowException() {
+        Assert.assertThrows(WeekValidationException.class, () -> {
+            Week week = getValidWeek();
+            week.groups[0].days[2].lessons[2].time = null;
+            weekValidator.validate(Arrays.asList(getValidWeek(), week, getValidWeek()));
+        });
     }
 
     private void executeTestWithChangedWeekAndExpectException(Consumer<Week> weekChanger) {

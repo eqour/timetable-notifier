@@ -5,6 +5,8 @@ import ru.eqour.timetable.parser.TimetableParser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 
 public class TimetableParserMock implements TimetableParser {
 
@@ -15,9 +17,9 @@ public class TimetableParserMock implements TimetableParser {
     }
 
     @Override
-    public Week parseTimetable(InputStream inputStream) throws IOException {
+    public List<Week> parseTimetable(InputStream inputStream) throws IOException {
         if (isCorrectParsing) {
-            return new Week();
+            return Collections.singletonList(new Week());
         } else {
             throw new IOException();
         }

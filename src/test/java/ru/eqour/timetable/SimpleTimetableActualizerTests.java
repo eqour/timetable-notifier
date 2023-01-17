@@ -190,7 +190,7 @@ public class SimpleTimetableActualizerTests {
 
         public TestCaseBuilder() {
             settings = new Settings();
-            settings.savedWeek = new Week();
+            settings.savedWeeks = Collections.singletonList(new Week());
         }
 
         public TestCaseBuilder withNotificationSenderError() {
@@ -239,7 +239,7 @@ public class SimpleTimetableActualizerTests {
         }
 
         public TestCaseBuilder withNullSavedWeek() {
-            this.settings.savedWeek = null;
+            this.settings.savedWeeks = null;
             return this;
         }
 

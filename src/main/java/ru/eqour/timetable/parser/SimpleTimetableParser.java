@@ -25,12 +25,12 @@ public class SimpleTimetableParser implements TimetableParser {
     private static final int LESSONS_IN_DAY = 7;
     private static final int LESSON_SIZE = 3;
 
-    public Week parseTimetable(InputStream inputStream) throws IOException {
+    public List<Week> parseTimetable(InputStream inputStream) throws IOException {
         if (inputStream == null) {
             throw new IllegalArgumentException();
         }
         TimetableSheet timetableSheet = readWorkbookSheet(createWorkbook(inputStream));
-        return timetableSheet == null ? null : parseTimetable(timetableSheet);
+        return timetableSheet == null ? Collections.emptyList() : Collections.singletonList(parseTimetable(timetableSheet));
     }
 
     private Workbook createWorkbook(InputStream inputStream) throws IOException {
