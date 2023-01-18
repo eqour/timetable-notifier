@@ -25,6 +25,7 @@ public class SimpleTimetableParser implements TimetableParser {
     private static final int LESSONS_IN_DAY = 7;
     private static final int LESSON_SIZE = 3;
 
+    @Override
     public List<Week> parseTimetable(InputStream inputStream) throws IOException {
         if (inputStream == null) {
             throw new IllegalArgumentException();
