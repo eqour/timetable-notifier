@@ -4,7 +4,7 @@ import org.apache.poi.ooxml.POIXMLException;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.eqour.timetable.model.Week;
-import ru.eqour.timetable.parser.SimpleTimetableParser;
+import ru.eqour.timetable.parser.impl.SimpleTimetableParser;
 import ru.eqour.timetable.util.Compare;
 import ru.eqour.timetable.util.JsonFileHelper;
 import ru.eqour.timetable.util.ResourceHelper;

@@ -11,7 +11,7 @@ import ru.eqour.timetable.api.FileActualizer;
 import ru.eqour.timetable.comparer.SimpleWeekComparer;
 import ru.eqour.timetable.exception.NotifierException;
 import ru.eqour.timetable.model.Notification;
-import ru.eqour.timetable.parser.SimpleTimetableParser;
+import ru.eqour.timetable.parser.impl.SimpleTimetableParser;
 import ru.eqour.timetable.repository.SubscriberRepository;
 import ru.eqour.timetable.settings.Settings;
 import ru.eqour.timetable.settings.SettingsManager;
