@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory;
+import ru.eqour.timetable.model.Lesson;
 import ru.eqour.timetable.parser.impl.SimpleTimetableParser;
 
 import java.io.IOException;
@@ -112,5 +113,20 @@ public abstract class ExcelTimetableParser implements TimetableParser {
             this.startDate = startDate;
             this.endDate = endDate;
         }
+    }
+
+    protected String getTableValue(String[][] table, int row, int column) {
+        if (row < table.length && column < table[row].length) {
+            String value = table[row][column];
+            return Objects.equals(value, "") ? null : value;
+        } else {
+            return "";
+        }
+    }
+
+    protected boolean lessonIsValid(Lesson lesson) {
+        return (lesson.teacher != null && !lesson.teacher.isEmpty())
+                || (lesson.classroom != null && !lesson.classroom.isEmpty())
+                || (lesson.discipline != null && !lesson.discipline.isEmpty());
     }
 }

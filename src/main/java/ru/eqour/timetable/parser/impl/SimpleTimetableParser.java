@@ -104,23 +104,8 @@ public class SimpleTimetableParser extends ExcelTimetableParser {
             lesson.discipline = getTableValue(table, row, column);
             lesson.teacher = getTableValue(table, row + 1, column);
             lesson.classroom = getTableValue(table, row + 2, column);
-            if ((lesson.teacher == null || lesson.teacher.isEmpty())
-                    && (lesson.classroom == null || lesson.classroom.isEmpty())
-                    && (lesson.discipline == null || lesson.discipline.isEmpty())) {
-                day.lessons[i] = null;
-            } else {
-                day.lessons[i] = lesson;
-            }
+            day.lessons[i] = lessonIsValid(lesson) ? lesson : null;
         }
         return day;
-    }
-
-    private String getTableValue(String[][] table, int row, int column) {
-        if (row < table.length && column < table[row].length) {
-            String value = table[row][column];
-            return Objects.equals(value, "") ? null : value;
-        } else {
-            return "";
-        }
     }
 }
