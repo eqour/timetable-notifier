@@ -1,0 +1,1062 @@
+[
+  {
+    "period": "16.01.2023-21.01.2023",
+    "groups": [
+      {
+        "name": "ОБ-Вт-09.03.03.02-11",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              {
+                "time": "15:40-17:10",
+                "discipline": "15.30 Физика Экзамен",
+                "teacher": "Гайсина Л.Г.",
+                "classroom": "307-1/4"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-09.03.03.02-21",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "11.00 Право Консультация",
+                "teacher": "Бердышева С.Н.",
+                "classroom": "8/1"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "9.00 Право ЭКЗАМЕН",
+                "teacher": "Бердышева С.Н."
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Основы веб-дизайна Консультация",
+                "teacher": "Раскин П.Н.",
+                "classroom": "13/1"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "Основы веб-дизайна ЭКЗАМЕН",
+                "teacher": "Раскин П.Н.",
+                "classroom": "13/1"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "в 11.30 Теория вероятностей и математическая статистика ЭКЗАМЕН",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "22/1"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-09.03.03.02-31",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              {
+                "time": "15:40-17:10",
+                "discipline": "16.00 Математические методы в экономике ЭКЗАМЕН",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "13/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Предметно-ориентированные экономические информационные системы Консультация",
+                "teacher": "Раскин П.Н.",
+                "classroom": "13/1"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Предметно-ориентированные экономические информационные системы ЭКЗАМЕН",
+                "teacher": "Раскин П.Н.",
+                "classroom": "13/1"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-09.03.03.02-41",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "Информационные технологии поддержки принятия решений ЭКЗАМЕН",
+                "teacher": "Кузнецов А.П.",
+                "classroom": "18/1"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "Корпоративные информационные системы ЭКЗАМЕН",
+                "teacher": "Раскин П.Н.",
+                "classroom": "13/1"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-11",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-12",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-21",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-31",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440301-21",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440301-31",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-380301-31",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-380304-11",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-380304-31",
+        "days": [
+          {
+            "date": "16.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "21.01.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,4 +1,4 @@
-package ru.eqour.timetable;
+package ru.eqour.timetable.parser;
 
 import org.apache.poi.ooxml.POIXMLException;
 import org.junit.Assert;
@@ -12,7 +12,7 @@ import ru.eqour.timetable.util.ResourceHelper;
 import java.io.IOException;
 import java.util.List;
 
-public class TimetableParserTests {
+public class SimpleTimetableParserTests {
 
     private static final SimpleTimetableParser parser = new SimpleTimetableParser();
 
@@ -31,7 +31,7 @@ public class TimetableParserTests {
     @Test
     public void whenNotExcelFileThenThrowIOException() {
         Assert.assertThrows(IOException.class,
-                () -> parser.parseTimetable(getClass().getResourceAsStream("/timetable-parser/text-123.txt")));
+                () -> parser.parseTimetable(getClass().getResourceAsStream("/timetable-parser/simple/text-123.txt")));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class TimetableParserTests {
     @Test
     public void whenExcel97_2003FileThenReturnValidWeek() throws IOException {
         Week expected = JsonFileHelper.loadFromFile(getParsedTimetablePath(0), Week.class);
-        Week actual = parser.parseTimetable(getClass().getResourceAsStream("/timetable-parser/timetable-3.xls")).get(0);
+        Week actual = parser.parseTimetable(getClass().getResourceAsStream("/timetable-parser/simple/timetable-3.xls")).get(0);
         Compare.compareWeeks(expected, actual);
     }
 
@@ -61,10 +61,10 @@ public class TimetableParserTests {
     }
 
     private String getTimetablePath(int index) {
-        return "/timetable-parser/timetable-" + index + ".xlsx";
+        return "/timetable-parser/simple/timetable-" + index + ".xlsx";
     }
 
     private String getParsedTimetablePath(@SuppressWarnings("SameParameterValue") int index) {
-        return ResourceHelper.getFullPathToResource("/timetable-parser/timetable-parsed-" + index + ".json").toString();
+        return ResourceHelper.getFullPathToResource("/timetable-parser/simple/timetable-parsed-" + index + ".json").toString();
     }
 }

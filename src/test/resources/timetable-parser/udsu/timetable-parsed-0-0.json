@@ -1,0 +1,724 @@
+[
+  {
+    "period": "01.09.2022-03.09.2022",
+    "groups": [
+      {
+        "name": "ОБ-Вт-09.03.03.02-11",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Математика",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "8/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Математика",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "8/1"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Математика",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "8/1"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Математика",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Математика",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Математика",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "14/1"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-09.03.03.02-21",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "Экономика фирмы (продвинутый уровень) / Основы веб-дизайна",
+                "teacher": "Сорокина Е.В. / Раскин П.Н.",
+                "classroom": "21/1 / 14/1"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Экономика фирмы (продвинутый уровень) / Основы веб-дизайна",
+                "teacher": "Сорокина Е.В. / Раскин П.Н.",
+                "classroom": "21/1 / 14/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А.",
+                "classroom": "(стадион)"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Основы веб-дизайна",
+                "teacher": "Раскин П.Н.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Основы веб-дизайна",
+                "teacher": "Раскин П.Н.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Основы веб-дизайна",
+                "teacher": "Раскин П.Н.",
+                "classroom": "14/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-09.03.03.02-31",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Компьютерная графика и основы веб-дизайна",
+                "teacher": "Раскин П.Н.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Предметно-ориентированные экономические информационные системы",
+                "teacher": "Раскин П.Н.",
+                "classroom": "14/1"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Математические методы в экономике",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "22/1"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Технологии программирования",
+                "teacher": "Марыкин О.В.",
+                "classroom": "22/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Технологии программирования",
+                "teacher": "Марыкин О.В.",
+                "classroom": "22/1"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-09.03.03.02-41",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "Информационные технологии поддержки принятия решений",
+                "teacher": "Кузнецов А.П.",
+                "classroom": "22/1"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Информационные технологии поддержки принятия решений",
+                "teacher": "Кузнецов А.П.",
+                "classroom": "22/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Проектирование информационных систем",
+                "teacher": "Воротова И.Н.",
+                "classroom": "22/1"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Проектирование информационных систем",
+                "teacher": "Воротова И.Н.",
+                "classroom": "22/1"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-11",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Библиотечный час",
+                "teacher": "(1 подгруппа) библиотека",
+                "classroom": "(1 подгруппа) библиотека"
+              },
+              null,
+              {
+                "time": "15:40-17:10",
+                "discipline": "Библиотечный час",
+                "teacher": "(2 подгруппа) библиотека",
+                "classroom": "(2 подгруппа) библиотека"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-21",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Профессиональный иностранный язык",
+                "teacher": "Коновалова Т.П.",
+                "classroom": "6/2"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Учебная практика, научно-исследовательская  работа",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Учебная практика, научно-исследовательская  работа",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Общие основы педагогики",
+                "teacher": "Окулова Л.П.",
+                "classroom": "303/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Общие основы педагогики",
+                "teacher": "Окулова Л.П.",
+                "classroom": "303/4"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-31",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "9.00 Основы психологичечского консультирования",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Основы психологичечского консультирования",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Учебная практика, технологическая",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Учебная практика, технологическая",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440301-21",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Методология и методы психолого-педагогических исследований",
+                "teacher": "Окулова Л.П.",
+                "classroom": "303/4"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Методология и методы психолого-педагогических исследований",
+                "teacher": "Окулова Л.П.",
+                "classroom": "303/4"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-31",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              {
+                "time": "15:40-17:10",
+                "discipline": "Возрастная психология",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              {
+                "time": "17:15-18:45",
+                "discipline": "Современные технологии начального математического образования",
+                "teacher": "Пермякова И.А.",
+                "classroom": "13/1"
+              },
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-380301-31",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Рынок ценных бумаг",
+                "teacher": "Ардашева Г.Н.",
+                "classroom": "18/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Рынок ценных бумаг",
+                "teacher": "Ардашева Г.Н.",
+                "classroom": "18/1"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Бухгалтерский учет и анализ",
+                "teacher": "Ардашева Г.Н.",
+                "classroom": "18/1"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Программные средства автоматизации финансовых процессов",
+                "teacher": "Ардашева Г.Н.",
+                "classroom": "18/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "Экономика предприятия",
+                "teacher": "Володина И.Г.",
+                "classroom": "19/1"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Экономика предприятия",
+                "teacher": "Володина И.Г.",
+                "classroom": "19/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-380304-11",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Экономическая теория",
+                "teacher": "Сорокина Е.В.",
+                "classroom": "19/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Экономическая теория",
+                "teacher": "Сорокина Е.В.",
+                "classroom": "19/1"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Библиотечный час",
+                "teacher": "библиотека",
+                "classroom": "библиотека"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-380304-31",
+        "days": [
+          {
+            "date": "01.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "02.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "03.09.2022",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
