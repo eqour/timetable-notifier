@@ -6,14 +6,14 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import ru.eqour.timetable.model.Week;
-import ru.eqour.timetable.parser.impl.UdsuVoTimetableParser;
+import ru.eqour.timetable.parser.impl.UdSUVoTimetableParser;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 @RunWith(Enclosed.class)
-public class UdsuVoTimetableParserParameterizedTests {
+public class UdSUVoTimetableParserParameterizedTests {
 
     @RunWith(Parameterized.class)
     public static class OneWeekInOnePeriodParameterizedTests {
@@ -85,8 +85,8 @@ public class UdsuVoTimetableParserParameterizedTests {
         }
     }
 
-    private static UdsuVoTimetableParser createParser(LocalDate date, int days) {
-        UdsuVoTimetableParser parser = new UdsuVoTimetableParser(days);
+    private static UdSUVoTimetableParser createParser(LocalDate date, int days) {
+        UdSUVoTimetableParser parser = new UdSUVoTimetableParser(days);
         parser.setCurrentDate(date);
         return parser;
     }

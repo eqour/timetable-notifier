@@ -11,6 +11,7 @@ public class SimpleSubscriberRepositoryTests {
 
     private static final String GROUP_1 = "ОБ-Вт-09.03.03.02-11";
     private static final String GROUP_2 = "ОБ-Вт-09.03.03.02-41";
+    private static final String GROUP_UNKNOWN = "ОБ-Вт-111-41";
 
     @Test
     public void whenValidFileThenReturnNotNull() {
@@ -34,5 +35,12 @@ public class SimpleSubscriberRepositoryTests {
             SubscriberRepository repository = new SimpleSubscriberRepository("/simple-subscriber-repository/subscribers-1.json");
             repository.getSubscribers(GROUP_1);
         });
+    }
+
+    @Test
+    public void whenValidFileAndUnknownGroupThenReturnEmptyList() {
+        String path = ResourceHelper.getFullPathToResource("/simple-subscriber-repository/subscribers-0.json").toString();
+        SubscriberRepository repository = new SimpleSubscriberRepository(path);
+        Assert.assertNotNull(repository.getSubscribers(GROUP_UNKNOWN));
     }
 }

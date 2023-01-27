@@ -5,6 +5,7 @@ import ru.eqour.timetable.exception.RepositoryException;
 import ru.eqour.timetable.model.Subscriber;
 import ru.eqour.timetable.util.JsonFileHelper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ public class SimpleSubscriberRepository implements SubscriberRepository {
 
     @Override
     public List<Subscriber> getSubscribers(String groupName) {
-        return loadSubscriberMap().get(groupName);
+        Map<String, List<Subscriber>> subscriberMap = loadSubscriberMap();
+        return subscriberMap.getOrDefault(groupName, Collections.emptyList());
     }
 }

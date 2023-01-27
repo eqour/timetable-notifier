@@ -11,20 +11,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class UdsuVoTimetableParser extends ExcelTimetableParser {
+public class UdSUVoTimetableParser extends ExcelTimetableParser {
 
     private final int GROUP_START_ROW_INDEX = 4;
 
     private final int periodSizeInDays;
     private LocalDate currentDate;
 
-    public UdsuVoTimetableParser(int periodSizeInDays) {
+    public UdSUVoTimetableParser(int periodSizeInDays) {
         this.periodSizeInDays = periodSizeInDays;
     }
 
@@ -43,7 +40,7 @@ public class UdsuVoTimetableParser extends ExcelTimetableParser {
 
     private List<Period> getTimetableWeeksInCurrentPeriod(Workbook workbook, LocalDate start, LocalDate end) {
         return Arrays.stream(getWorkbookSheets(workbook))
-                .map(this::parsePeriod)
+                .map(this::parsePeriod).filter(Objects::nonNull)
                 .sorted(Comparator.comparing(p -> p.startDate))
                 .filter(p -> isWeekInPeriod(p, start, end))
                 .collect(Collectors.toList());
@@ -62,7 +59,7 @@ public class UdsuVoTimetableParser extends ExcelTimetableParser {
             String endDate = periodString.split("-")[1];
             return new Period(periodString, parsePeriodDate(startDate), parsePeriodDate(endDate));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 

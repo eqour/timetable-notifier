@@ -2,10 +2,7 @@ package ru.eqour.timetable.parser;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbookFactory;
 import org.apache.poi.ooxml.POIXMLException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory;
 import ru.eqour.timetable.model.Lesson;
 import ru.eqour.timetable.parser.impl.SimpleTimetableParser;
@@ -16,6 +13,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 public abstract class ExcelTimetableParser implements TimetableParser {
+
+    private final DataFormatter formatter = new DataFormatter();
 
     protected Workbook createWorkbook(InputStream inputStream) throws IOException {
         if (inputStream == null) {
@@ -63,11 +62,7 @@ public abstract class ExcelTimetableParser implements TimetableParser {
 
     private String getCellValue(Cell cell) {
         if (cell != null) {
-            switch (cell.getCellType()) {
-                case STRING: return cell.getStringCellValue();
-                case NUMERIC: return Double.toString(cell.getNumericCellValue());
-                default: return "";
-            }
+            return formatter.formatCellValue(cell);
         } else {
             return "";
         }

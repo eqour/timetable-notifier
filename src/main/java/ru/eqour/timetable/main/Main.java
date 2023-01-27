@@ -13,7 +13,7 @@ public class Main {
     private static final Path SUBSCRIBERS_PATH = Paths.get(APP_PATH.toString(), "subscribers.json");
 
     public static void main(String[] args) throws InterruptedException {
-        new Application(
+        new UdSUApplication(
                 new SimpleSettingsManager(SETTINGS_PATH.toString()),
                 new SimpleSubscriberRepository(SUBSCRIBERS_PATH.toString())
         ).start();

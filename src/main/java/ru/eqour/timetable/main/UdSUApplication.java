@@ -4,14 +4,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.eqour.timetable.TimeBasedUpdater;
-import ru.eqour.timetable.validator.SimpleWeekValidator;
+import ru.eqour.timetable.parser.impl.UdSUVoTimetableParser;
+import ru.eqour.timetable.validator.UdSUWeekValidator;
 import ru.eqour.timetable.validator.WeekValidator;
 import ru.eqour.timetable.actualizer.SimpleTimetableActualizer;
 import ru.eqour.timetable.api.FileActualizer;
 import ru.eqour.timetable.comparer.SimpleWeekComparer;
 import ru.eqour.timetable.exception.NotifierException;
 import ru.eqour.timetable.model.Notification;
-import ru.eqour.timetable.parser.impl.SimpleTimetableParser;
 import ru.eqour.timetable.repository.SubscriberRepository;
 import ru.eqour.timetable.settings.Settings;
 import ru.eqour.timetable.settings.SettingsManager;
@@ -20,20 +20,25 @@ import ru.eqour.timetable.util.factory.NotifierFactory;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
-public class Application {
+public class UdSUApplication {
 
     private final Logger LOG = LogManager.getLogger();
     private final TimeBasedUpdater updater;
     private final SimpleTimetableActualizer timetableActualizer;
+    private final UdSUVoTimetableParser timetableParser;
+    private final Settings settings;
 
-    public Application(SettingsManager settingsManager, SubscriberRepository subscriberRepository) {
-        Settings settings = settingsManager.load();
+    public UdSUApplication(SettingsManager settingsManager, SubscriberRepository subscriberRepository) {
+        settings = settingsManager.load();
         FileActualizer actualizer = FileActualizerFactory.create(FileActualizerFactory.FileActualizerType.GOOGLE_DRIVE_SERVICE, settings);
-        WeekValidator validator = new SimpleWeekValidator();
+        WeekValidator validator = new UdSUWeekValidator();
+        timetableParser = new UdSUVoTimetableParser(settings.parsingPeriod);
         timetableActualizer = new SimpleTimetableActualizer(settingsManager, actualizer, subscriberRepository,
-                validator, this::sendNotifications, new SimpleTimetableParser(), new SimpleWeekComparer());
+                validator, this::sendNotifications, timetableParser, new SimpleWeekComparer());
         updater = new TimeBasedUpdater(actualizer::actualize, this::actualize, settings.maxDelayAfterChange);
     }
 
@@ -41,6 +46,7 @@ public class Application {
         //noinspection InfiniteLoopStatement
         while (true) {
             try {
+                timetableParser.setCurrentDate(OffsetDateTime.now(ZoneOffset.ofHours(settings.zoneOffset)).toLocalDate());
                 updater.update(System.currentTimeMillis());
             } catch (Exception e) {
                 LOG.log(Level.ERROR, "An exception occurred while the application was running: " + e.getMessage());

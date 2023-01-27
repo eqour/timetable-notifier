@@ -17,9 +17,7 @@ import ru.eqour.timetable.validator.WeekValidator;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class SimpleTimetableActualizer {
@@ -99,8 +97,13 @@ public class SimpleTimetableActualizer {
                 if (lesson != null) {
                     hasLessons = true;
                     builder.append(i + 1).append(" пара, ").append(lesson.time).append("\n");
-                    builder.append(lesson.discipline).append("\n");
-                    builder.append(lesson.teacher).append(" ").append(lesson.classroom);
+                    builder.append(getStringOrEmptyString(lesson.discipline)).append("\n");
+                    if (Objects.equals(lesson.teacher, lesson.classroom)) {
+                        builder.append(getStringOrEmptyString(lesson.teacher));
+                    } else {
+                        builder.append(getStringOrEmptyString(lesson.teacher)).append(" ")
+                                .append(getStringOrEmptyString(lesson.classroom));
+                    }
                     if (i != day.lessons.length - 1) {
                         builder.append("\n\n");
                     }
@@ -113,5 +116,9 @@ public class SimpleTimetableActualizer {
             }
         }
         return builder.toString();
+    }
+
+    private String getStringOrEmptyString(String value) {
+        return value == null ? "" : value;
     }
 }

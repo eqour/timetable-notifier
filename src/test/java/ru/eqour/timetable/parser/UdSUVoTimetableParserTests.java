@@ -4,7 +4,7 @@ import com.google.common.reflect.TypeToken;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.eqour.timetable.model.Week;
-import ru.eqour.timetable.parser.impl.UdsuVoTimetableParser;
+import ru.eqour.timetable.parser.impl.UdSUVoTimetableParser;
 import ru.eqour.timetable.util.Compare;
 import ru.eqour.timetable.util.JsonFileHelper;
 import ru.eqour.timetable.util.ResourceHelper;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-public class UdsuVoTimetableParserTests {
+public class UdSUVoTimetableParserTests {
 
     @Test
     public void whenArgumentNullThenThrowIllegalArgumentException() {
@@ -28,9 +28,9 @@ public class UdsuVoTimetableParserTests {
                         getClass().getResourceAsStream("/timetable-parser/simple/text-123.txt")));
     }
 
-    private UdsuVoTimetableParser createSimpleUdsuParser() {
+    private UdSUVoTimetableParser createSimpleUdsuParser() {
         int defaultPeriodSizeInDays = 7;
-        UdsuVoTimetableParser parser = new UdsuVoTimetableParser(defaultPeriodSizeInDays);
+        UdSUVoTimetableParser parser = new UdSUVoTimetableParser(defaultPeriodSizeInDays);
         parser.setCurrentDate(LocalDate.of(2023, 1, 1));
         return parser;
     }
@@ -63,8 +63,8 @@ public class UdsuVoTimetableParserTests {
         Compare.compareWeeks(expected.get(0), actual);
     }
 
-    private static UdsuVoTimetableParser createParser(LocalDate date, int days) {
-        UdsuVoTimetableParser parser = new UdsuVoTimetableParser(days);
+    private static UdSUVoTimetableParser createParser(LocalDate date, int days) {
+        UdSUVoTimetableParser parser = new UdSUVoTimetableParser(days);
         parser.setCurrentDate(date);
         return parser;
     }

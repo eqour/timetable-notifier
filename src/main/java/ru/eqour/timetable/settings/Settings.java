@@ -8,6 +8,8 @@ import java.util.Objects;
 public class Settings {
 
     public int maxDelayAfterChange;
+    public int zoneOffset;
+    public int parsingPeriod;
     public String vkToken;
     public String telegramToken;
     public String timetableFileId;
@@ -18,11 +20,11 @@ public class Settings {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Settings settings = (Settings) o;
-        return maxDelayAfterChange == settings.maxDelayAfterChange && Objects.equals(vkToken, settings.vkToken) && Objects.equals(telegramToken, settings.telegramToken) && Objects.equals(timetableFileId, settings.timetableFileId) && Objects.equals(savedWeeks, settings.savedWeeks);
+        return maxDelayAfterChange == settings.maxDelayAfterChange && zoneOffset == settings.zoneOffset && parsingPeriod == settings.parsingPeriod && vkToken.equals(settings.vkToken) && telegramToken.equals(settings.telegramToken) && timetableFileId.equals(settings.timetableFileId) && Objects.equals(savedWeeks, settings.savedWeeks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maxDelayAfterChange, vkToken, telegramToken, timetableFileId, savedWeeks);
+        return Objects.hash(maxDelayAfterChange, zoneOffset, parsingPeriod, vkToken, telegramToken, timetableFileId, savedWeeks);
     }
 }
