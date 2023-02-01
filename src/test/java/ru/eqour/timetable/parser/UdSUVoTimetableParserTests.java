@@ -30,9 +30,7 @@ public class UdSUVoTimetableParserTests {
 
     private UdSUVoTimetableParser createSimpleUdsuParser() {
         int defaultPeriodSizeInDays = 7;
-        UdSUVoTimetableParser parser = new UdSUVoTimetableParser(defaultPeriodSizeInDays);
-        parser.setCurrentDate(LocalDate.of(2023, 1, 1));
-        return parser;
+        return new UdSUVoTimetableParser(defaultPeriodSizeInDays, () -> LocalDate.of(2023, 1, 1));
     }
 
     @Test
@@ -64,9 +62,7 @@ public class UdSUVoTimetableParserTests {
     }
 
     private static UdSUVoTimetableParser createParser(LocalDate date, int days) {
-        UdSUVoTimetableParser parser = new UdSUVoTimetableParser(days);
-        parser.setCurrentDate(date);
-        return parser;
+        return new UdSUVoTimetableParser(days, () -> date);
     }
 
     private static String getTimetablePath(@SuppressWarnings("SameParameterValue") int index) {

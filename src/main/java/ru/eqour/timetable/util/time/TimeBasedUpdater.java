@@ -1,4 +1,4 @@
-package ru.eqour.timetable;
+package ru.eqour.timetable.util.time;
 
 import java.util.function.Supplier;
 

@@ -199,7 +199,12 @@
           {
             "date": "03.09.2022",
             "lessons": [
-              null,
+              {
+                "time": "8:20-9:50",
+                "discipline": "8.00 Культура и межкультурное взаимодействие в современном мире",
+                "teacher": "Тройникова Е.В.",
+                "classroom": "https://b84931.vr.mirapolis.ru/mira/miravr/5523698180"
+              },
               null,
               null,
               null,

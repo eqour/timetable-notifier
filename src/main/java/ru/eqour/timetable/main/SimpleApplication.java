@@ -3,7 +3,7 @@ package ru.eqour.timetable.main;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.eqour.timetable.TimeBasedUpdater;
+import ru.eqour.timetable.util.time.TimeBasedUpdater;
 import ru.eqour.timetable.settings.Settings;
 import ru.eqour.timetable.validator.SimpleWeekValidator;
 import ru.eqour.timetable.validator.WeekValidator;

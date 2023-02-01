@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class WeekComparerTests {
+public class SimpleWeekComparerTests {
 
     private static final SimpleWeekComparer comparer = new SimpleWeekComparer();
 
@@ -138,7 +138,7 @@ public class WeekComparerTests {
                 Day[] act = actual.get(expectedKey).get(i);
                 Assert.assertEquals(exp.length, act.length);
                 for (int j = 0; j < exp.length; j++) {
-                    Compare.compareDays(exp[i], act[i]);
+                    Compare.compareDays(exp[j], act[j]);
                 }
             }
         }

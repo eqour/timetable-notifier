@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class UdSUVoTimetableParser extends ExcelTimetableParser {
@@ -19,17 +20,16 @@ public class UdSUVoTimetableParser extends ExcelTimetableParser {
     private final int GROUP_START_ROW_INDEX = 4;
 
     private final int periodSizeInDays;
-    private LocalDate currentDate;
+    private final Supplier<LocalDate> localDateSupplier;
 
-    public UdSUVoTimetableParser(int periodSizeInDays) {
+    public UdSUVoTimetableParser(int periodSizeInDays, Supplier<LocalDate> localDateSupplier) {
         this.periodSizeInDays = periodSizeInDays;
+        this.localDateSupplier = localDateSupplier;
     }
 
     @Override
     public List<Week> parseTimetable(InputStream inputStream) throws IOException {
-        if (currentDate == null) {
-            throw new RuntimeException("currentDateTime is null");
-        }
+        LocalDate currentDate = localDateSupplier.get();
         Workbook workbook = createWorkbook(inputStream);
         List<Period> periodsForParsing = getTimetableWeeksInCurrentPeriod(workbook, currentDate,
                 currentDate.plusDays(periodSizeInDays));
@@ -64,7 +64,7 @@ public class UdSUVoTimetableParser extends ExcelTimetableParser {
     }
 
     private LocalDate parsePeriodDate(String value) {
-        return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd.MM.yy"));
+        return LocalDate.parse(value.trim(), DateTimeFormatter.ofPattern("dd.MM.yy"));
     }
 
     private Week parseWeek(TimetableSheet sheet) {
@@ -146,9 +146,10 @@ public class UdSUVoTimetableParser extends ExcelTimetableParser {
         return removeNewLineCharacters(value).trim();
     }
 
-    private String[] parseSecondLessonRow(String text) {
+    private String[] parseSecondLessonRow(String sourceText) {
         String teacherRegex = "[А-яЕё]+ [А-ЯЁ]\\.[А-ЯЁ]\\.";
-        if (text == null) return null;
+        if (sourceText == null) return null;
+        String text = removeNewLineCharacters(sourceText);
         if (text.matches(teacherRegex + " .+")) {
             return text.split("(?<=\\.) ");
         } else if (text.matches(teacherRegex)) {
@@ -170,9 +171,5 @@ public class UdSUVoTimetableParser extends ExcelTimetableParser {
 
     private String removeNewLineCharacters(String text) {
         return text.replaceAll("( +\\n +| +\\n|\\n +|\\n)", " ");
-    }
-
-    public void setCurrentDate(LocalDate currentDate) {
-        this.currentDate = currentDate;
     }
 }
