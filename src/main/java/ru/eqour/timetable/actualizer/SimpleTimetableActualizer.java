@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * Актуализатор расписания.
+ */
 public class SimpleTimetableActualizer {
 
     private final Logger LOG = LogManager.getLogger();
@@ -46,6 +49,11 @@ public class SimpleTimetableActualizer {
         this.weekComparer = weekComparer;
     }
 
+    /**
+     * Выполняет актуализацию расписания.
+     *
+     * @throws WeekValidationException если новое расписание не проходит валидацию.
+     */
     public void actualize() throws WeekValidationException {
         LOG.log(Level.INFO, "Actualizing the timetable");
         List<Week> actualWeeks = getActualWeeks(actualizer);

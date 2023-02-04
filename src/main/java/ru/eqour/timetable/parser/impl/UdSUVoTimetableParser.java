@@ -15,6 +15,9 @@ import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+/**
+ * Реализация парсера расписания из книги Excel в соответствии с текущим расписанием УдГУ.
+ */
 public class UdSUVoTimetableParser extends ExcelTimetableParser {
 
     private final int GROUP_START_ROW_INDEX = 4;
@@ -22,11 +25,27 @@ public class UdSUVoTimetableParser extends ExcelTimetableParser {
     private final int periodSizeInDays;
     private final Supplier<LocalDate> localDateSupplier;
 
+    /**
+     * Создаёт новый экземпляр класса {@code UdSUVoTimetableParser}.
+     *
+     * @param periodSizeInDays длительность промежутка времени в днях.
+     * @param localDateSupplier функциональный интерфейс, возвращающий дату на момент выполнения парсинга.
+     */
     public UdSUVoTimetableParser(int periodSizeInDays, Supplier<LocalDate> localDateSupplier) {
         this.periodSizeInDays = periodSizeInDays;
         this.localDateSupplier = localDateSupplier;
     }
 
+    /**
+     * Выполняет парсинг файла расписания.
+     * При выполнении метода вызывается функциональный интерфейс {@code Supplier<LocalDate>}, переданный в конструктор.
+     * В результирующий список входят недели, которые частично или полностью входят в период от полученной из интерфейса
+     * даты размером в {@code periodSizeInDays} дней ({@link UdSUVoTimetableParser#UdSUVoTimetableParser(int, Supplier)}).
+     *
+     * @param inputStream входной поток источника файла расписания.
+     * @return список недель {@code List<Week>}.
+     * @throws IOException при возникновении ошибки чтения/записи.
+     */
     @Override
     public List<Week> parseTimetable(InputStream inputStream) throws IOException {
         LocalDate currentDate = localDateSupplier.get();

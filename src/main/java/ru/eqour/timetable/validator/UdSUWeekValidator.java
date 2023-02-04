@@ -11,6 +11,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Выполняет валидацию недель в расписании УдГУ.
+ */
 public class UdSUWeekValidator implements WeekValidator {
 
     @Override

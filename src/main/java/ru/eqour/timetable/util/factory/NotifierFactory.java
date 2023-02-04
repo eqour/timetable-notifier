@@ -9,8 +9,18 @@ import ru.eqour.timetable.notifier.VkNotifier;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Фабрика классов, отвечающих за отправку уведомлений.
+ */
 public class NotifierFactory {
 
+    /**
+     * Создаёт список отправителей уведомлений для конкретного подписчика.
+     *
+     * @param subscriber подписчик.
+     * @param settings настройки приложения.
+     * @return список отправителей уведомлений для конкретного подписчика.
+     */
     public static List<Notifier> createNotifiersForSubscriber(Subscriber subscriber, Settings settings) {
         List<Notifier> ans = new ArrayList<>();
         if (subscriber.vkId != null) {
@@ -22,6 +32,13 @@ public class NotifierFactory {
         return ans;
     }
 
+    /**
+     * Возвращает идентификатор получателя сообщений у подписчика для конкретного уведомителя.
+     *
+     * @param notifier уведомитель.
+     * @param subscriber подписчик.
+     * @return идентификатор получателя сообщений.
+     */
     public static String getRecipientIdForNotifier(Notifier notifier, Subscriber subscriber) {
         if (notifier instanceof VkNotifier) {
             return subscriber.vkId;

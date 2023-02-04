@@ -1,7 +1,15 @@
 package ru.eqour.timetable.notifier;
 
+/**
+ * Отправляет сообщения от имени бота в Telegram.
+ */
 public class TelegramNotifier extends SimpleWebRequestNotifier {
 
+    /**
+     * Создаёт новый экземпляр класса {@code TelegramNotifier}.
+     *
+     * @param token секретный ключ, использующийся для отправки сообщений.
+     */
     public TelegramNotifier(String token) {
         super(token);
     }

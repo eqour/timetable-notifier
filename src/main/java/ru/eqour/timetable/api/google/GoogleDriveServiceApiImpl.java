@@ -9,6 +9,10 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * Класс, выполняющий взаимодействие с Google Drive API.
+ * Использует авторизацию с помощью сервисного аккаунта Google Cloud.
+ */
 public class GoogleDriveServiceApiImpl extends GoogleDriveApiImpl {
 
     @Override

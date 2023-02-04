@@ -3,9 +3,19 @@ package ru.eqour.timetable.model;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * День расписания.
+ */
 public class Day {
 
+    /**
+     * Дата в формате дд.мм.гггг.
+     */
     public String date;
+
+    /**
+     * Занятия за день.
+     */
     public Lesson[] lessons;
 
     public Day() {

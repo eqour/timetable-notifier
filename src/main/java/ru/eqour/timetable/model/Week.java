@@ -3,9 +3,19 @@ package ru.eqour.timetable.model;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Учебная неделя.
+ */
 public class Week {
 
+    /**
+     * Дата начала и конца недели в формате дд.мм.гггг-дд.мм.гггг.
+     */
     public String period;
+
+    /**
+     * Группы студентов.
+     */
     public Group[] groups;
 
     @Override

@@ -11,14 +11,33 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.function.Function;
 
+/**
+ * Содержит методы для обработки json файлов.
+ */
 public class JsonFileHelper {
 
     private static final Gson GSON = new Gson().newBuilder().setPrettyPrinting().create();
 
+    /**
+     * Десериализует объект из json файла.
+     *
+     * @param path путь к json файлу.
+     * @param type класс десериализуемого объекта.
+     * @return десериализуемый объект.
+     * @param <T> объект десериализации.
+     */
     public static <T> T loadFromFile(String path, Class<T> type) {
         return loadFromFile(path, json -> GSON.fromJson(json, type));
     }
 
+    /**
+     * Десериализует объект из json файла.
+     *
+     * @param path путь к json файлу.
+     * @param type тип десериализуемого объекта.
+     * @return десериализуемый объект.
+     * @param <T> тип объекта десериализации.
+     */
     public static <T> T loadFromFile(String path, Type type) {
         return loadFromFile(path, json -> GSON.fromJson(json, type));
     }
@@ -32,6 +51,13 @@ public class JsonFileHelper {
         }
     }
 
+    /**
+     * Сериализует объект в json файл.
+     *
+     * @param path путь к json файлу.
+     * @param value сериализуемый объект.
+     * @param <T> тип объекта сериализации.
+     */
     public static <T> void saveToFile(String path, T value) {
         String json = GSON.toJson(value);
         try (PrintWriter writer = new PrintWriter(path, "UTF-8")) {

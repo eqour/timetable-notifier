@@ -3,9 +3,19 @@ package ru.eqour.timetable.model;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Группа студентов.
+ */
 public class Group {
 
+    /**
+     * Название группы.
+     */
     public String name;
+
+    /**
+     * Дни группы за неделю.
+     */
     public Day[] days;
 
     @Override

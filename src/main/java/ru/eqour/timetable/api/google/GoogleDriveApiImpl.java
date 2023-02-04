@@ -21,6 +21,9 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Класс, выполняющий взаимодействие с Google Drive API. Использует авторизацию с помощью OAuth.
+ */
 public class GoogleDriveApiImpl implements GoogleDriveApi {
 
     private static final String APPLICATION_NAME = "TimetableNotifier";
@@ -52,6 +55,7 @@ public class GoogleDriveApiImpl implements GoogleDriveApi {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
+    @Override
     public FileMetadata getFileMetadata(String fileId) {
         try {
             File file = driveInstance().files().get(fileId)
@@ -66,6 +70,7 @@ public class GoogleDriveApiImpl implements GoogleDriveApi {
         }
     }
 
+    @Override
     public ByteArrayOutputStream getFile(String fileId) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -77,6 +82,7 @@ public class GoogleDriveApiImpl implements GoogleDriveApi {
         }
     }
 
+    @Override
     public ByteArrayOutputStream exportFile(String fileId, String mimeType) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

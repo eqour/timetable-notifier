@@ -2,11 +2,29 @@ package ru.eqour.timetable.model;
 
 import java.util.Objects;
 
+/**
+ * Занятие.
+ */
 public class Lesson {
 
+    /**
+     * Время проведения занятия в формате чч:мм-чч:мм.
+     */
     public String time;
+
+    /**
+     * Название дисциплины.
+     */
     public String discipline;
+
+    /**
+     * Преподаватель.
+     */
     public String teacher;
+
+    /**
+     * Место проведения занятия.
+     */
     public String classroom;
 
     public Lesson() {

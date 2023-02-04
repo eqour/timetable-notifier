@@ -11,6 +11,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Выполняет валидацию недель.
+ */
 public class SimpleWeekValidator implements WeekValidator {
 
     @Override

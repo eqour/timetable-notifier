@@ -5,14 +5,44 @@ import ru.eqour.timetable.model.Week;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Настройки приложения.
+ */
 public class Settings {
 
+    /**
+     * Задержка в минутах с последнего изменения расписания.
+     */
     public int maxDelayAfterChange;
+
+    /**
+     * Смещение в часах от UTC.
+     */
     public int zoneOffset;
+
+    /**
+     * Период, за который будет происходить актуализация расписания.
+     */
     public int parsingPeriod;
+
+    /**
+     * Токен для доступа к боту в ВКонтакте.
+     */
     public String vkToken;
+
+    /**
+     * Тоен для доступа к боту Telegram.
+     */
     public String telegramToken;
+
+    /**
+     * Идентификатор файла расписания в Google Drive.
+     */
     public String timetableFileId;
+
+    /**
+     * Сохранённая версия недель после парсинга.
+     */
     public List<Week> savedWeeks;
 
     @Override

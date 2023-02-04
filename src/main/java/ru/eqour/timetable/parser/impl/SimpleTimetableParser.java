@@ -15,6 +15,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Реализация парсера расписания из книги Excel в соответствии со строгим шаблоном.
+ */
 public class SimpleTimetableParser extends ExcelTimetableParser {
 
     private static final int DAYS_IN_WEEK = 6;

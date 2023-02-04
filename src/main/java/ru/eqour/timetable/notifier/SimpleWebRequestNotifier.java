@@ -7,10 +7,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+/**
+ * Абстрактный класс, выполняющий отправку сообщений при помощи отправки web запроса на определённый ресурс.
+ */
 public abstract class SimpleWebRequestNotifier implements Notifier {
 
     private final String token;
 
+    /**
+     * Создаёт новый экземпляр класса {@code SimpleWebRequestNotifier}.
+     *
+     * @param token секретный ключ, использующийся для отправки сообщений.
+     */
     public SimpleWebRequestNotifier(String token) {
         this.token = token;
     }
@@ -33,5 +41,13 @@ public abstract class SimpleWebRequestNotifier implements Notifier {
         connection.disconnect();
     }
 
+    /**
+     * Выполняет построение url для отправки запроса.
+     *
+     * @param token секретный ключ, использующийся для отправки сообщения.
+     * @param recipient строка, идентифицирующая получателя сообщения.
+     * @param message сообщение получателю.
+     * @return url адрес.
+     */
     protected abstract String buildSendMessageURL(String token, String recipient, String message);
 }

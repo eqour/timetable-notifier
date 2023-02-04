@@ -6,8 +6,21 @@ import ru.eqour.timetable.model.Week;
 
 import java.util.*;
 
+/**
+ * Используется для нахождения различий между неделями.
+ */
 public class SimpleWeekComparer implements WeekComparer {
 
+    /**
+     * Находит различия в днях между двумя списками недель для каждой учебной группы.
+     * Отличия находятся только у недель с одинаковым периодом и групп с совпадающими названиями.
+     *
+     * @param weeks1 первый список недель.
+     * @param weeks2 второй список недель.
+     * @return различия между неделями в виде {@code Map<String, List<Day[]>>}, где ключ - название учебной группы,
+     * а значение - список отличающихся дней, где значение под индексом {@code 0} - день из недели в {@code weeks1},
+     * а значение под индексом {@code 1} - день из недели в {@code weeks2}.
+     */
     @Override
     public Map<String, List<Day[]>> findDifferences(List<Week> weeks1, List<Week> weeks2) {
         if (weeks1 == null || weeks2 == null) {
@@ -28,6 +41,16 @@ public class SimpleWeekComparer implements WeekComparer {
         return ans;
     }
 
+    /**
+     * Находит различия в днях между двумя неделями для каждой учебной группы.
+     * Отличия находятся только у групп с совпадающими названиями.
+     *
+     * @param w1 первая неделя.
+     * @param w2 вторая неделя.
+     * @return различия между неделями в виде {@code Map<String, List<Day[]>>}, где ключ - название учебной группы,
+     * а значение - список отличающихся дней, где значение под индексом {@code 0} - день из недели {@code w1},
+     * а значение под индексом {@code 1} - день из недели {@code w2}.
+     */
     @Override
     public Map<String, List<Day[]>> findDifferences(Week w1, Week w2) {
         if (w1 == null || w2 == null || w1.groups == null || w2.groups == null) {
