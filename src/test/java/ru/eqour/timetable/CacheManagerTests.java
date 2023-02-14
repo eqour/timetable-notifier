@@ -2,9 +2,9 @@ package ru.eqour.timetable;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.eqour.timetable.settings.CacheManager;
 import ru.eqour.timetable.settings.Settings;
-import ru.eqour.timetable.settings.SettingsManager;
-import ru.eqour.timetable.settings.SimpleSettingsManager;
+import ru.eqour.timetable.settings.SimpleCacheManager;
 import ru.eqour.timetable.util.JsonFileHelper;
 import ru.eqour.timetable.util.ResourceHelper;
 
@@ -15,32 +15,32 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-public class SettingsManagerTests {
+public class CacheManagerTests {
 
     @Test
     public void whenLoadAndFileNotFoundThenReturnNull() {
-        SettingsManager settingsManager = new SimpleSettingsManager("settings-temp.json");
-        Settings actual = settingsManager.load();
+        CacheManager<Settings> cacheManager = new SimpleCacheManager<>("settings-temp.json", Settings.class);
+        Settings actual = cacheManager.load();
         Assert.assertNull(actual);
     }
 
     @Test
     public void whenLoadAndFileExistsThenReturnValidResult() {
         String path = ResourceHelper.getFullPathToResource("/settings-manager/settings-0.json").toString();
-        SettingsManager settingsManager = new SimpleSettingsManager(path);
+        CacheManager<Settings> cacheManager = new SimpleCacheManager<>(path, Settings.class);
         Settings expected = JsonFileHelper.loadFromFile(
                 ResourceHelper.getFullPathToResource("/settings-manager/settings-0.json").toString(), Settings.class);
-        Settings actual = settingsManager.load();
+        Settings actual = cacheManager.load();
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void whenSaveAndLoadThenReturnValidResult() throws IOException {
         String path = getTempSettingsPath();
-        SettingsManager settingsManager = new SimpleSettingsManager(path);
+        CacheManager<Settings> cacheManager = new SimpleCacheManager<>(path, Settings.class);
         Settings expected = createSettings();
-        settingsManager.save(expected);
-        Settings actual = settingsManager.load();
+        cacheManager.save(expected);
+        Settings actual = cacheManager.load();
         Assert.assertEquals(expected, actual);
         Files.deleteIfExists(Paths.get(path));
     }
@@ -48,9 +48,9 @@ public class SettingsManagerTests {
     @Test
     public void whenSaveThenFileWithSettingsCreated() throws IOException {
         String path = getTempSettingsPath();
-        SettingsManager settingsManager = new SimpleSettingsManager(path);
+        CacheManager<Settings> cacheManager = new SimpleCacheManager<>(path, Settings.class);
         Settings settings = createSettings();
-        settingsManager.save(settings);
+        cacheManager.save(settings);
         Settings actual = JsonFileHelper.loadFromFile(
                 ResourceHelper.getFullPathToResource("/settings-manager/settings.json").toString(), Settings.class);
         Assert.assertEquals(settings, actual);
@@ -59,7 +59,6 @@ public class SettingsManagerTests {
 
     private Settings createSettings() {
         Settings settings = new Settings();
-        settings.savedWeeks = null;
         settings.timetableFileId = "id";
         settings.telegramToken = "telegram";
         settings.vkToken = "vk";

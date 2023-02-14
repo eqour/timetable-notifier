@@ -1,8 +1,14 @@
 package ru.eqour.timetable.main;
 
+import com.google.common.reflect.TypeToken;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.eqour.timetable.model.Week;
+import ru.eqour.timetable.settings.CacheManager;
+import ru.eqour.timetable.settings.SimpleCacheManager;
+import ru.eqour.timetable.util.AppConstants;
+import ru.eqour.timetable.util.JsonFileHelper;
 import ru.eqour.timetable.util.time.TimeBasedUpdater;
 import ru.eqour.timetable.settings.Settings;
 import ru.eqour.timetable.validator.SimpleWeekValidator;
@@ -14,7 +20,6 @@ import ru.eqour.timetable.exception.NotifierException;
 import ru.eqour.timetable.model.Notification;
 import ru.eqour.timetable.parser.impl.SimpleTimetableParser;
 import ru.eqour.timetable.repository.SubscriberRepository;
-import ru.eqour.timetable.settings.SettingsManager;
 import ru.eqour.timetable.util.factory.FileActualizerFactory;
 import ru.eqour.timetable.util.factory.NotifierFactory;
 
@@ -28,11 +33,13 @@ public class SimpleApplication {
     private final TimeBasedUpdater updater;
     private final SimpleTimetableActualizer timetableActualizer;
 
-    public SimpleApplication(SettingsManager settingsManager, SubscriberRepository subscriberRepository) {
-        Settings settings = settingsManager.load();
+    public SimpleApplication(SubscriberRepository subscriberRepository) {
+        Settings settings = JsonFileHelper.loadFromFile(AppConstants.SETTINGS_PATH.toString(), Settings.class);
+        CacheManager<List<Week>> cacheManager = new SimpleCacheManager<>(AppConstants.TIMETABLE_CACHE_PATH.toString(),
+                new TypeToken<List<Week>>(){}.getType());
         FileActualizer actualizer = FileActualizerFactory.create(FileActualizerFactory.FileActualizerType.GOOGLE_DRIVE_SERVICE, settings);
         WeekValidator validator = new SimpleWeekValidator();
-        timetableActualizer = new SimpleTimetableActualizer(settingsManager, actualizer, subscriberRepository,
+        timetableActualizer = new SimpleTimetableActualizer(cacheManager, actualizer, subscriberRepository, settings,
                 validator, this::sendNotifications, new SimpleTimetableParser(), new SimpleWeekComparer());
         updater = new TimeBasedUpdater(actualizer::actualize, this::actualize, settings.maxDelayAfterChange);
     }

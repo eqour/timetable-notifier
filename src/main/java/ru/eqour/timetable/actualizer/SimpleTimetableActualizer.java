@@ -10,8 +10,8 @@ import ru.eqour.timetable.model.*;
 import ru.eqour.timetable.notifier.Notifier;
 import ru.eqour.timetable.parser.TimetableParser;
 import ru.eqour.timetable.repository.SubscriberRepository;
+import ru.eqour.timetable.settings.CacheManager;
 import ru.eqour.timetable.settings.Settings;
-import ru.eqour.timetable.settings.SettingsManager;
 import ru.eqour.timetable.util.factory.NotifierFactory;
 import ru.eqour.timetable.validator.WeekValidator;
 
@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 public class SimpleTimetableActualizer {
 
     private final Logger LOG = LogManager.getLogger();
-    private final SettingsManager settingsManager;
+    private final CacheManager<List<Week>> cacheManager;
     private final FileActualizer actualizer;
     private final SubscriberRepository subscriberRepository;
     private final Settings settings;
@@ -35,18 +35,24 @@ public class SimpleTimetableActualizer {
     private final TimetableParser timetableParser;
     private final WeekComparer weekComparer;
 
-    public SimpleTimetableActualizer(SettingsManager settingsManager, FileActualizer actualizer,
-                                     SubscriberRepository subscriberRepository, WeekValidator validator,
-                                     Consumer<List<Notification>> sendNotificationsConsumer, TimetableParser timetableParser,
-                                     WeekComparer weekComparer) {
-        this.settingsManager = settingsManager;
+    private List<Week> timetableCache;
+
+    public SimpleTimetableActualizer(CacheManager<List<Week>> cacheManager, FileActualizer actualizer,
+                                     SubscriberRepository subscriberRepository, Settings settings,
+                                     WeekValidator validator, Consumer<List<Notification>> sendNotificationsConsumer,
+                                     TimetableParser timetableParser, WeekComparer weekComparer) {
+        if (settings == null) {
+            throw new IllegalArgumentException("settings is null");
+        }
+        this.cacheManager = cacheManager;
         this.actualizer = actualizer;
         this.subscriberRepository = subscriberRepository;
-        this.settings = settingsManager.load();
+        this.settings = settings;
         this.validator = validator;
         this.sendNotificationsConsumer = sendNotificationsConsumer;
         this.timetableParser = timetableParser;
         this.weekComparer = weekComparer;
+        timetableCache = cacheManager.load();
     }
 
     /**
@@ -58,11 +64,11 @@ public class SimpleTimetableActualizer {
         LOG.log(Level.INFO, "Actualizing the timetable");
         List<Week> actualWeeks = getActualWeeks(actualizer);
         validator.validate(actualWeeks);
-        LOG.log(Level.INFO, "Saving settings");
-        List<Week> oldWeeks = settings.savedWeeks;
-        settings.savedWeeks = actualWeeks;
-        settingsManager.save(settings);
-        if (settings.savedWeeks != null && oldWeeks != null) {
+        LOG.log(Level.INFO, "Saving parsed timetable");
+        List<Week> oldWeeks = timetableCache;
+        timetableCache = actualWeeks;
+        cacheManager.save(timetableCache);
+        if (timetableCache != null && oldWeeks != null) {
             Map<String, List<Day[]>> differences = weekComparer.findDifferences(oldWeeks, actualWeeks);
             if (!differences.isEmpty()) {
                 LOG.log(Level.INFO, "Sending notifications");

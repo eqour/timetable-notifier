@@ -1,37 +1,36 @@
 package ru.eqour.timetable.mock;
 
-import ru.eqour.timetable.settings.Settings;
-import ru.eqour.timetable.settings.SettingsManager;
+import ru.eqour.timetable.settings.CacheManager;
 
-public class SettingsManagerMock implements SettingsManager {
+public class CacheManagerMock<T> implements CacheManager<T> {
 
     private final boolean withBadSave, withBadLoad;
-    private Settings settings;
+    private T value;
     private int saveCalls, loadCalls;
 
-    public SettingsManagerMock(boolean withBadSave, boolean withBadLoad, Settings settings) {
+    public CacheManagerMock(boolean withBadSave, boolean withBadLoad, T value) {
         this.withBadSave = withBadSave;
         this.withBadLoad = withBadLoad;
-        this.settings = settings;
+        this.value = value;
     }
 
     @Override
-    public void save(Settings settings) {
+    public void save(T value) {
         saveCalls++;
         if (withBadSave) {
             throw new RuntimeException();
         } else {
-            this.settings = settings;
+            this.value = value;
         }
     }
 
     @Override
-    public Settings load() {
+    public T load() {
         loadCalls++;
         if (withBadLoad) {
             return null;
         } else {
-            return settings;
+            return value;
         }
     }
 

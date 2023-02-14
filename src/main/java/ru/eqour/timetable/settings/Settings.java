@@ -1,8 +1,5 @@
 package ru.eqour.timetable.settings;
 
-import ru.eqour.timetable.model.Week;
-
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -31,7 +28,7 @@ public class Settings {
     public String vkToken;
 
     /**
-     * Тоен для доступа к боту Telegram.
+     * Токен для доступа к боту Telegram.
      */
     public String telegramToken;
 
@@ -40,21 +37,16 @@ public class Settings {
      */
     public String timetableFileId;
 
-    /**
-     * Сохранённая версия недель после парсинга.
-     */
-    public List<Week> savedWeeks;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Settings settings = (Settings) o;
-        return maxDelayAfterChange == settings.maxDelayAfterChange && zoneOffset == settings.zoneOffset && parsingPeriod == settings.parsingPeriod && vkToken.equals(settings.vkToken) && telegramToken.equals(settings.telegramToken) && timetableFileId.equals(settings.timetableFileId) && Objects.equals(savedWeeks, settings.savedWeeks);
+        return maxDelayAfterChange == settings.maxDelayAfterChange && zoneOffset == settings.zoneOffset && parsingPeriod == settings.parsingPeriod && vkToken.equals(settings.vkToken) && telegramToken.equals(settings.telegramToken) && timetableFileId.equals(settings.timetableFileId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maxDelayAfterChange, zoneOffset, parsingPeriod, vkToken, telegramToken, timetableFileId, savedWeeks);
+        return Objects.hash(maxDelayAfterChange, zoneOffset, parsingPeriod, vkToken, telegramToken, timetableFileId);
     }
 }

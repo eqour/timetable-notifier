@@ -14,6 +14,7 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import ru.eqour.timetable.api.FileMetadata;
+import ru.eqour.timetable.util.AppConstants;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -27,8 +28,10 @@ import java.util.List;
 public class GoogleDriveApiImpl implements GoogleDriveApi {
 
     private static final String APPLICATION_NAME = "TimetableNotifier";
-    private static final String TOKENS_DIRECTORY_PATH = "tokens";
-    protected static final String CREDENTIALS_FILE_PATH = "credentials.json";
+    private static final String TOKENS_DIRECTORY_PATH = Paths.get(AppConstants.APP_DATA_PATH.toString(),
+            "google-drive", "tokens").toString();
+    protected static final String CREDENTIALS_FILE_PATH = Paths.get(AppConstants.APP_DATA_PATH.toString(),
+            "google-drive", "credentials.json").toString();
     private final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     protected final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_READONLY);
     private final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();

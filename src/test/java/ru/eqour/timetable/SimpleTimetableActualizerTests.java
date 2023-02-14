@@ -21,8 +21,8 @@ public class SimpleTimetableActualizerTests {
     public void whenValidDataAndNotDifferencesThenNotSendNotifiersAndNotThrowException() throws WeekValidationException {
         new TestCaseBuilder()
                 .thenSendNotificationCalls(0)
-                .thenLoadSettingsCallsCalls(1)
-                .thenSaveSettingsCalls(1)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
                 .build()
                 .actualize();
     }
@@ -33,8 +33,8 @@ public class SimpleTimetableActualizerTests {
                 .withDifferences(getDifferences())
                 .withSubscribers(getSubscribersMap())
                 .thenSendNotificationCalls(1)
-                .thenLoadSettingsCallsCalls(1)
-                .thenSaveSettingsCalls(1)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
                 .build()
                 .actualize();
     }
@@ -44,33 +44,46 @@ public class SimpleTimetableActualizerTests {
         new TestCaseBuilder()
                 .withDifferences(getDifferences())
                 .withSubscribers(getSubscribersMap())
-                .withNullSavedWeek()
+                .withNullTimetableCache()
                 .thenSendNotificationCalls(0)
-                .thenLoadSettingsCallsCalls(1)
-                .thenSaveSettingsCalls(1)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
                 .build()
                 .actualize();
     }
 
     @Test
-    public void whenSettingsManagerWithBadLoadThenThrowException() throws WeekValidationException {
+    public void whenCacheManagerWithNullLoadThenNotSendNotifiersAndNotThrowException() throws WeekValidationException {
         new TestCaseBuilder()
-                .withSettingsLoadError()
+                .withDifferences(getDifferences())
+                .withSubscribers(getSubscribersMap())
+                .withCacheLoadError()
                 .thenSendNotificationCalls(0)
-                .thenLoadSettingsCallsCalls(1)
-                .thenSaveSettingsCalls(0)
-                .thenThrowsException(RuntimeException.class)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
                 .build()
                 .actualize();
     }
 
     @Test
-    public void whenSettingsManagerWithBadSaveThenThrowException() throws WeekValidationException {
+    public void whenSettingsNullThenThrowException() throws WeekValidationException {
         new TestCaseBuilder()
-                .withSettingsSaveError()
+                .withNullSettings()
                 .thenSendNotificationCalls(0)
-                .thenLoadSettingsCallsCalls(1)
-                .thenSaveSettingsCalls(1)
+                .thenLoadCacheCalls(0)
+                .thenSaveCacheCalls(0)
+                .thenThrowsException(IllegalArgumentException.class)
+                .build()
+                .actualize();
+    }
+
+    @Test
+    public void whenCacheManagerWithBadSaveThenThrowException() throws WeekValidationException {
+        new TestCaseBuilder()
+                .withCacheSaveError()
+                .thenSendNotificationCalls(0)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
                 .thenThrowsException(RuntimeException.class)
                 .build()
                 .actualize();
@@ -83,8 +96,8 @@ public class SimpleTimetableActualizerTests {
                 .withSubscribers(getSubscribersMap())
                 .withNotificationSenderError()
                 .thenSendNotificationCalls(1)
-                .thenLoadSettingsCallsCalls(1)
-                .thenSaveSettingsCalls(1)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
                 .thenThrowsException(NotifierException.class)
                 .build()
                 .actualize();
@@ -97,8 +110,8 @@ public class SimpleTimetableActualizerTests {
                 .withSubscribers(getSubscribersMap())
                 .withParserError()
                 .thenSendNotificationCalls(0)
-                .thenLoadSettingsCallsCalls(1)
-                .thenSaveSettingsCalls(0)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(0)
                 .thenThrowsException(RuntimeException.class)
                 .build()
                 .actualize();
@@ -111,8 +124,8 @@ public class SimpleTimetableActualizerTests {
                 .withSubscribers(getSubscribersMap())
                 .withWeekValidationError()
                 .thenSendNotificationCalls(0)
-                .thenLoadSettingsCallsCalls(1)
-                .thenSaveSettingsCalls(0)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(0)
                 .thenThrowsException(WeekValidationException.class)
                 .build()
                 .actualize();
@@ -125,8 +138,8 @@ public class SimpleTimetableActualizerTests {
                 .withSubscribers(getSubscribersMap())
                 .withSubscriberRepositoryError()
                 .thenSendNotificationCalls(0)
-                .thenLoadSettingsCallsCalls(1)
-                .thenSaveSettingsCalls(1)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
                 .thenThrowsException(RepositoryException.class)
                 .build()
                 .actualize();
@@ -139,8 +152,8 @@ public class SimpleTimetableActualizerTests {
                 .withSubscribers(getSubscribersMap())
                 .withComparerError()
                 .thenSendNotificationCalls(0)
-                .thenLoadSettingsCallsCalls(1)
-                .thenSaveSettingsCalls(1)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
                 .thenThrowsException(RuntimeException.class)
                 .build()
                 .actualize();
@@ -174,15 +187,16 @@ public class SimpleTimetableActualizerTests {
     private static class TestCaseBuilder {
 
         private boolean notificationSenderError;
-        private boolean settingsLoadError;
-        private boolean settingsSaveError;
+        private boolean cacheLoadError;
+        private boolean cacheSaveError;
         private boolean subscriberRepositoryError;
         private boolean weekValidationError;
         private boolean parserError;
         private boolean comparerError;
         private Map<String, List<Subscriber>> subscribers;
         private Map<String, List<Day[]>> differences;
-        private final Settings settings;
+        private Settings settings;
+        private List<Week> timetableCache;
         private int sendNotificationsCalls;
         private int loadSettingsCalls;
         private int saveSettingsCalls;
@@ -190,7 +204,7 @@ public class SimpleTimetableActualizerTests {
 
         public TestCaseBuilder() {
             settings = new Settings();
-            settings.savedWeeks = Collections.singletonList(new Week());
+            timetableCache = Collections.singletonList(new Week());
         }
 
         public TestCaseBuilder withNotificationSenderError() {
@@ -198,13 +212,13 @@ public class SimpleTimetableActualizerTests {
             return this;
         }
 
-        public TestCaseBuilder withSettingsLoadError() {
-            settingsLoadError = true;
+        public TestCaseBuilder withCacheLoadError() {
+            cacheLoadError = true;
             return this;
         }
 
-        public TestCaseBuilder withSettingsSaveError() {
-            settingsSaveError = true;
+        public TestCaseBuilder withCacheSaveError() {
+            cacheSaveError = true;
             return this;
         }
 
@@ -238,8 +252,13 @@ public class SimpleTimetableActualizerTests {
             return this;
         }
 
-        public TestCaseBuilder withNullSavedWeek() {
-            this.settings.savedWeeks = null;
+        public TestCaseBuilder withNullTimetableCache() {
+            timetableCache = null;
+            return this;
+        }
+
+        public TestCaseBuilder withNullSettings() {
+            settings = null;
             return this;
         }
 
@@ -248,12 +267,12 @@ public class SimpleTimetableActualizerTests {
             return this;
         }
 
-        public TestCaseBuilder thenLoadSettingsCallsCalls(int amount) {
+        public TestCaseBuilder thenLoadCacheCalls(int amount) {
             loadSettingsCalls = amount;
             return this;
         }
 
-        public TestCaseBuilder thenSaveSettingsCalls(int amount) {
+        public TestCaseBuilder thenSaveCacheCalls(int amount) {
             saveSettingsCalls = amount;
             return this;
         }
@@ -266,24 +285,28 @@ public class SimpleTimetableActualizerTests {
         public ActualizerRunnable build() {
             return () -> {
                 NotificationSenderMock senderMock = new NotificationSenderMock(notificationSenderError);
-                SettingsManagerMock settingsManagerMock = new SettingsManagerMock(settingsSaveError, settingsLoadError, settings);
-                SimpleTimetableActualizer actualizer = new SimpleTimetableActualizer(
-                        settingsManagerMock,
-                        new FileActualizerMock(),
-                        new SubscriberRepositoryMock(subscribers == null ? new HashMap<>() : subscribers, subscriberRepositoryError),
-                        new WeekValidatorMock(weekValidationError),
-                        senderMock::sendNotifications,
-                        new TimetableParserMock(!parserError),
-                        new WeekComparerMock(differences == null ? new HashMap<>() : differences, comparerError)
-                );
-                if (exception == null) {
+                CacheManagerMock<List<Week>> cacheManagerMock = new CacheManagerMock<>(cacheSaveError, cacheLoadError, timetableCache);
+                ActualizerRunnable testRunnable = () -> {
+                    SimpleTimetableActualizer actualizer = new SimpleTimetableActualizer(
+                            cacheManagerMock,
+                            new FileActualizerMock(),
+                            new SubscriberRepositoryMock(subscribers == null ? new HashMap<>() : subscribers, subscriberRepositoryError),
+                            settings,
+                            new WeekValidatorMock(weekValidationError),
+                            senderMock::sendNotifications,
+                            new TimetableParserMock(!parserError),
+                            new WeekComparerMock(differences == null ? new HashMap<>() : differences, comparerError)
+                    );
                     actualizer.actualize();
+                };
+                if (exception == null) {
+                    testRunnable.actualize();
                 } else {
-                    Assert.assertThrows(exception, actualizer::actualize);
+                    Assert.assertThrows(exception, testRunnable::actualize);
                 }
                 Assert.assertEquals(senderMock.getSendNotificationsCalls(), sendNotificationsCalls);
-                Assert.assertEquals(settingsManagerMock.getLoadCalls(), loadSettingsCalls);
-                Assert.assertEquals(settingsManagerMock.getSaveCalls(), saveSettingsCalls);
+                Assert.assertEquals(cacheManagerMock.getLoadCalls(), loadSettingsCalls);
+                Assert.assertEquals(cacheManagerMock.getSaveCalls(), saveSettingsCalls);
             };
         }
     }
