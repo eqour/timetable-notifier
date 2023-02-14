@@ -1,0 +1,37 @@
+package ru.eqour.timetable.watch.mock;
+
+import ru.eqour.timetable.watch.comparer.WeekComparer;
+import ru.eqour.timetable.watch.model.Day;
+import ru.eqour.timetable.watch.model.Week;
+
+import java.util.List;
+import java.util.Map;
+
+public class WeekComparerMock implements WeekComparer {
+
+    private final Map<String, List<Day[]>> differences;
+    private final boolean throwException;
+
+    public WeekComparerMock(Map<String, List<Day[]>> differences, boolean throwException) {
+        this.differences = differences;
+        this.throwException = throwException;
+    }
+
+    @Override
+    public Map<String, List<Day[]>> findDifferences(List<Week> w1, List<Week> w2) {
+        return findDifferences();
+    }
+
+    @Override
+    public Map<String, List<Day[]>> findDifferences(Week w1, Week w2) {
+        return findDifferences();
+    }
+
+    private Map<String, List<Day[]>> findDifferences() {
+        if (throwException) {
+            throw new IllegalArgumentException();
+        } else {
+            return differences;
+        }
+    }
+}

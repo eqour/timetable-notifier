@@ -6,6 +6,7 @@
 
     <groupId>ru.eqour.timetable</groupId>
     <artifactId>timetable-notifier</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.1</version>
 
     <properties>
@@ -13,6 +14,10 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <modules>
+        <module>app-watch</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -67,6 +72,16 @@
             <version>3.4.2</version>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ru.eqour.timetable</groupId>
+                <artifactId>app-watch</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
