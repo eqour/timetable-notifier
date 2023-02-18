@@ -17,6 +17,7 @@
 
     <modules>
         <module>app-watch</module>
+        <module>app-rest</module>
     </modules>
 
     <dependencies>
@@ -78,6 +79,11 @@
             <dependency>
                 <groupId>ru.eqour.timetable</groupId>
                 <artifactId>app-watch</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.eqour.timetable</groupId>
+                <artifactId>app-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
