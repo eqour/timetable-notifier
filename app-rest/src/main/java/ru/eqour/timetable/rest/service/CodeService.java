@@ -1,26 +1,40 @@
 package ru.eqour.timetable.rest.service;
 
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 import ru.eqour.timetable.rest.exception.SendCodeException;
-import ru.eqour.timetable.rest.utils.CodeCache;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
 public class CodeService {
 
-    private final CodeCache codeCache;
+    private EmailService emailService;
+    private Cache<String, String> codeCache;
     private final Random random;
 
-    public CodeService(CodeCache codeCache) {
-        this.codeCache = codeCache;
+    public CodeService() {
         random = new Random();
+    }
+
+    @Autowired
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
+    @Autowired
+    public void setCodeCache(CacheManager cacheManager) {
+        codeCache = cacheManager.getCache("code", String.class, String.class);
     }
 
     public void registerCode(String email) {
         String code = generateCode();
         sendCode(email, code);
-        codeCache.putCode(email, code);
+        codeCache.put(email, code);
     }
 
     private String generateCode() {
@@ -28,18 +42,20 @@ public class CodeService {
     }
 
     private void sendCode(String email, String code) throws SendCodeException {
-        // todo implement sending the code to email
-        if (!email.endsWith("@gmail.com")) throw new SendCodeException(email);
-        System.out.println("Code " + code + " sent to email " + email);
+        try {
+            emailService.sendEmail(email, "Timetable Notifier: access code", "Use this code to login: " + code);
+        } catch (MailException e) {
+            throw new SendCodeException(e);
+        }
     }
 
     public boolean verifyCode(String email, String code) {
-        return codeCache.getCode(email)
+        return Optional.ofNullable(codeCache.get(email))
                 .map(s -> s.equals(code))
                 .orElse(false);
     }
 
     public void removeCode(String email) {
-        codeCache.removeCode(email);
+        codeCache.remove(email);
     }
 }

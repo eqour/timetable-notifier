@@ -16,6 +16,8 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <skip.assembly>false</skip.assembly>
+        <main.class>ru.eqour.timetable.watch.main.Main</main.class>
     </properties>
 
     <dependencies>
