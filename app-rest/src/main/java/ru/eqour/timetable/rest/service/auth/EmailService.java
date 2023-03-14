@@ -1,4 +1,4 @@
-package ru.eqour.timetable.rest.service;
+package ru.eqour.timetable.rest.service.auth;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;

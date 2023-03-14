@@ -3,7 +3,7 @@ package ru.eqour.timetable.rest.utils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.eqour.timetable.rest.service.JwtService;
+import ru.eqour.timetable.rest.service.auth.JwtService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

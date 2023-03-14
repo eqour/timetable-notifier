@@ -1,14 +1,13 @@
 package ru.eqour.timetable.rest.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.eqour.timetable.rest.exception.SendCodeException;
-import ru.eqour.timetable.rest.model.CodeRequest;
-import ru.eqour.timetable.rest.model.LoginRequest;
-import ru.eqour.timetable.rest.model.LoginResponse;
-import ru.eqour.timetable.rest.service.CodeService;
-import ru.eqour.timetable.rest.service.JwtService;
+import ru.eqour.timetable.rest.model.auth.CodeRequest;
+import ru.eqour.timetable.rest.model.auth.LoginRequest;
+import ru.eqour.timetable.rest.model.auth.LoginResponse;
+import ru.eqour.timetable.rest.service.auth.CodeService;
+import ru.eqour.timetable.rest.service.auth.JwtService;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -46,7 +45,7 @@ public class AuthController {
     }
 
     @ExceptionHandler(SendCodeException.class)
-    private ResponseEntity<?> handleSendCodeException(SendCodeException e) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+    private ResponseEntity<?> handleSendCodeException(SendCodeException exception) {
+        return ResponseEntity.unprocessableEntity().build();
     }
 }

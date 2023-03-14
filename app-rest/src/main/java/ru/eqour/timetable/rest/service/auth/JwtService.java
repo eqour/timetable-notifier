@@ -1,4 +1,4 @@
-package ru.eqour.timetable.rest.service;
+package ru.eqour.timetable.rest.service.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

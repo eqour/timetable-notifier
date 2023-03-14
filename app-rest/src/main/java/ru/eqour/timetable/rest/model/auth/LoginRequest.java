@@ -1,4 +1,4 @@
-package ru.eqour.timetable.rest.model;
+package ru.eqour.timetable.rest.model.auth;
 
 public class LoginRequest {
 
