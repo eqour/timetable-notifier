@@ -1,76 +1,49 @@
 package ru.eqour.timetable.rest.service;
 
-import org.ehcache.Cache;
-import org.ehcache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import ru.eqour.timetable.rest.model.channels.CommunicationChannel;
-import ru.eqour.timetable.rest.model.channels.UpdateChannelRecipientData;
-import ru.eqour.timetable.rest.utils.notifier.NotifierFactory;
+import ru.eqour.timetable.rest.repository.CommunicationChannelRepository;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@Service
+@Component
 public class CommunicationChannelsService {
 
-    private CodeGenerationService codeGenerationService;
-    private Cache<String, UpdateChannelRecipientData> recipientCache;
+    private CommunicationChannelRepository repository;
 
     @Autowired
-    public void setCodeGenerationService(CodeGenerationService codeGenerationService) {
-        this.codeGenerationService = codeGenerationService;
-    }
-
-    @Autowired
-    public void setRecipientCache(CacheManager cacheManager) {
-        recipientCache = cacheManager.getCache("recipient", String.class, UpdateChannelRecipientData.class);
-    }
-
-    private Map<String, CommunicationChannel> getDefaultChannels() {
-        return new HashMap<String, CommunicationChannel>() {{
-            put("vk", null);
-            put("telegram", null);
-        }};
+    public void setRepository(CommunicationChannelRepository repository) {
+        this.repository = repository;
     }
 
     public Map<String, CommunicationChannel> findAllChannelsByEmail(String email) {
-        // TODO: 14.03.2023 get data from database
-        if (email.equals("test@test.ru")) {
-            return getDefaultChannels();
+        return repository.findByEmailOrCreateEmpty(email);
+    }
+
+    public void updateChannelRecipient(String email, String channelId, String newRecipient) {
+        Map<String, CommunicationChannel> channels = repository.findByEmailOrCreateEmpty(email);
+        CommunicationChannel channel = channels.get(email);
+        if (channel == null) {
+            channel = new CommunicationChannel(newRecipient, true);
+            channels.put(channelId, channel);
         } else {
-            return Collections.emptyMap();
+            channel.setRecipient(newRecipient);
         }
+        repository.updateAllByEmail(email, channels);
     }
 
-    public void registerCode(String email, String channelId, String recipient) {
-        String code = codeGenerationService.generateCode();
-        NotifierFactory.createNotifierById(channelId).sendMessage(recipient, code);
-        recipientCache.put(email, new UpdateChannelRecipientData(channelId, recipient, code));
+    public void setActive(String email, String channelId, boolean isActive) {
+        Map<String, CommunicationChannel> channels = repository.findByEmailOrCreateEmpty(email);
+        CommunicationChannel channel = channels.get(channelId);
+        Optional.ofNullable(channel).ifPresent(c -> channels.get(channelId).setActive(isActive));
+        repository.updateAllByEmail(email, channels);
     }
 
-    public void updateChannelRecipient(String channelId, String newRecipient, String code) {
-        // TODO: 14.03.2023 update data in database
-    }
-
-    public boolean verifyCode(String email, String channelId, String recipient, String code) {
-        return Optional.ofNullable(recipientCache.get(email))
-                .map(r -> r.getCode().equals(code) && r.getRecipient().equals(recipient)
-                        && r.getChannel().equals(channelId))
-                .orElse(false);
-    }
-
-    public void removeUpdateChannelRecipientRequest(String email) {
-        recipientCache.remove(email);
-    }
-
-    public void setActive(String channelId, boolean isActive) {
-        // TODO: 14.03.2023 update data in database
-    }
-
-    public void deleteChannel(String channelId) {
-        // TODO: 14.03.2023 update data in database
+    public void deleteChannel(String email, String channelId) {
+        Map<String, CommunicationChannel> channels = repository.findByEmailOrCreateEmpty(email);
+        channels.remove(channelId);
+        repository.updateAllByEmail(email, channels);
     }
 }

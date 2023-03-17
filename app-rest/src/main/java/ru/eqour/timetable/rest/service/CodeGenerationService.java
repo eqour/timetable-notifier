@@ -1,10 +1,10 @@
 package ru.eqour.timetable.rest.service;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-@Service
+@Component
 public class CodeGenerationService {
 
     private final Random random;

@@ -7,7 +7,7 @@ import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.eqour.timetable.rest.model.channels.UpdateChannelRecipientData;
+import ru.eqour.timetable.rest.service.code.CodeData;
 
 import java.time.Duration;
 
@@ -18,13 +18,7 @@ public class CacheConfig {
     public CacheManager cacheManager() {
         return CacheManagerBuilder.newCacheManagerBuilder()
                 .withCache("code",
-                        CacheConfigurationBuilder.newCacheConfigurationBuilder(String.class, String.class,
-                                ResourcePoolsBuilder.heap(100)
-                        ).withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMinutes(5)))
-                )
-                .withCache("recipient",
-                        CacheConfigurationBuilder.newCacheConfigurationBuilder(String.class,
-                                UpdateChannelRecipientData.class,
+                        CacheConfigurationBuilder.newCacheConfigurationBuilder(String.class, CodeData.class,
                                 ResourcePoolsBuilder.heap(100)
                         ).withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMinutes(5)))
                 )

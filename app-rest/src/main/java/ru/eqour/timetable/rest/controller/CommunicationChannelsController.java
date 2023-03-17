@@ -6,13 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
-import ru.eqour.timetable.rest.exception.NotifierNotFoundException;
+import ru.eqour.timetable.rest.exception.MessageSenderNotFoundException;
 import ru.eqour.timetable.rest.exception.SendCodeException;
-import ru.eqour.timetable.rest.model.channels.CodeRequest;
-import ru.eqour.timetable.rest.model.channels.CommunicationChannel;
-import ru.eqour.timetable.rest.model.channels.UpdateChannelActiveRequest;
-import ru.eqour.timetable.rest.model.channels.UpdateChannelRecipientRequest;
+import ru.eqour.timetable.rest.model.channels.*;
 import ru.eqour.timetable.rest.service.CommunicationChannelsService;
+import ru.eqour.timetable.rest.service.code.CodeService;
+import ru.eqour.timetable.rest.service.code.payload.UpdateChannelPayload;
+import ru.eqour.timetable.rest.utils.sender.MessageSenderFactory;
 
 import java.util.Map;
 
@@ -21,10 +21,22 @@ import java.util.Map;
 public class CommunicationChannelsController {
 
     private CommunicationChannelsService channelsService;
+    private CodeService<UpdateChannelPayload> codeService;
+    private MessageSenderFactory senderFactory;
 
     @Autowired
     public void setChannelsService(CommunicationChannelsService channelsService) {
         this.channelsService = channelsService;
+    }
+
+    @Autowired
+    public void setCodeService(CodeService<UpdateChannelPayload> codeService) {
+        this.codeService = codeService;
+    }
+
+    @Autowired
+    public void setSenderFactory(MessageSenderFactory senderFactory) {
+        this.senderFactory = senderFactory;
     }
 
     @PostMapping
@@ -33,24 +45,29 @@ public class CommunicationChannelsController {
     }
 
     @PostMapping("{channelId}/code")
-    public ResponseEntity<?> code(@RequestParam String channelId, @RequestBody CodeRequest request, @CurrentSecurityContext SecurityContext context) {
+    public ResponseEntity<?> code(@PathVariable String channelId,
+                                  @RequestBody CodeRequest request,
+                                  @CurrentSecurityContext SecurityContext context) {
         if (request == null || request.getRecipient() == null && channelId == null) {
             return ResponseEntity.badRequest().build();
         }
         String email = context.getAuthentication().getPrincipal().toString();
-        channelsService.registerCode(email, channelId, request.getRecipient());
+        codeService.registerCode(email, new UpdateChannelPayload(channelId, request.getRecipient()),
+                request.getRecipient(), senderFactory.getById(channelId));
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("{channelId}/id")
-    public ResponseEntity<?> updateChannelRecipient(@RequestParam String channelId, @RequestBody UpdateChannelRecipientRequest request,
+    public ResponseEntity<?> updateChannelRecipient(@PathVariable String channelId,
+                                                    @RequestBody UpdateChannelRecipientRequest request,
                                                     @CurrentSecurityContext SecurityContext context) {
         if (request == null || request.getRecipient() == null || request.getCode() == null && channelId == null) {
             return ResponseEntity.badRequest().build();
         }
         String email = context.getAuthentication().getPrincipal().toString();
-        if (channelsService.verifyCode(email, channelId, request.getRecipient(), request.getCode())) {
-            channelsService.updateChannelRecipient(channelId, request.getRecipient(), request.getCode());
+        UpdateChannelPayload payload = new UpdateChannelPayload(channelId, request.getRecipient());
+        if (codeService.verifyCode(email, request.getCode(), payload)) {
+            channelsService.updateChannelRecipient(email, channelId, request.getRecipient());
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -58,17 +75,22 @@ public class CommunicationChannelsController {
     }
 
     @PutMapping("{channelId}/active")
-    public ResponseEntity<?> updateActive(@RequestParam String channelId, @RequestBody UpdateChannelActiveRequest request) {
+    public ResponseEntity<?> updateActive(@PathVariable String channelId,
+                                          @RequestBody UpdateChannelActiveRequest request,
+                                          @CurrentSecurityContext SecurityContext context) {
         if (request == null || channelId == null) {
             return ResponseEntity.badRequest().build();
         }
-        channelsService.setActive(channelId, request.isActive());
+        String email = context.getAuthentication().getPrincipal().toString();
+        channelsService.setActive(email, channelId, request.isActive());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("{channelId}")
-    public ResponseEntity<?> delete(@RequestParam String channelId) {
-        channelsService.deleteChannel(channelId);
+    public ResponseEntity<?> delete(@PathVariable String channelId,
+                                    @CurrentSecurityContext SecurityContext context) {
+        String email = context.getAuthentication().getPrincipal().toString();
+        channelsService.deleteChannel(email, channelId);
         return ResponseEntity.ok().build();
     }
 
@@ -77,8 +99,8 @@ public class CommunicationChannelsController {
         return ResponseEntity.unprocessableEntity().build();
     }
 
-    @ExceptionHandler(NotifierNotFoundException.class)
-    private ResponseEntity<?> handleNotifierNotFoundException(NotifierNotFoundException exception) {
+    @ExceptionHandler(MessageSenderNotFoundException.class)
+    private ResponseEntity<?> handleNotifierNotFoundException(MessageSenderNotFoundException exception) {
         return ResponseEntity.badRequest().build();
     }
 }
