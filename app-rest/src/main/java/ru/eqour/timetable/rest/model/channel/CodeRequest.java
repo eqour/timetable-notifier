@@ -1,4 +1,4 @@
-package ru.eqour.timetable.rest.model.channels;
+package ru.eqour.timetable.rest.model.channel;
 
 public class CodeRequest {
 

@@ -8,21 +8,26 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
 import ru.eqour.timetable.rest.exception.MessageSenderNotFoundException;
 import ru.eqour.timetable.rest.exception.SendCodeException;
-import ru.eqour.timetable.rest.model.channels.*;
+import ru.eqour.timetable.rest.model.channel.*;
+import ru.eqour.timetable.rest.service.UserAccountService;
 import ru.eqour.timetable.rest.service.CommunicationChannelsService;
 import ru.eqour.timetable.rest.service.code.CodeService;
 import ru.eqour.timetable.rest.service.code.payload.UpdateChannelPayload;
 import ru.eqour.timetable.rest.utils.sender.MessageSenderFactory;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/v1/communication-channels")
 public class CommunicationChannelsController {
 
+    private UserAccountService userAccountService;
     private CommunicationChannelsService channelsService;
     private CodeService<UpdateChannelPayload> codeService;
     private MessageSenderFactory senderFactory;
+
+    @Autowired
+    public void setUserAccountService(UserAccountService userAccountService) {
+        this.userAccountService = userAccountService;
+    }
 
     @Autowired
     public void setChannelsService(CommunicationChannelsService channelsService) {
@@ -39,16 +44,12 @@ public class CommunicationChannelsController {
         this.senderFactory = senderFactory;
     }
 
-    @PostMapping
-    public ResponseEntity<Map<String, CommunicationChannel>> getCommunicationChannels(@CurrentSecurityContext SecurityContext context) {
-        return ResponseEntity.ok(channelsService.findAllChannelsByEmail(context.getAuthentication().getPrincipal().toString()));
-    }
-
     @PostMapping("{channelId}/code")
     public ResponseEntity<?> code(@PathVariable String channelId,
                                   @RequestBody CodeRequest request,
                                   @CurrentSecurityContext SecurityContext context) {
-        if (request == null || request.getRecipient() == null && channelId == null) {
+        if (request == null || request.getRecipient() == null || channelId == null
+                || userAccountService.channelTypeIsInvalid(channelId)) {
             return ResponseEntity.badRequest().build();
         }
         String email = context.getAuthentication().getPrincipal().toString();
@@ -61,7 +62,8 @@ public class CommunicationChannelsController {
     public ResponseEntity<?> updateChannelRecipient(@PathVariable String channelId,
                                                     @RequestBody UpdateChannelRecipientRequest request,
                                                     @CurrentSecurityContext SecurityContext context) {
-        if (request == null || request.getRecipient() == null || request.getCode() == null && channelId == null) {
+        if (request == null || request.getRecipient() == null || request.getCode() == null || channelId == null
+                || userAccountService.channelTypeIsInvalid(channelId)) {
             return ResponseEntity.badRequest().build();
         }
         String email = context.getAuthentication().getPrincipal().toString();
@@ -78,7 +80,7 @@ public class CommunicationChannelsController {
     public ResponseEntity<?> updateActive(@PathVariable String channelId,
                                           @RequestBody UpdateChannelActiveRequest request,
                                           @CurrentSecurityContext SecurityContext context) {
-        if (request == null || channelId == null) {
+        if (request == null || channelId == null || userAccountService.channelTypeIsInvalid(channelId)) {
             return ResponseEntity.badRequest().build();
         }
         String email = context.getAuthentication().getPrincipal().toString();
@@ -89,6 +91,9 @@ public class CommunicationChannelsController {
     @DeleteMapping("{channelId}")
     public ResponseEntity<?> delete(@PathVariable String channelId,
                                     @CurrentSecurityContext SecurityContext context) {
+        if (channelId == null || userAccountService.channelTypeIsInvalid(channelId)) {
+            return ResponseEntity.badRequest().build();
+        }
         String email = context.getAuthentication().getPrincipal().toString();
         channelsService.deleteChannel(email, channelId);
         return ResponseEntity.ok().build();

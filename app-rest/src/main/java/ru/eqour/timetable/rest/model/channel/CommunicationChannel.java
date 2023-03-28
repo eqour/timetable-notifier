@@ -1,16 +1,26 @@
-package ru.eqour.timetable.rest.model.channels;
+package ru.eqour.timetable.rest.model.channel;
 
 public class CommunicationChannel {
 
+    private String type;
     private String recipient;
     private boolean active;
 
     public CommunicationChannel() {
     }
 
-    public CommunicationChannel(String recipient, boolean active) {
+    public CommunicationChannel(String type, String recipient, boolean active) {
+        this.type = type;
         this.recipient = recipient;
         this.active = active;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getRecipient() {
