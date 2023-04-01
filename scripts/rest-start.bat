@@ -1,0 +1,1 @@
+"C:\jdk\jdk1.8.0_342\bin\java.exe" -Dfile.encoding=UTF-8 -jar "app-rest.jar"

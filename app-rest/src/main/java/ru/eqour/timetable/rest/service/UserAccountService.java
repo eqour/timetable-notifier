@@ -2,21 +2,15 @@ package ru.eqour.timetable.rest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eqour.timetable.rest.model.channel.CommunicationChannel;
-import ru.eqour.timetable.rest.model.subscription.NotificationSubscription;
-import ru.eqour.timetable.rest.model.user.UserAccount;
+import ru.eqour.timetable.model.account.*;
 import ru.eqour.timetable.rest.repository.UserAccountRepository;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 public class UserAccountService {
-
-    public static final String SUB_GROUP_TYPE = "group";
-    public static final String SUB_TEACHER_TYPE = "teacher";
-    private static final String CHANNEL_VK = "vk";
-    private static final String CHANNEL_TELEGRAM = "telegram";
 
     private UserAccountRepository repository;
 
@@ -26,11 +20,11 @@ public class UserAccountService {
     }
 
     public boolean channelTypeIsInvalid(String type) {
-        return !CHANNEL_VK.equals(type) && !CHANNEL_TELEGRAM.equals(type);
+        return Arrays.stream(ChannelType.values()).noneMatch(t -> t.getValue().equals(type));
     }
 
     public boolean subscriptionTypeIsInvalid(String type) {
-        return !SUB_GROUP_TYPE.equals(type) && !SUB_TEACHER_TYPE.equals(type);
+        return Arrays.stream(SubscriptionType.values()).noneMatch(t -> t.getValue().equals(type));
     }
 
     public UserAccount findByEmailOrCreateEmpty(String email) {
@@ -44,11 +38,15 @@ public class UserAccountService {
 
     private UserAccount createUserAccount(String email) {
         Map<String, NotificationSubscription> subscriptions = new HashMap<>();
-        subscriptions.put(SUB_GROUP_TYPE, new NotificationSubscription(SUB_GROUP_TYPE, null));
-        subscriptions.put(SUB_TEACHER_TYPE, new NotificationSubscription(SUB_TEACHER_TYPE, null));
+        subscriptions.put(SubscriptionType.GROUP.getValue(),
+                new NotificationSubscription(SubscriptionType.GROUP.getValue(), null));
+        subscriptions.put(SubscriptionType.TEACHER.getValue(),
+                new NotificationSubscription(SubscriptionType.TEACHER.getValue(), null));
         Map<String, CommunicationChannel> channels = new HashMap<>();
-        channels.put(CHANNEL_VK, new CommunicationChannel(CHANNEL_VK, null, false));
-        channels.put(CHANNEL_TELEGRAM, new CommunicationChannel(CHANNEL_TELEGRAM, null, false));
+        channels.put(ChannelType.VK.getValue(),
+                new CommunicationChannel(ChannelType.VK.getValue(), null, false));
+        channels.put(ChannelType.TELEGRAM.getValue(),
+                new CommunicationChannel(ChannelType.TELEGRAM.getValue(), null, false));
         return new UserAccount(email, subscriptions, channels);
     }
 }

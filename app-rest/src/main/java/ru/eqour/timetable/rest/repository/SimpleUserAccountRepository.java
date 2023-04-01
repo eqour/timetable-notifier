@@ -1,7 +1,7 @@
 package ru.eqour.timetable.rest.repository;
 
 import org.springframework.stereotype.Component;
-import ru.eqour.timetable.rest.model.user.UserAccount;
+import ru.eqour.timetable.model.account.UserAccount;
 
 import java.util.HashMap;
 import java.util.Map;

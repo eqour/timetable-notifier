@@ -37,16 +37,21 @@ public class Settings {
      */
     public String timetableFileId;
 
+    /**
+     * Строка подключения к базе данных.
+     */
+    public String dbConnection;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Settings settings = (Settings) o;
-        return maxDelayAfterChange == settings.maxDelayAfterChange && zoneOffset == settings.zoneOffset && parsingPeriod == settings.parsingPeriod && vkToken.equals(settings.vkToken) && telegramToken.equals(settings.telegramToken) && timetableFileId.equals(settings.timetableFileId);
+        return maxDelayAfterChange == settings.maxDelayAfterChange && zoneOffset == settings.zoneOffset && parsingPeriod == settings.parsingPeriod && vkToken.equals(settings.vkToken) && telegramToken.equals(settings.telegramToken) && timetableFileId.equals(settings.timetableFileId) && dbConnection.equals(settings.dbConnection);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maxDelayAfterChange, zoneOffset, parsingPeriod, vkToken, telegramToken, timetableFileId);
+        return Objects.hash(maxDelayAfterChange, zoneOffset, parsingPeriod, vkToken, telegramToken, timetableFileId, dbConnection);
     }
 }

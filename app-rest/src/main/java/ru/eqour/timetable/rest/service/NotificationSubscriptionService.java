@@ -2,7 +2,8 @@ package ru.eqour.timetable.rest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eqour.timetable.rest.model.user.UserAccount;
+import ru.eqour.timetable.model.account.SubscriptionType;
+import ru.eqour.timetable.model.account.UserAccount;
 import ru.eqour.timetable.rest.repository.NotificationSubscriptionRepository;
 import ru.eqour.timetable.rest.repository.UserAccountRepository;
 
@@ -31,9 +32,9 @@ public class NotificationSubscriptionService {
     }
 
     public List<String> findAllSubscriptions(String type) {
-        if (UserAccountService.SUB_GROUP_TYPE.equals(type))
+        if (SubscriptionType.GROUP.getValue().equals(type))
             return subscriptionRepository.findAllGroupSubscriptions();
-        if (UserAccountService.SUB_TEACHER_TYPE.equals(type))
+        if (SubscriptionType.TEACHER.getValue().equals(type))
             return subscriptionRepository.findAllTeacherSubscriptions();
         throw new RuntimeException("invalid subscription type");
     }

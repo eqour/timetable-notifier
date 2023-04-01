@@ -62,6 +62,7 @@ public class CacheManagerTests {
         settings.timetableFileId = "id";
         settings.telegramToken = "telegram";
         settings.vkToken = "vk";
+        settings.dbConnection = "db-connection";
         return settings;
     }
 

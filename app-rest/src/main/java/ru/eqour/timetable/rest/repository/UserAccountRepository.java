@@ -1,6 +1,6 @@
 package ru.eqour.timetable.rest.repository;
 
-import ru.eqour.timetable.rest.model.user.UserAccount;
+import ru.eqour.timetable.model.account.UserAccount;
 
 public interface UserAccountRepository {
 

@@ -39,6 +39,16 @@
             <version>0.0.1</version>
         </dependency>
         <dependency>
+            <groupId>ru.eqour.timetable</groupId>
+            <artifactId>app-db</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.eqour.timetable</groupId>
+            <artifactId>model-user-account</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>

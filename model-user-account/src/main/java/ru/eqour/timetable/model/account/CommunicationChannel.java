@@ -1,4 +1,4 @@
-package ru.eqour.timetable.rest.model.channel;
+package ru.eqour.timetable.model.account;
 
 public class CommunicationChannel {
 

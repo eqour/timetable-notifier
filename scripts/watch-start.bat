@@ -1,0 +1,1 @@
+"C:\jdk\jdk1.8.0_342\bin\java.exe" -Dfile.encoding=UTF-8 -Dlog4j.configurationFile="C:\Users\eqour\IdeaProjects\timetable-notifier\app-watch\src\main\resources\log4j2.xml" -jar "app-watch.jar"

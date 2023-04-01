@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.eqour.timetable.rest.model.user.UserAccount;
+import ru.eqour.timetable.model.account.UserAccount;
 import ru.eqour.timetable.rest.service.UserAccountService;
 
 @RestController

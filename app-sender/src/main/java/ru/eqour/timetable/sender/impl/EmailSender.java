@@ -52,7 +52,7 @@ public class EmailSender implements MessageSender {
         }
     }
 
-    public void sendEmail(String to, String subject, String text) {
+    private void sendEmail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
         message.setTo(to);

@@ -2,8 +2,8 @@ package ru.eqour.timetable.rest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eqour.timetable.rest.model.channel.CommunicationChannel;
-import ru.eqour.timetable.rest.model.user.UserAccount;
+import ru.eqour.timetable.model.account.CommunicationChannel;
+import ru.eqour.timetable.model.account.UserAccount;
 import ru.eqour.timetable.rest.repository.UserAccountRepository;
 
 

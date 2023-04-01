@@ -1,7 +1,4 @@
-package ru.eqour.timetable.rest.model.user;
-
-import ru.eqour.timetable.rest.model.channel.CommunicationChannel;
-import ru.eqour.timetable.rest.model.subscription.NotificationSubscription;
+package ru.eqour.timetable.model.account;
 
 import java.util.Map;
 

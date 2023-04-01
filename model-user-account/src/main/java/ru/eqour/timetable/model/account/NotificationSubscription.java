@@ -1,4 +1,4 @@
-package ru.eqour.timetable.rest.model.subscription;
+package ru.eqour.timetable.model.account;
 
 public class NotificationSubscription {
 

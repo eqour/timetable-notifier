@@ -21,6 +21,8 @@
         <module>app-watch</module>
         <module>app-rest</module>
         <module>app-sender</module>
+        <module>app-db</module>
+        <module>model-user-account</module>
     </modules>
 
     <dependencies>
@@ -46,6 +48,16 @@
             <dependency>
                 <groupId>ru.eqour.timetable</groupId>
                 <artifactId>app-sender</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.eqour.timetable</groupId>
+                <artifactId>app-db</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.eqour.timetable</groupId>
+                <artifactId>model-user-account</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
