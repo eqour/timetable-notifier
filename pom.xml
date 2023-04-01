@@ -20,6 +20,7 @@
     <modules>
         <module>app-watch</module>
         <module>app-rest</module>
+        <module>app-sender</module>
     </modules>
 
     <dependencies>
@@ -40,6 +41,11 @@
             <dependency>
                 <groupId>ru.eqour.timetable</groupId>
                 <artifactId>app-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.eqour.timetable</groupId>
+                <artifactId>app-sender</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

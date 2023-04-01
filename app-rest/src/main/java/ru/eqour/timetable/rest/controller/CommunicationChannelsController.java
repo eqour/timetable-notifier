@@ -13,7 +13,7 @@ import ru.eqour.timetable.rest.service.UserAccountService;
 import ru.eqour.timetable.rest.service.CommunicationChannelsService;
 import ru.eqour.timetable.rest.service.code.CodeService;
 import ru.eqour.timetable.rest.service.code.payload.UpdateChannelPayload;
-import ru.eqour.timetable.rest.utils.sender.MessageSenderFactory;
+import ru.eqour.timetable.rest.utils.MessageSenderFactory;
 
 @RestController
 @RequestMapping("/api/v1/communication-channels")

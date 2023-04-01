@@ -3,11 +3,12 @@ package ru.eqour.timetable.watch.actualizer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.eqour.timetable.sender.MessageSender;
+import ru.eqour.timetable.sender.model.Message;
 import ru.eqour.timetable.watch.api.FileActualizer;
 import ru.eqour.timetable.watch.comparer.WeekComparer;
 import ru.eqour.timetable.watch.exception.WeekValidationException;
 import ru.eqour.timetable.watch.model.*;
-import ru.eqour.timetable.watch.notifier.Notifier;
 import ru.eqour.timetable.watch.parser.TimetableParser;
 import ru.eqour.timetable.watch.repository.SubscriberRepository;
 import ru.eqour.timetable.watch.settings.CacheManager;
@@ -91,8 +92,9 @@ public class SimpleTimetableActualizer {
         List<Notification> notifications = new ArrayList<>();
         for (Map.Entry<String, List<Day[]>> entry : differences.entrySet()) {
             for (Subscriber subscriber : subscriberRepository.getSubscribers(entry.getKey())) {
-                for (Notifier notifier : NotifierFactory.createNotifiersForSubscriber(subscriber, settings)) {
-                    notifications.add(new Notification(notifier, subscriber, formatChangesString(entry.getValue())));
+                for (MessageSender notifier : NotifierFactory.createNotifiersForSubscriber(subscriber, settings)) {
+                    notifications.add(new Notification(notifier, subscriber, new Message("",
+                            formatChangesString(entry.getValue()))));
                 }
             }
         }

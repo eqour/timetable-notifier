@@ -1,27 +1,37 @@
 package ru.eqour.timetable.rest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.eqour.timetable.rest.exception.SendCodeException;
 import ru.eqour.timetable.rest.model.auth.CodeRequest;
 import ru.eqour.timetable.rest.model.auth.LoginRequest;
 import ru.eqour.timetable.rest.model.auth.LoginResponse;
-import ru.eqour.timetable.rest.service.auth.EmailService;
 import ru.eqour.timetable.rest.service.auth.JwtService;
 import ru.eqour.timetable.rest.service.code.CodeService;
+import ru.eqour.timetable.rest.utils.MessageSenderFactory;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private final CodeService<?> codeService;
-    private final JwtService jwtService;
-    private final EmailService emailService;
+    private CodeService<?> codeService;
+    private JwtService jwtService;
+    private MessageSenderFactory senderFactory;
 
-    public AuthController(CodeService<?> codeService, JwtService jwtService, EmailService emailService) {
+    @Autowired
+    public void setCodeService(CodeService<?> codeService) {
         this.codeService = codeService;
+    }
+
+    @Autowired
+    public void setJwtService(JwtService jwtService) {
         this.jwtService = jwtService;
-        this.emailService = emailService;
+    }
+
+    @Autowired
+    public void setSenderFactory(MessageSenderFactory senderFactory) {
+        this.senderFactory = senderFactory;
     }
 
     @PostMapping("code")
@@ -29,7 +39,7 @@ public class AuthController {
         if (request == null || request.getEmail() == null) {
             return ResponseEntity.badRequest().build();
         }
-        codeService.registerCode(request.getEmail(), null, request.getEmail(), emailService);
+        codeService.registerCode(request.getEmail(), null, request.getEmail(), senderFactory.getById("email"));
         return ResponseEntity.ok().build();
     }
 

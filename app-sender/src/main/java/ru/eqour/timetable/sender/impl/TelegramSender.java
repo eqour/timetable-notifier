@@ -1,16 +1,16 @@
-package ru.eqour.timetable.watch.notifier;
+package ru.eqour.timetable.sender.impl;
 
 /**
  * Отправляет сообщения от имени бота в Telegram.
  */
-public class TelegramNotifier extends SimpleWebRequestNotifier {
+public class TelegramSender extends SimpleWebRequestSender {
 
     /**
-     * Создаёт новый экземпляр класса {@code TelegramNotifier}.
+     * Создаёт новый экземпляр класса {@code TelegramSender}.
      *
      * @param token секретный ключ, использующийся для отправки сообщений.
      */
-    public TelegramNotifier(String token) {
+    public TelegramSender(String token) {
         super(token);
     }
 

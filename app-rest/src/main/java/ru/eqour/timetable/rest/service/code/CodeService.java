@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.eqour.timetable.rest.exception.SendCodeException;
-import ru.eqour.timetable.rest.exception.SendMessageException;
 import ru.eqour.timetable.rest.service.CodeGenerationService;
-import ru.eqour.timetable.rest.utils.sender.MessageSender;
+import ru.eqour.timetable.sender.MessageSender;
+import ru.eqour.timetable.sender.exception.SendMessageException;
+import ru.eqour.timetable.sender.model.Message;
 
 import java.util.Objects;
 
@@ -43,7 +44,7 @@ public class CodeService<T> {
             System.out.println("code " + code + " sent to " + recipient);
         } else {
             try {
-                sender.sendMessage(recipient, "", "your code: " + code);
+                sender.sendMessage(recipient, new Message("", "your code: " + code));
             } catch (SendMessageException e) {
                 throw new SendCodeException(e);
             }

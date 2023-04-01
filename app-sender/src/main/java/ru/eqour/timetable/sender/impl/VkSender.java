@@ -1,20 +1,20 @@
-package ru.eqour.timetable.watch.notifier;
+package ru.eqour.timetable.sender.impl;
 
 import java.util.Random;
 
 /**
  * Отправляет сообщения от имени сообщества в социальной сети ВКонтакте.
  */
-public class VkNotifier extends SimpleWebRequestNotifier {
+public class VkSender extends SimpleWebRequestSender {
 
     private final Random random;
 
     /**
-     * Создаёт новый экземпляр класса {@code VkNotifier}.
+     * Создаёт новый экземпляр класса {@code VkSender}.
      *
      * @param token секретный ключ, использующийся для отправки сообщений.
      */
-    public VkNotifier(String token) {
+    public VkSender(String token) {
         super(token);
         random = new Random();
     }

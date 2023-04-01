@@ -1,10 +1,10 @@
 package ru.eqour.timetable.watch.util.factory;
 
+import ru.eqour.timetable.sender.MessageSender;
+import ru.eqour.timetable.sender.impl.TelegramSender;
+import ru.eqour.timetable.sender.impl.VkSender;
 import ru.eqour.timetable.watch.settings.Settings;
 import ru.eqour.timetable.watch.model.Subscriber;
-import ru.eqour.timetable.watch.notifier.Notifier;
-import ru.eqour.timetable.watch.notifier.TelegramNotifier;
-import ru.eqour.timetable.watch.notifier.VkNotifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +21,13 @@ public class NotifierFactory {
      * @param settings настройки приложения.
      * @return список отправителей уведомлений для конкретного подписчика.
      */
-    public static List<Notifier> createNotifiersForSubscriber(Subscriber subscriber, Settings settings) {
-        List<Notifier> ans = new ArrayList<>();
+    public static List<MessageSender> createNotifiersForSubscriber(Subscriber subscriber, Settings settings) {
+        List<MessageSender> ans = new ArrayList<>();
         if (subscriber.vkId != null) {
-            ans.add(new VkNotifier(settings.vkToken));
+            ans.add(new VkSender(settings.vkToken));
         }
         if (subscriber.telegramId != null) {
-            ans.add(new TelegramNotifier(settings.telegramToken));
+            ans.add(new TelegramSender(settings.telegramToken));
         }
         return ans;
     }
@@ -35,14 +35,14 @@ public class NotifierFactory {
     /**
      * Возвращает идентификатор получателя сообщений у подписчика для конкретного уведомителя.
      *
-     * @param notifier уведомитель.
+     * @param sender уведомитель.
      * @param subscriber подписчик.
      * @return идентификатор получателя сообщений.
      */
-    public static String getRecipientIdForNotifier(Notifier notifier, Subscriber subscriber) {
-        if (notifier instanceof VkNotifier) {
+    public static String getRecipientIdForNotifier(MessageSender sender, Subscriber subscriber) {
+        if (sender instanceof VkSender) {
             return subscriber.vkId;
-        } else if (notifier instanceof TelegramNotifier) {
+        } else if (sender instanceof TelegramSender) {
             return subscriber.telegramId;
         }
         throw new IllegalArgumentException();

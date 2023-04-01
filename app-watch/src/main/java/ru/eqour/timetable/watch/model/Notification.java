@@ -1,6 +1,7 @@
 package ru.eqour.timetable.watch.model;
 
-import ru.eqour.timetable.watch.notifier.Notifier;
+import ru.eqour.timetable.sender.MessageSender;
+import ru.eqour.timetable.sender.model.Message;
 
 /**
  * Уведомление.
@@ -10,7 +11,7 @@ public class Notification {
     /**
      * Способ отправки уведмоления.
      */
-    public final Notifier notifier;
+    public final MessageSender notifier;
 
     /**
      * Подписчик на уведомления.
@@ -20,9 +21,9 @@ public class Notification {
     /**
      * Сообщение подписчику.
      */
-    public final String message;
+    public final Message message;
 
-    public Notification(Notifier notifier, Subscriber subscriber, String message) {
+    public Notification(MessageSender notifier, Subscriber subscriber, Message message) {
         this.notifier = notifier;
         this.subscriber = subscriber;
         this.message = message;
