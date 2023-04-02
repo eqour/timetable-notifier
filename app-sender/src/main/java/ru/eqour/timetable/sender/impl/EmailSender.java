@@ -1,9 +1,11 @@
 package ru.eqour.timetable.sender.impl;
 
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import ru.eqour.timetable.sender.MessageSender;
 import ru.eqour.timetable.sender.exception.SendMessageException;
 import ru.eqour.timetable.sender.model.EmailSenderSettings;
@@ -16,8 +18,7 @@ import java.util.Properties;
  */
 public class EmailSender implements MessageSender {
 
-    private final String from;
-    private final JavaMailSender mailSender;
+    private final EmailSenderSettings settings;
 
     /**
      * Создаёт новый экземпляр класса {@code EmailSender}.
@@ -25,39 +26,36 @@ public class EmailSender implements MessageSender {
      * @param settings настройки отправителя сообщений.
      */
     public EmailSender(EmailSenderSettings settings) {
-        this.mailSender = createJavaMailSender(settings);
-        this.from = settings.getUsername();
-    }
-
-    private JavaMailSender createJavaMailSender(EmailSenderSettings settings) {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(settings.getHost());
-        mailSender.setPort(settings.getPort());
-        mailSender.setUsername(settings.getUsername());
-        mailSender.setPassword(settings.getPassword());
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", settings.getProtocol());
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", settings.getDebug());
-        return mailSender;
+        this.settings = settings;
     }
 
     @Override
     public void sendMessage(String recipient, Message message) throws SendMessageException {
         try {
             sendEmail(recipient, message.getSubject(), message.getText());
-        } catch (MailException e) {
+        } catch (Exception e) {
             throw new SendMessageException(e);
         }
     }
 
-    private void sendEmail(String to, String subject, String text) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(to);
+    private void sendEmail(String to, String subject, String text) throws Exception {
+        Properties props = System.getProperties();
+        props.put("mail.transport.protocol", settings.getProtocol());
+        props.put("mail.smtp.host", settings.getHost());
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", settings.getDebug());
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(settings.getUsername(), settings.getPassword());
+            }
+        });
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(settings.getUsername()));
+        message.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(to));
         message.setSubject(subject);
         message.setText(text);
-        mailSender.send(message);
+        Transport.send(message);
     }
 }
