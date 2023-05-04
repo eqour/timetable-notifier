@@ -2,25 +2,13 @@ package ru.eqour.timetable.model.account;
 
 public class CommunicationChannel {
 
-    private String type;
     private String recipient;
-    private boolean active;
 
     public CommunicationChannel() {
     }
 
-    public CommunicationChannel(String type, String recipient, boolean active) {
-        this.type = type;
+    public CommunicationChannel(String recipient) {
         this.recipient = recipient;
-        this.active = active;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getRecipient() {
@@ -29,13 +17,5 @@ public class CommunicationChannel {
 
     public void setRecipient(String recipient) {
         this.recipient = recipient;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 }

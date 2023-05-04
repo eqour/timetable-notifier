@@ -44,4 +44,10 @@ public class NotificationSubscriptionService {
         account.getSubscriptions().get(type).setName(name);
         userAccountRepository.replaceByEmail(email, account);
     }
+
+    public void updateSubscriptionChannels(String email, String type, List<String> channels) {
+        UserAccount account = userAccountService.findByEmailOrCreateEmpty(email);
+        account.getSubscriptions().get(type).setChannels(channels);
+        userAccountRepository.replaceByEmail(email, account);
+    }
 }

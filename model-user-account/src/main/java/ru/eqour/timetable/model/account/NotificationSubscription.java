@@ -1,24 +1,18 @@
 package ru.eqour.timetable.model.account;
 
+import java.util.List;
+
 public class NotificationSubscription {
 
-    private String type;
     private String name;
+    private List<String> channels;
 
     public NotificationSubscription() {
     }
 
-    public NotificationSubscription(String type, String name) {
-        this.type = type;
+    public NotificationSubscription(String name, List<String> channels) {
         this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+        this.channels = channels;
     }
 
     public String getName() {
@@ -27,5 +21,13 @@ public class NotificationSubscription {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<String> getChannels() {
+        return channels;
+    }
+
+    public void setChannels(List<String> channels) {
+        this.channels = channels;
     }
 }

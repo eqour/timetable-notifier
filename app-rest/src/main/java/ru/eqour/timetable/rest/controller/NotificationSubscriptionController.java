@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
+import ru.eqour.timetable.rest.model.subscription.UpdateSubscriptionChannelsRequest;
 import ru.eqour.timetable.rest.model.subscription.SubscribeRequest;
 import ru.eqour.timetable.rest.service.NotificationSubscriptionService;
 import ru.eqour.timetable.rest.service.UserAccountService;
@@ -46,6 +47,19 @@ public class NotificationSubscriptionController {
         }
         String email = context.getAuthentication().getPrincipal().toString();
         subscriptionService.subscribeToNotification(email, type, request.getName());
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("{type}/channels")
+    public ResponseEntity<?> updateSubscriptionChannels(@PathVariable String type,
+                                          @RequestBody UpdateSubscriptionChannelsRequest request,
+                                          @CurrentSecurityContext SecurityContext context) {
+        if (request == null || type == null || userAccountService.subscriptionTypeIsInvalid(type)
+                || userAccountService.channelTypesIsInvalid(request.getChannels())) {
+            return ResponseEntity.badRequest().build();
+        }
+        String email = context.getAuthentication().getPrincipal().toString();
+        subscriptionService.updateSubscriptionChannels(email, type, request.getChannels());
         return ResponseEntity.ok().build();
     }
 }

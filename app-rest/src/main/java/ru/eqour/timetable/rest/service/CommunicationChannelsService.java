@@ -6,7 +6,6 @@ import ru.eqour.timetable.model.account.CommunicationChannel;
 import ru.eqour.timetable.model.account.UserAccount;
 import ru.eqour.timetable.rest.repository.UserAccountRepository;
 
-
 @Component
 public class CommunicationChannelsService {
 
@@ -26,21 +25,13 @@ public class CommunicationChannelsService {
     public void updateChannelRecipient(String email, String channelId, String newRecipient) {
         UserAccount account = service.findByEmailOrCreateEmpty(email);
         CommunicationChannel channel = account.getChannels().get(channelId);
-        if (channel.getRecipient() == null) channel.setActive(true);
         channel.setRecipient(newRecipient);
-        repository.replaceByEmail(email, account);
-    }
-
-    public void setActive(String email, String channelId, boolean isActive) {
-        UserAccount account = service.findByEmailOrCreateEmpty(email);
-        account.getChannels().get(channelId).setActive(isActive);
         repository.replaceByEmail(email, account);
     }
 
     public void deleteChannel(String email, String channelId) {
         UserAccount account = service.findByEmailOrCreateEmpty(email);
         CommunicationChannel channel = account.getChannels().get(channelId);
-        channel.setActive(false);
         channel.setRecipient(null);
         repository.replaceByEmail(email, account);
     }

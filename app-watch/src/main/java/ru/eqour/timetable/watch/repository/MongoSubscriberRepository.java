@@ -6,6 +6,7 @@ import ru.eqour.timetable.watch.model.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MongoSubscriberRepository implements SubscriberRepository {
 
@@ -20,15 +21,16 @@ public class MongoSubscriberRepository implements SubscriberRepository {
         List<UserAccount> accounts = client.findAllUserAccountsByGroup(groupName);
         List<Subscriber> subscribers = new ArrayList<>();
         for (UserAccount account : accounts) {
+            List<String> groupSubscriptionChannels = account.getSubscriptions().get(SubscriptionType.GROUP.toString()).getChannels();
             Subscriber subscriber = new Subscriber();
-            subscriber.vkId = getChannelId(account.getChannels().get(ChannelType.VK.getValue()));
-            subscriber.telegramId = getChannelId(account.getChannels().get(ChannelType.TELEGRAM.getValue()));
+            subscriber.vkId = getChannelId(account.getChannels(), groupSubscriptionChannels, ChannelType.VK.getValue());
+            subscriber.telegramId = getChannelId(account.getChannels(), groupSubscriptionChannels,  ChannelType.TELEGRAM.getValue());
             subscribers.add(subscriber);
         }
         return subscribers;
     }
 
-    private String getChannelId(CommunicationChannel channel) {
-        return channel.isActive() ? channel.getRecipient() : null;
+    private String getChannelId(Map<String, CommunicationChannel> channels, List<String> subscriptionChannels, String key) {
+        return subscriptionChannels.contains(key) ? channels.get(key).getRecipient() : null;
     }
 }

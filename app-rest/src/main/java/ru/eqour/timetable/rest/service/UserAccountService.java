@@ -5,9 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.eqour.timetable.model.account.*;
 import ru.eqour.timetable.rest.repository.UserAccountRepository;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class UserAccountService {
@@ -17,6 +15,10 @@ public class UserAccountService {
     @Autowired
     public void setRepository(UserAccountRepository repository) {
         this.repository = repository;
+    }
+
+    public boolean channelTypesIsInvalid(List<String> types) {
+        return types.stream().anyMatch(this::channelTypeIsInvalid);
     }
 
     public boolean channelTypeIsInvalid(String type) {
@@ -39,14 +41,14 @@ public class UserAccountService {
     private UserAccount createUserAccount(String email) {
         Map<String, NotificationSubscription> subscriptions = new HashMap<>();
         subscriptions.put(SubscriptionType.GROUP.getValue(),
-                new NotificationSubscription(SubscriptionType.GROUP.getValue(), null));
+                new NotificationSubscription(null, new ArrayList<>()));
         subscriptions.put(SubscriptionType.TEACHER.getValue(),
-                new NotificationSubscription(SubscriptionType.TEACHER.getValue(), null));
+                new NotificationSubscription(null, new ArrayList<>()));
         Map<String, CommunicationChannel> channels = new HashMap<>();
         channels.put(ChannelType.VK.getValue(),
-                new CommunicationChannel(ChannelType.VK.getValue(), null, false));
+                new CommunicationChannel(null));
         channels.put(ChannelType.TELEGRAM.getValue(),
-                new CommunicationChannel(ChannelType.TELEGRAM.getValue(), null, false));
+                new CommunicationChannel(null));
         return new UserAccount(email, subscriptions, channels);
     }
 }

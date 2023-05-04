@@ -76,18 +76,6 @@ public class CommunicationChannelsController {
         }
     }
 
-    @PutMapping("{channelId}/active")
-    public ResponseEntity<?> updateActive(@PathVariable String channelId,
-                                          @RequestBody UpdateChannelActiveRequest request,
-                                          @CurrentSecurityContext SecurityContext context) {
-        if (request == null || channelId == null || userAccountService.channelTypeIsInvalid(channelId)) {
-            return ResponseEntity.badRequest().build();
-        }
-        String email = context.getAuthentication().getPrincipal().toString();
-        channelsService.setActive(email, channelId, request.isActive());
-        return ResponseEntity.ok().build();
-    }
-
     @DeleteMapping("{channelId}")
     public ResponseEntity<?> delete(@PathVariable String channelId,
                                     @CurrentSecurityContext SecurityContext context) {
