@@ -9,6 +9,7 @@ public class NotificationSenderMock {
 
     private final boolean isIncorrectSend;
     private int sendNotificationsCalls;
+    private int sendNotificationsAmount;
 
     public NotificationSenderMock(boolean isIncorrectSend) {
         this.isIncorrectSend = isIncorrectSend;
@@ -17,6 +18,7 @@ public class NotificationSenderMock {
 
     public void sendNotifications(List<Notification> ignoredNotifications) {
         sendNotificationsCalls++;
+        sendNotificationsAmount += ignoredNotifications.size();
         if (isIncorrectSend) {
             throw new NotifierException();
         }
@@ -24,5 +26,9 @@ public class NotificationSenderMock {
 
     public int getSendNotificationsCalls() {
         return sendNotificationsCalls;
+    }
+
+    public int getSendNotificationsAmount() {
+        return sendNotificationsAmount;
     }
 }

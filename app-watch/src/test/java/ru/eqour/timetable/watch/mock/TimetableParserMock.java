@@ -2,6 +2,7 @@ package ru.eqour.timetable.watch.mock;
 
 import ru.eqour.timetable.watch.model.Week;
 import ru.eqour.timetable.watch.parser.TimetableParser;
+import ru.eqour.timetable.watch.util.TestDataFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +20,7 @@ public class TimetableParserMock implements TimetableParser {
     @Override
     public List<Week> parseTimetable(InputStream inputStream) throws IOException {
         if (isCorrectParsing) {
-            return Collections.singletonList(new Week());
+            return Collections.singletonList(TestDataFactory.createEmptyWeek());
         } else {
             throw new IOException();
         }

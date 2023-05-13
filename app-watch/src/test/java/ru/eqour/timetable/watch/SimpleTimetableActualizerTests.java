@@ -6,12 +6,10 @@ import ru.eqour.timetable.watch.actualizer.SimpleTimetableActualizer;
 import ru.eqour.timetable.watch.exception.NotifierException;
 import ru.eqour.timetable.watch.exception.RepositoryException;
 import ru.eqour.timetable.watch.exception.WeekValidationException;
-import ru.eqour.timetable.watch.model.Day;
-import ru.eqour.timetable.watch.model.Lesson;
-import ru.eqour.timetable.watch.model.Subscriber;
-import ru.eqour.timetable.watch.model.Week;
+import ru.eqour.timetable.watch.model.*;
 import ru.eqour.timetable.watch.mock.*;
 import ru.eqour.timetable.watch.settings.Settings;
+import ru.eqour.timetable.watch.util.TestDataFactory;
 
 import java.util.*;
 
@@ -21,6 +19,7 @@ public class SimpleTimetableActualizerTests {
     public void whenValidDataAndNotDifferencesThenNotSendNotifiersAndNotThrowException() throws WeekValidationException {
         new TestCaseBuilder()
                 .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
                 .thenLoadCacheCalls(1)
                 .thenSaveCacheCalls(1)
                 .build()
@@ -30,9 +29,63 @@ public class SimpleTimetableActualizerTests {
     @Test
     public void whenValidDataAndHasDifferencesThenSendNotifiersAndNotThrowException() throws WeekValidationException {
         new TestCaseBuilder()
-                .withDifferences(getDifferences())
-                .withSubscribers(getSubscribersMap())
+                .withDifferences(TestDataFactory.createGroupDifferences())
+                .withGroupSubscribers(TestDataFactory.createGroupSubscribersMap())
                 .thenSendNotificationCalls(1)
+                .thenSendNotificationsAmount(3)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
+                .build()
+                .actualize();
+    }
+
+    @Test
+    public void whenValidDataAndHasTeacherDifferencesAndHasGroupSubscribersThenNotSendNotifiersAndNotThrowException() throws WeekValidationException {
+        new TestCaseBuilder()
+                .withDifferences(TestDataFactory.createTeacherDifferences())
+                .withGroupSubscribers(TestDataFactory.createGroupSubscribersMap())
+                .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
+                .build()
+                .actualize();
+    }
+
+    @Test
+    public void whenValidDataAndHasGroupDifferencesAndHasTeacherSubscribersThenNotSendNotifiersAndNotThrowException() throws WeekValidationException {
+        new TestCaseBuilder()
+                .withDifferences(TestDataFactory.createGroupDifferences())
+                .withTeacherSubscribers(TestDataFactory.createTeacherSubscribersMap())
+                .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
+                .build()
+                .actualize();
+    }
+
+    @Test
+    public void whenValidDataAndHasTeacherStudentDifferencesAndHasTeacherStudentSubscribersThenSendNotifiersAndNotThrowException() throws WeekValidationException {
+        new TestCaseBuilder()
+                .withDifferences(TestDataFactory.createGroupAndTeacherDifferences())
+                .withGroupSubscribers(TestDataFactory.createGroupSubscribersMap())
+                .withTeacherSubscribers(TestDataFactory.createTeacherSubscribersMap())
+                .thenSendNotificationCalls(1)
+                .thenSendNotificationsAmount(6)
+                .thenLoadCacheCalls(1)
+                .thenSaveCacheCalls(1)
+                .build()
+                .actualize();
+    }
+
+    @Test
+    public void whenValidDataAndHasTeacherStudentDifferencesAndHasTeacherSubscribersThenSendNotifiersAndNotThrowException() throws WeekValidationException {
+        new TestCaseBuilder()
+                .withDifferences(TestDataFactory.createGroupAndTeacherDifferences())
+                .withTeacherSubscribers(TestDataFactory.createTeacherSubscribersMap())
+                .thenSendNotificationCalls(1)
+                .thenSendNotificationsAmount(3)
                 .thenLoadCacheCalls(1)
                 .thenSaveCacheCalls(1)
                 .build()
@@ -42,10 +95,11 @@ public class SimpleTimetableActualizerTests {
     @Test
     public void whenValidDataAndHasDifferencesAndHasNullSavedWeekThenNotSendNotifiersAndNotThrowException() throws WeekValidationException {
         new TestCaseBuilder()
-                .withDifferences(getDifferences())
-                .withSubscribers(getSubscribersMap())
+                .withDifferences(TestDataFactory.createGroupDifferences())
+                .withGroupSubscribers(TestDataFactory.createGroupSubscribersMap())
                 .withNullTimetableCache()
                 .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
                 .thenLoadCacheCalls(1)
                 .thenSaveCacheCalls(1)
                 .build()
@@ -55,10 +109,11 @@ public class SimpleTimetableActualizerTests {
     @Test
     public void whenCacheManagerWithNullLoadThenNotSendNotifiersAndNotThrowException() throws WeekValidationException {
         new TestCaseBuilder()
-                .withDifferences(getDifferences())
-                .withSubscribers(getSubscribersMap())
+                .withDifferences(TestDataFactory.createGroupDifferences())
+                .withGroupSubscribers(TestDataFactory.createGroupSubscribersMap())
                 .withCacheLoadError()
                 .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
                 .thenLoadCacheCalls(1)
                 .thenSaveCacheCalls(1)
                 .build()
@@ -70,6 +125,7 @@ public class SimpleTimetableActualizerTests {
         new TestCaseBuilder()
                 .withNullSettings()
                 .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
                 .thenLoadCacheCalls(0)
                 .thenSaveCacheCalls(0)
                 .thenThrowsException(IllegalArgumentException.class)
@@ -82,6 +138,7 @@ public class SimpleTimetableActualizerTests {
         new TestCaseBuilder()
                 .withCacheSaveError()
                 .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
                 .thenLoadCacheCalls(1)
                 .thenSaveCacheCalls(1)
                 .thenThrowsException(RuntimeException.class)
@@ -92,10 +149,11 @@ public class SimpleTimetableActualizerTests {
     @Test
     public void whenValidDataAndHasDifferencesAndBadNotifierSenderThenThrowException() throws WeekValidationException {
         new TestCaseBuilder()
-                .withDifferences(getDifferences())
-                .withSubscribers(getSubscribersMap())
+                .withDifferences(TestDataFactory.createGroupDifferences())
+                .withGroupSubscribers(TestDataFactory.createGroupSubscribersMap())
                 .withNotificationSenderError()
                 .thenSendNotificationCalls(1)
+                .thenSendNotificationsAmount(3)
                 .thenLoadCacheCalls(1)
                 .thenSaveCacheCalls(1)
                 .thenThrowsException(NotifierException.class)
@@ -106,10 +164,11 @@ public class SimpleTimetableActualizerTests {
     @Test
     public void whenInvalidTimetableParsingThenThrowException() throws WeekValidationException {
         new TestCaseBuilder()
-                .withDifferences(getDifferences())
-                .withSubscribers(getSubscribersMap())
+                .withDifferences(TestDataFactory.createGroupDifferences())
+                .withGroupSubscribers(TestDataFactory.createGroupSubscribersMap())
                 .withParserError()
                 .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
                 .thenLoadCacheCalls(1)
                 .thenSaveCacheCalls(0)
                 .thenThrowsException(RuntimeException.class)
@@ -120,10 +179,11 @@ public class SimpleTimetableActualizerTests {
     @Test
     public void whenInvalidTimetableThenThrowException() throws WeekValidationException {
         new TestCaseBuilder()
-                .withDifferences(getDifferences())
-                .withSubscribers(getSubscribersMap())
+                .withDifferences(TestDataFactory.createGroupDifferences())
+                .withGroupSubscribers(TestDataFactory.createGroupSubscribersMap())
                 .withWeekValidationError()
                 .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
                 .thenLoadCacheCalls(1)
                 .thenSaveCacheCalls(0)
                 .thenThrowsException(WeekValidationException.class)
@@ -134,10 +194,11 @@ public class SimpleTimetableActualizerTests {
     @Test
     public void whenErrorInSubscriberRepositoryThenThrowException() throws WeekValidationException {
         new TestCaseBuilder()
-                .withDifferences(getDifferences())
-                .withSubscribers(getSubscribersMap())
+                .withDifferences(TestDataFactory.createGroupDifferences())
+                .withGroupSubscribers(TestDataFactory.createGroupSubscribersMap())
                 .withSubscriberRepositoryError()
                 .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
                 .thenLoadCacheCalls(1)
                 .thenSaveCacheCalls(1)
                 .thenThrowsException(RepositoryException.class)
@@ -148,40 +209,16 @@ public class SimpleTimetableActualizerTests {
     @Test
     public void whenErrorInWeekComparatorThenThrowException() throws WeekValidationException {
         new TestCaseBuilder()
-                .withDifferences(getDifferences())
-                .withSubscribers(getSubscribersMap())
+                .withDifferences(TestDataFactory.createGroupDifferences())
+                .withGroupSubscribers(TestDataFactory.createGroupSubscribersMap())
                 .withComparerError()
                 .thenSendNotificationCalls(0)
+                .thenSendNotificationsAmount(0)
                 .thenLoadCacheCalls(1)
                 .thenSaveCacheCalls(1)
                 .thenThrowsException(RuntimeException.class)
                 .build()
                 .actualize();
-    }
-
-    private Map<String, List<Day[]>> getDifferences() {
-        Map<String, List<Day[]>> differences = new HashMap<>();
-        Lesson lesson = new Lesson();
-        lesson.time = "mock-time";
-        lesson.classroom = "mock-classroom";
-        lesson.discipline = "mock-discipline";
-        lesson.teacher = "mock-teacher";
-        Day day = new Day();
-        day.date = "mock-date";
-        day.lessons = new Lesson[] { lesson };
-        differences.put("group-1", Collections.singletonList(new Day[] { day, day }));
-        return differences;
-    }
-
-    private Map<String, List<Subscriber>> getSubscribersMap() {
-        Map<String, List<Subscriber>> map = new HashMap<>();
-        Subscriber s1 = new Subscriber();
-        s1.vkId = "vk-1";
-        Subscriber s2 = new Subscriber();
-        s2.vkId = "vk-2";
-        s2.telegramId = "tg-1";
-        map.put("group-1", Arrays.asList(s1, s2));
-        return map;
     }
 
     private static class TestCaseBuilder {
@@ -193,18 +230,20 @@ public class SimpleTimetableActualizerTests {
         private boolean weekValidationError;
         private boolean parserError;
         private boolean comparerError;
-        private Map<String, List<Subscriber>> subscribers;
+        private Map<String, List<Subscriber>> groupSubscribers;
+        private Map<String, List<Subscriber>> teacherSubscribers;
         private Map<String, List<Day[]>> differences;
         private Settings settings;
         private List<Week> timetableCache;
         private int sendNotificationsCalls;
+        private int sendNotificationsAmount;
         private int loadSettingsCalls;
         private int saveSettingsCalls;
         private Class<? extends Exception> exception;
 
         public TestCaseBuilder() {
-            settings = new Settings();
-            timetableCache = Collections.singletonList(new Week());
+            settings = TestDataFactory.createSettings();
+            timetableCache = Collections.singletonList(TestDataFactory.createEmptyWeek());
         }
 
         public TestCaseBuilder withNotificationSenderError() {
@@ -242,8 +281,13 @@ public class SimpleTimetableActualizerTests {
             return this;
         }
 
-        public TestCaseBuilder withSubscribers(Map<String, List<Subscriber>> subscribers) {
-            this.subscribers = subscribers;
+        public TestCaseBuilder withGroupSubscribers(Map<String, List<Subscriber>> groupSubscribers) {
+            this.groupSubscribers = groupSubscribers;
+            return this;
+        }
+
+        public TestCaseBuilder withTeacherSubscribers(Map<String, List<Subscriber>> teacherSubscribers) {
+            this.teacherSubscribers = teacherSubscribers;
             return this;
         }
 
@@ -264,6 +308,11 @@ public class SimpleTimetableActualizerTests {
 
         public TestCaseBuilder thenSendNotificationCalls(int amount) {
             sendNotificationsCalls = amount;
+            return this;
+        }
+
+        public TestCaseBuilder thenSendNotificationsAmount(int amount) {
+            sendNotificationsAmount = amount;
             return this;
         }
 
@@ -290,7 +339,8 @@ public class SimpleTimetableActualizerTests {
                     SimpleTimetableActualizer actualizer = new SimpleTimetableActualizer(
                             cacheManagerMock,
                             new FileActualizerMock(),
-                            new SubscriberRepositoryMock(subscribers == null ? new HashMap<>() : subscribers, subscriberRepositoryError),
+                            new SubscriberRepositoryMock(groupSubscribers == null ? new HashMap<>() : groupSubscribers,
+                                    teacherSubscribers == null ? new HashMap<>() : teacherSubscribers, subscriberRepositoryError),
                             settings,
                             new WeekValidatorMock(weekValidationError),
                             senderMock::sendNotifications,
@@ -304,9 +354,10 @@ public class SimpleTimetableActualizerTests {
                 } else {
                     Assert.assertThrows(exception, testRunnable::actualize);
                 }
-                Assert.assertEquals(senderMock.getSendNotificationsCalls(), sendNotificationsCalls);
-                Assert.assertEquals(cacheManagerMock.getLoadCalls(), loadSettingsCalls);
-                Assert.assertEquals(cacheManagerMock.getSaveCalls(), saveSettingsCalls);
+                Assert.assertEquals(sendNotificationsCalls, senderMock.getSendNotificationsCalls());
+                Assert.assertEquals(sendNotificationsAmount, senderMock.getSendNotificationsAmount());
+                Assert.assertEquals(loadSettingsCalls, cacheManagerMock.getLoadCalls());
+                Assert.assertEquals(saveSettingsCalls, cacheManagerMock.getSaveCalls());
             };
         }
     }

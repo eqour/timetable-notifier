@@ -7,6 +7,7 @@ import ru.eqour.timetable.watch.settings.Settings;
 import ru.eqour.timetable.watch.settings.SimpleCacheManager;
 import ru.eqour.timetable.watch.util.JsonFileHelper;
 import ru.eqour.timetable.watch.util.ResourceHelper;
+import ru.eqour.timetable.watch.util.TestDataFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -38,7 +39,7 @@ public class CacheManagerTests {
     public void whenSaveAndLoadThenReturnValidResult() throws IOException {
         String path = getTempSettingsPath();
         CacheManager<Settings> cacheManager = new SimpleCacheManager<>(path, Settings.class);
-        Settings expected = createSettings();
+        Settings expected = TestDataFactory.createSettings();
         cacheManager.save(expected);
         Settings actual = cacheManager.load();
         Assert.assertEquals(expected, actual);
@@ -49,21 +50,12 @@ public class CacheManagerTests {
     public void whenSaveThenFileWithSettingsCreated() throws IOException {
         String path = getTempSettingsPath();
         CacheManager<Settings> cacheManager = new SimpleCacheManager<>(path, Settings.class);
-        Settings settings = createSettings();
+        Settings settings = TestDataFactory.createSettings();
         cacheManager.save(settings);
         Settings actual = JsonFileHelper.loadFromFile(
                 ResourceHelper.getFullPathToResource("/settings-manager/settings.json").toString(), Settings.class);
         Assert.assertEquals(settings, actual);
         Files.deleteIfExists(Paths.get(path));
-    }
-
-    private Settings createSettings() {
-        Settings settings = new Settings();
-        settings.timetableFileId = "id";
-        settings.telegramToken = "telegram";
-        settings.vkToken = "vk";
-        settings.dbConnection = "db-connection";
-        return settings;
     }
 
     private String getTempSettingsPath() {

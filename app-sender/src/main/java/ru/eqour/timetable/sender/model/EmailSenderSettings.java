@@ -1,5 +1,7 @@
 package ru.eqour.timetable.sender.model;
 
+import java.util.Objects;
+
 /**
  * Настройки отправителя сообщений по электронной почте.
  */
@@ -77,5 +79,18 @@ public class EmailSenderSettings {
 
     public void setDebug(String debug) {
         this.debug = debug;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmailSenderSettings settings = (EmailSenderSettings) o;
+        return port == settings.port && host.equals(settings.host) && username.equals(settings.username) && password.equals(settings.password) && protocol.equals(settings.protocol) && debug.equals(settings.debug);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(host, port, username, password, protocol, debug);
     }
 }

@@ -1,0 +1,38 @@
+{
+  "group": {
+    "ОБ-Вт-09.03.03.02-11": [
+      {
+        "vkId": "001",
+        "email": "qwe@qwe.qwe"
+      },
+      {
+        "vkId": "003",
+        "telegramId": "001"
+      }
+    ],
+    "ОБ-Вт-09.03.03.02-41": [
+      {
+        "vkId": "005"
+      },
+      {
+        "telegramId": "002",
+        "email": "qwe@qwe.qwe"
+      }
+    ]
+  },
+  "teacher": {
+    "Иванов И.И.": [
+      {
+        "vkId": "010",
+        "telegramId": "011",
+        "email": "012"
+      },
+      {
+        "email": "qwe@qwe.qwe"
+      },
+      {
+        "telegramId": "013"
+      }
+    ]
+  }
+}

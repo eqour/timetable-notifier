@@ -43,9 +43,17 @@ public class MongoDbClient {
     }
 
     public List<UserAccount> findAllUserAccountsByGroup(String group) {
+        return findUserAccounts(SubscriptionType.GROUP, group);
+    }
+
+    public List<UserAccount> findAllUserAccountsByTeacherSubscription(String teacher) {
+        return findUserAccounts(SubscriptionType.TEACHER, teacher);
+    }
+
+    private List<UserAccount> findUserAccounts(SubscriptionType subscriptionType, String name) {
         return useMongoDb(database -> {
             MongoCollection<Document> collection = database.getCollection(COLLECTION_USER_ACCOUNTS);
-            BasicDBObject query = new BasicDBObject("subscriptions." + SubscriptionType.GROUP.getValue() + ".name", group);
+            BasicDBObject query = new BasicDBObject("subscriptions." + subscriptionType.getValue() + ".name", name);
             FindIterable<Document> iterable = collection.find(query);
             List<UserAccount> accounts = new ArrayList<>();
             try (MongoCursor<Document> cursor = iterable.cursor()) {

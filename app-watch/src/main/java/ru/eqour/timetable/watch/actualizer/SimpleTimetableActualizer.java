@@ -7,6 +7,7 @@ import ru.eqour.timetable.sender.MessageSender;
 import ru.eqour.timetable.sender.model.Message;
 import ru.eqour.timetable.watch.api.FileActualizer;
 import ru.eqour.timetable.watch.comparer.WeekComparer;
+import ru.eqour.timetable.watch.converter.WeekConverter;
 import ru.eqour.timetable.watch.exception.WeekValidationException;
 import ru.eqour.timetable.watch.model.*;
 import ru.eqour.timetable.watch.parser.TimetableParser;
@@ -20,6 +21,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Актуализатор расписания.
@@ -70,10 +72,16 @@ public class SimpleTimetableActualizer {
         timetableCache = actualWeeks;
         cacheManager.save(timetableCache);
         if (timetableCache != null && oldWeeks != null) {
-            Map<String, List<Day[]>> differences = weekComparer.findDifferences(oldWeeks, actualWeeks);
-            if (!differences.isEmpty()) {
+            WeekConverter converter = new WeekConverter();
+            List<Week> oldTeacherWeeks = converter.convertToTeacherWeeks(oldWeeks);
+            List<Week> actualTeacherWeeks = converter.convertToTeacherWeeks(actualWeeks);
+            List<Notification> notifications = processTimetableChanges(Arrays.asList(
+                    new ProcessDifferencesData(oldWeeks, actualWeeks, subscriberRepository::getSubscribersByStudentGroup),
+                    new ProcessDifferencesData(oldTeacherWeeks, actualTeacherWeeks, subscriberRepository::getSubscribersByTeacher)
+            ));
+            if (!notifications.isEmpty()) {
                 LOG.log(Level.INFO, "Sending notifications");
-                sendNotificationsConsumer.accept(collectNotifications(differences));
+                sendNotificationsConsumer.accept(notifications);
             }
         }
     }
@@ -88,10 +96,20 @@ public class SimpleTimetableActualizer {
         }
     }
 
-    private List<Notification> collectNotifications(Map<String, List<Day[]>> differences) {
+    private List<Notification> processTimetableChanges(List<ProcessDifferencesData> processDifferencesData) {
+        List<Notification> notifications = new ArrayList<>();
+        for (ProcessDifferencesData data : processDifferencesData) {
+            Map<String, List<Day[]>> differences = weekComparer.findDifferences(data.oldWeeks, data.actualWeeks);
+            notifications.addAll(collectNotifications(differences, data.getSubscribersFunction));
+        }
+        return notifications;
+    }
+
+    private List<Notification> collectNotifications(Map<String, List<Day[]>> differences,
+                                                    Function<String, List<Subscriber>> getSubscribersFunction) {
         List<Notification> notifications = new ArrayList<>();
         for (Map.Entry<String, List<Day[]>> entry : differences.entrySet()) {
-            for (Subscriber subscriber : subscriberRepository.getSubscribers(entry.getKey())) {
+            for (Subscriber subscriber : getSubscribersFunction.apply(entry.getKey())) {
                 for (MessageSender notifier : NotifierFactory.createNotifiersForSubscriber(subscriber, settings)) {
                     notifications.add(new Notification(notifier, subscriber, new Message("",
                             formatChangesString(entry.getValue()))));
@@ -136,5 +154,18 @@ public class SimpleTimetableActualizer {
 
     private String getStringOrEmptyString(String value) {
         return value == null ? "" : value;
+    }
+
+    private static class ProcessDifferencesData {
+
+        private final List<Week> oldWeeks, actualWeeks;
+        private final Function<String, List<Subscriber>> getSubscribersFunction;
+
+        public ProcessDifferencesData(List<Week> oldWeeks, List<Week> actualWeeks,
+                                      Function<String, List<Subscriber>> getSubscribersFunction) {
+            this.oldWeeks = oldWeeks;
+            this.actualWeeks = actualWeeks;
+            this.getSubscribersFunction = getSubscribersFunction;
+        }
     }
 }

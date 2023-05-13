@@ -2,6 +2,7 @@ package ru.eqour.timetable.model.account;
 
 public enum ChannelType {
 
+    EMAIL("email"),
     VK("vk"),
     TELEGRAM("telegram");
 

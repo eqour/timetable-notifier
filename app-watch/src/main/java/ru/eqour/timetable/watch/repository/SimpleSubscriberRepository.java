@@ -15,6 +15,9 @@ import java.util.Map;
  */
 public class SimpleSubscriberRepository implements SubscriberRepository {
 
+    private static final String GROUP_KEY = "group";
+    private static final String TEACHER_KEY = "teacher";
+
     private final String path;
 
     /**
@@ -26,17 +29,25 @@ public class SimpleSubscriberRepository implements SubscriberRepository {
         this.path = path;
     }
 
-    private Map<String, List<Subscriber>> loadSubscriberMap() {
+    private Map<String, Map<String, List<Subscriber>>> loadSubscriberMap() {
         try {
-            return JsonFileHelper.loadFromFile(path, new TypeToken<Map<String, List<Subscriber>>>(){}.getType());
+            return JsonFileHelper.loadFromFile(path, new TypeToken<Map<String, Map<String, List<Subscriber>>>>(){}.getType());
         } catch (Exception e) {
             throw new RepositoryException();
         }
     }
 
     @Override
-    public List<Subscriber> getSubscribers(String groupName) {
-        Map<String, List<Subscriber>> subscriberMap = loadSubscriberMap();
-        return subscriberMap.getOrDefault(groupName, Collections.emptyList());
+    public List<Subscriber> getSubscribersByStudentGroup(String groupName) {
+        Map<String, Map<String, List<Subscriber>>> subscriberMap = loadSubscriberMap();
+        if (!subscriberMap.containsKey(GROUP_KEY)) return Collections.emptyList();
+        return subscriberMap.get(GROUP_KEY).getOrDefault(groupName, Collections.emptyList());
+    }
+
+    @Override
+    public List<Subscriber> getSubscribersByTeacher(String teacherName) {
+        Map<String, Map<String, List<Subscriber>>> subscriberMap = loadSubscriberMap();
+        if (!subscriberMap.containsKey(TEACHER_KEY)) return Collections.emptyList();
+        return subscriberMap.get(TEACHER_KEY).getOrDefault(teacherName, Collections.emptyList());
     }
 }

@@ -1,6 +1,7 @@
 package ru.eqour.timetable.watch.util.factory;
 
 import ru.eqour.timetable.sender.MessageSender;
+import ru.eqour.timetable.sender.impl.EmailSender;
 import ru.eqour.timetable.sender.impl.TelegramSender;
 import ru.eqour.timetable.sender.impl.VkSender;
 import ru.eqour.timetable.watch.settings.Settings;
@@ -29,6 +30,9 @@ public class NotifierFactory {
         if (subscriber.telegramId != null) {
             ans.add(new TelegramSender(settings.telegramToken));
         }
+        if (subscriber.email != null) {
+             ans.add(new EmailSender(settings.emailSenderSettings));
+        }
         return ans;
     }
 
@@ -44,6 +48,8 @@ public class NotifierFactory {
             return subscriber.vkId;
         } else if (sender instanceof TelegramSender) {
             return subscriber.telegramId;
+        } else if (sender instanceof EmailSender) {
+            return subscriber.email;
         }
         throw new IllegalArgumentException();
     }

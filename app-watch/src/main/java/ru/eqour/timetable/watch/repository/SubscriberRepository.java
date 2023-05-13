@@ -17,5 +17,14 @@ public interface SubscriberRepository {
      * @return список подписчиков.
      * @throws RepositoryException в случае, если возникла ошибка при чтении данных.
      */
-    List<Subscriber> getSubscribers(String groupName);
+    List<Subscriber> getSubscribersByStudentGroup(String groupName);
+
+    /**
+     * Возвращает список подписчиков по преподавателю.
+     *
+     * @param teacherName преподаватель.
+     * @return список подписчиков.
+     * @throws RepositoryException в случае, если возникла ошибка при чтении данных.
+     */
+    List<Subscriber> getSubscribersByTeacher(String teacherName);
 }

@@ -14,4 +14,9 @@ public class Subscriber {
      * Идентификатор пользователя в Telegram.
      */
     public String telegramId;
+
+    /**
+     * Адрес электронной почты пользователя.
+     */
+    public String email;
 }
