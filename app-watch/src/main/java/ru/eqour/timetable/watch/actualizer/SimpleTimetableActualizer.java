@@ -14,6 +14,7 @@ import ru.eqour.timetable.watch.parser.TimetableParser;
 import ru.eqour.timetable.watch.repository.SubscriberRepository;
 import ru.eqour.timetable.watch.settings.CacheManager;
 import ru.eqour.timetable.watch.settings.Settings;
+import ru.eqour.timetable.watch.util.ChangesFormatter;
 import ru.eqour.timetable.watch.util.factory.NotifierFactory;
 import ru.eqour.timetable.watch.validator.WeekValidator;
 
@@ -76,8 +77,12 @@ public class SimpleTimetableActualizer {
             List<Week> oldTeacherWeeks = converter.convertToTeacherWeeks(oldWeeks);
             List<Week> actualTeacherWeeks = converter.convertToTeacherWeeks(actualWeeks);
             List<Notification> notifications = processTimetableChanges(Arrays.asList(
-                    new ProcessDifferencesData(oldWeeks, actualWeeks, subscriberRepository::getSubscribersByStudentGroup),
-                    new ProcessDifferencesData(oldTeacherWeeks, actualTeacherWeeks, subscriberRepository::getSubscribersByTeacher)
+                    new ProcessDifferencesData(oldWeeks, actualWeeks,
+                            subscriberRepository::getSubscribersByStudentGroup,
+                            ChangesFormatter::formatChangesStringForGroup),
+                    new ProcessDifferencesData(oldTeacherWeeks, actualTeacherWeeks,
+                            subscriberRepository::getSubscribersByTeacher,
+                            ChangesFormatter::formatChangesStringForTeacher)
             ));
             if (!notifications.isEmpty()) {
                 LOG.log(Level.INFO, "Sending notifications");
@@ -100,72 +105,39 @@ public class SimpleTimetableActualizer {
         List<Notification> notifications = new ArrayList<>();
         for (ProcessDifferencesData data : processDifferencesData) {
             Map<String, List<Day[]>> differences = weekComparer.findDifferences(data.oldWeeks, data.actualWeeks);
-            notifications.addAll(collectNotifications(differences, data.getSubscribersFunction));
+            notifications.addAll(collectNotifications(differences, data.getSubscribersFunction, data.changesFormatter));
         }
         return notifications;
     }
 
     private List<Notification> collectNotifications(Map<String, List<Day[]>> differences,
-                                                    Function<String, List<Subscriber>> getSubscribersFunction) {
+                                                    Function<String, List<Subscriber>> getSubscribersFunction,
+                                                    Function<List<Day[]>, String> changesFormatter) {
         List<Notification> notifications = new ArrayList<>();
         for (Map.Entry<String, List<Day[]>> entry : differences.entrySet()) {
             for (Subscriber subscriber : getSubscribersFunction.apply(entry.getKey())) {
                 for (MessageSender notifier : NotifierFactory.createNotifiersForSubscriber(subscriber, settings)) {
                     notifications.add(new Notification(notifier, subscriber, new Message("",
-                            formatChangesString(entry.getValue()))));
+                            changesFormatter.apply(entry.getValue()))));
                 }
             }
         }
         return notifications;
-    }
-
-    private String formatChangesString(List<Day[]> days) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Изменения в расписании:\n\n");
-        for (Day[] pair : days) {
-            Day day = pair[1];
-            builder.append(day.date).append("\n\n");
-            boolean hasLessons = false;
-            for (int i = 0; i < day.lessons.length; i++) {
-                Lesson lesson = day.lessons[i];
-                if (lesson != null) {
-                    hasLessons = true;
-                    builder.append(i + 1).append(" пара, ").append(lesson.time).append("\n");
-                    builder.append(getStringOrEmptyString(lesson.discipline)).append("\n");
-                    if (Objects.equals(lesson.teacher, lesson.classroom)) {
-                        builder.append(getStringOrEmptyString(lesson.teacher));
-                    } else {
-                        builder.append(getStringOrEmptyString(lesson.teacher)).append(" ")
-                                .append(getStringOrEmptyString(lesson.classroom));
-                    }
-                    if (i != day.lessons.length - 1) {
-                        builder.append("\n\n");
-                    }
-                }
-                if (i == day.lessons.length - 1) {
-                    if (!hasLessons) {
-                        builder.append("Занятий нет\n\n");
-                    }
-                }
-            }
-        }
-        return builder.toString();
-    }
-
-    private String getStringOrEmptyString(String value) {
-        return value == null ? "" : value;
     }
 
     private static class ProcessDifferencesData {
 
         private final List<Week> oldWeeks, actualWeeks;
         private final Function<String, List<Subscriber>> getSubscribersFunction;
+        private final Function<List<Day[]>, String> changesFormatter;
 
         public ProcessDifferencesData(List<Week> oldWeeks, List<Week> actualWeeks,
-                                      Function<String, List<Subscriber>> getSubscribersFunction) {
+                                      Function<String, List<Subscriber>> getSubscribersFunction,
+                                      Function<List<Day[]>, String> changesFormatter) {
             this.oldWeeks = oldWeeks;
             this.actualWeeks = actualWeeks;
             this.getSubscribersFunction = getSubscribersFunction;
+            this.changesFormatter = changesFormatter;
         }
     }
 }
