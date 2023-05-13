@@ -1,0 +1,1699 @@
+[
+  {
+    "period": "15.05.2023-20.05.2023",
+    "groups": [
+      {
+        "name": "ОБ-Вт-09.03.03.02-11",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Алгоритмизация и программирование",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "13/1"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Алгоритмизация и программирование",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "13/1"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Алгоритмизация и программирование",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "13/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Информационные системы и технологии",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Информационные системы и технологии",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Математика",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "8/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Математика",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "8/1"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-09.03.03.02-21",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Алгоритмизация и программирование",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Алгоритмизация и программирование",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Алгоритмизация и программирование",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Алгоритмизация и программирование",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Алгоритмизация и программирование",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "Алгоритмизация и программирование",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Алгоритмизация и программирование",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              {
+                "time": "17:15-18:45",
+                "discipline": "Иностранный язык",
+                "teacher": "Загуляев Д.Г.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "18:50-20:20",
+                "discipline": "Иностранный язык",
+                "teacher": "Загуляев Д.Г.",
+                "classroom": "14/1"
+              }
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Моделирование бизнес-процессов",
+                "teacher": "Воротова И.Н.",
+                "classroom": "13/1"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Моделирование бизнес-процессов",
+                "teacher": "Воротова И.Н.",
+                "classroom": "13/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Моделирование бизнес-процессов",
+                "teacher": "Воротова И.Н.",
+                "classroom": "13/1"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-09.03.03.02-31",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Теория игр ЭКЗАМЕН",
+                "teacher": "Виноградова М.Н.",
+                "classroom": "13/1"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Технологии программирования ЭКЗАМЕН",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Разработка веб-приложений ЭКЗАМЕН",
+                "teacher": "Ощепкова О.П.",
+                "classroom": "22/1"
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-09.03.03.02-41",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "О-Вт-080200-41",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "teacher": "Методика преподавания \"Окружающий мир\" в начальной школе",
+                "classroom": "Методика преподавания \"Окружающий мир\" в начальной школе"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Гребенкина И.А.   304 / 4"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-11",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Общие основы педагогики",
+                "teacher": "Окулова Л.П.",
+                "classroom": "107/4"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Тренинг партнерского взаимодействия",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Тренинг партнерского взаимодействия",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "История педагогики и образования",
+                "teacher": "Викулов А.В.206/4",
+                "classroom": "Викулов А.В.206/4"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Иностранный язык (ВСЕ)",
+                "teacher": "Коновалова Т.П.304/4",
+                "classroom": "Коновалова Т.П.304/4"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Анатомия и возрастная физиология",
+                "teacher": "Худякова Н.А.",
+                "classroom": "101/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Анатомия и возрастная физиология",
+                "teacher": "Худякова Н.А.",
+                "classroom": "101/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Философия",
+                "teacher": "Хорькова Е.П.",
+                "classroom": "103/4"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Философия",
+                "teacher": "Хорькова Е.П.",
+                "classroom": "103/4"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "8.50  Общая и экспериментальная психология",
+                "teacher": "Щербакова Е.В.",
+                "classroom": "206/4"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Общая и экспериментальная психология",
+                "teacher": "Щербакова Е.В.",
+                "classroom": "206/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Общая и экспериментальная психология",
+                "teacher": "Щербакова Е.В.",
+                "classroom": "206/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Общая и экспериментальная психология",
+                "teacher": "Щербакова Е.В.",
+                "classroom": "206/4"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "8.00 Немецкий язык",
+                "teacher": "Брим Н.Е.",
+                "classroom": "https://b84931.vr.mirapolis.ru/mira/miravr/5523698180"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Современные информационные технологии",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "11.30 Всероссийская научно-практическая  конференция «АКТУАЛЬНЫЕ ПРОБЛЕМЫ РАЗВИТИЯ МОЛОДЁЖНОЙ ПОЛИТИКИ И СОЦИАЛЬНОЙ РАБОТЫ»",
+                "teacher": "Закирова Г.М.",
+                "classroom": "19/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Конференция УдГУ",
+                "teacher": "Закирова Г.М.",
+                "classroom": "19/1"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Безопасность жизнедеятельности",
+                "teacher": "Самигуллина Г.З.103/4",
+                "classroom": "Самигуллина Г.З.103/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Безопасность жизнедеятельности",
+                "teacher": "Самигуллина Г.З.103/4",
+                "classroom": "Самигуллина Г.З.103/4"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-12",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Общие основы педагогики",
+                "teacher": "Окулова Л.П.",
+                "classroom": "107/4"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Тренинг партнерского взаимодействия",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Тренинг партнерского взаимодействия",
+                "teacher": "Закирова Г.М.",
+                "classroom": "20/1"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "История педагогики и образования",
+                "teacher": "Викулов А.В.",
+                "classroom": "206/4"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Иностранный язык (ВСЕ)",
+                "teacher": "Коновалова Т.П.304/4",
+                "classroom": "Коновалова Т.П.304/4"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Философия",
+                "teacher": "Хорькова Е.П.",
+                "classroom": "103/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Философия",
+                "teacher": "Хорькова Е.П.",
+                "classroom": "103/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Анатомия и возрастная физиология",
+                "teacher": "Худякова Н.А.",
+                "classroom": "101/4"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Анатомия и возрастная физиология",
+                "teacher": "Худякова Н.А.101/4",
+                "classroom": "Худякова Н.А.101/4"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "8.50  Общая и экспериментальная психология",
+                "teacher": "Щербакова Е.В.",
+                "classroom": "206/4"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Общая и экспериментальная психология",
+                "teacher": "Щербакова Е.В.",
+                "classroom": "206/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Общая и экспериментальная психология",
+                "teacher": "Щербакова Е.В.",
+                "classroom": "206/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Общая и экспериментальная психология",
+                "teacher": "Щербакова Е.В.",
+                "classroom": "206/4"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "8.00 Немецкий язык",
+                "teacher": "Брим Н.Е.",
+                "classroom": "https://b84931.vr.mirapolis.ru/mira/miravr/5523698180"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Современные информационные технологии",
+                "teacher": "Мамрыкин О.В.",
+                "classroom": "14/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "11.30 Всероссийская научно-практическая  конференция «АКТУАЛЬНЫЕ ПРОБЛЕМЫ РАЗВИТИЯ МОЛОДЁЖНОЙ ПОЛИТИКИ И СОЦИАЛЬНОЙ РАБОТЫ»",
+                "teacher": "Закирова Г.М.",
+                "classroom": "19/1"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Конференция УдГУ",
+                "teacher": "Закирова Г.М.",
+                "classroom": "19/1"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "Безопасность жизнедеятельности",
+                "teacher": "Самигуллина Г.З.103/4",
+                "classroom": "Самигуллина Г.З.103/4"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Безопасность жизнедеятельности",
+                "teacher": "Самигуллина Г.З.103/4",
+                "classroom": "Самигуллина Г.З.103/4"
+              },
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-21",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Экзаменационная сессия 8.05-21.05"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Профессиональный иностранный язык (КОНСУЛЬТАЦИЯ)",
+                "teacher": "Коновалова Т.П.",
+                "classroom": "16/2"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Профессиональный иностранный язык (ЭКЗАМЕН)",
+                "teacher": "Коновалова Т.П.",
+                "classroom": "13/2"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "13.00 Социальная асихология (КОНСУЛЬТАЦИЯ)",
+                "teacher": "Щербакова Е.В.",
+                "classroom": "206/4"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "9.00  Социальная асихология (ЭКЗАМЕН)",
+                "teacher": "Щербакова Е.В.",
+                "classroom": "205/4"
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440302-31",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Производственная практика, технологическая 08.05-18.06"
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440301-21",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Экзаменационная сессия 8.05-28.05"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Иностранный язык (КОНСУЛЬТАЦИЯ)",
+                "teacher": "Коновалова Т.П.",
+                "classroom": "16/2"
+              },
+              null,
+              null,
+              null,
+              {
+                "time": "17:15-18:45",
+                "discipline": "18.40  Основы педагогического мастерства (ЗАЧЕТ)",
+                "teacher": "Хасанова Л.И.",
+                "classroom": "https://us05web.zoom.us/j/87201983396?pwd\u003deWN5VVJGeFdoanBsdkZlWTl5OURMUT09 Идентификатор конференции: 872 0198 3396 Код доступа: P34sze"
+              },
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Методы математической статистики в психолого-педагогических науках (ЗАЧЕТ)",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "6/1"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-440301-31",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Русский язык и методика его преподавания в начальной школе",
+                "teacher": "Пикулева О.Ф.101/4",
+                "classroom": "Пикулева О.Ф.101/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Русский язык и методика его преподавания в начальной школе",
+                "teacher": "Пикулева О.Ф.101/4",
+                "classroom": "Пикулева О.Ф.101/4"
+              },
+              null,
+              {
+                "time": "17:15-18:45",
+                "discipline": "18.30  Основы педагогического мастерства",
+                "teacher": "Хасанова Л.И.",
+                "classroom": "https://us05web.zoom.us/j/87201983396?pwd\u003deWN5VVJGeFdoanBsdkZlWTl5OURMUT09 Идентификатор конференции: 872 0198 3396 Код доступа: P34sze"
+              },
+              {
+                "time": "18:50-20:20",
+                "discipline": "Основы педагогического мастерства",
+                "teacher": "Хасанова Л.И.",
+                "classroom": "https://us05web.zoom.us/j/87201983396?pwd\u003deWN5VVJGeFdoanBsdkZlWTl5OURMUT09 Идентификатор конференции: 872 0198 3396 Код доступа: P34sze"
+              }
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Педагогическая риторика",
+                "teacher": "Пикулева О.Ф.",
+                "classroom": "101/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Педагогическая риторика",
+                "teacher": "Пикулева О.Ф.",
+                "classroom": "101/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Творческая работа с детской книгой",
+                "teacher": "Пикулева О.Ф.",
+                "classroom": "101/4"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Творческая работа с детской книгой",
+                "teacher": "Пикулева О.Ф.",
+                "classroom": "101/4"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Трудности русского правописания и орфографические компетенции младших школьников",
+                "teacher": "Пикулева О.Ф.103/4",
+                "classroom": "Пикулева О.Ф.103/4"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Трудности русского правописания и орфографические компетенции младших школьников",
+                "teacher": "Пикулева О.Ф.",
+                "classroom": "103/4"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "История педагогики и образования",
+                "teacher": "Викулов В.А.",
+                "classroom": "101/4"
+              },
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-380301-31",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              {
+                "time": "18:50-20:20",
+                "discipline": "Инвестиции",
+                "teacher": "Загуляев Д.Г.",
+                "classroom": "14/1"
+              }
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Бюджетная система РФ",
+                "teacher": "Сергеев Н.Н.",
+                "classroom": "101/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Программные средства автоматизации финансовых процессов",
+                "teacher": "Ардашева Г.Н.",
+                "classroom": "18/1"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Программные средства автоматизации финансовых процессов",
+                "teacher": "Ардашева Г.Н.",
+                "classroom": "18/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              {
+                "time": "17:15-18:45",
+                "discipline": "Государственные и муниципальные финансы (ЗАЧЕТ)",
+                "teacher": "Загуляев Д.Г.",
+                "classroom": "13/1"
+              },
+              {
+                "time": "18:50-20:20",
+                "discipline": "Инвестиции",
+                "teacher": "Загуляев Д.Г.",
+                "classroom": "13/1"
+              }
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "Финансы предприятий отраслей народгого хозяйства",
+                "teacher": "Загуляев Д.Г.101/4",
+                "classroom": "Загуляев Д.Г.101/4"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Финансы предприятий отраслей народгого хозяйства",
+                "teacher": "Загуляев Д.Г.",
+                "classroom": "101/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Финансы предприятий отраслей народгого хозяйства",
+                "teacher": "Загуляев Д.Г.",
+                "classroom": "101/4"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-380304-11",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Конституционное право",
+                "teacher": "Бердышева С.Н.",
+                "classroom": "103/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Конституционное право",
+                "teacher": "Бердышева С.Н.",
+                "classroom": "103/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Конституционное право",
+                "teacher": "Бердышева С.Н.",
+                "classroom": "103/4"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Иностранный язык",
+                "teacher": "Коновалова Т.П.",
+                "classroom": "103/4"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              null,
+              {
+                "time": "12:10-13:40",
+                "discipline": "Математика",
+                "teacher": "Кузнецова О.В.",
+                "classroom": "6/1"
+              },
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "8.00 Немецкий язык",
+                "teacher": "Брим Н.Е.",
+                "classroom": "https://b84931.vr.mirapolis.ru/mira/miravr/5523698180"
+              },
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "Основы предпринимательской деятельности",
+                "teacher": "Шаклеина Н.К.",
+                "classroom": "15/1"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Основы предпринимательской деятельности (ЗАЧЕТ)",
+                "teacher": "Шаклеина Н.К.",
+                "classroom": "15/1"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              {
+                "time": "13:50-15:20",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Физическая культура и спорт",
+                "teacher": "Широбоков В.А."
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Анализ социально-политической среды в ГиМУ",
+                "teacher": "Мухин А.А.",
+                "classroom": "203/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Анализ социально-политической среды в ГиМУ",
+                "teacher": "Мухин А.А.",
+                "classroom": "203/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Анализ социально-политической среды в ГиМУ",
+                "teacher": "Мухин А.А.",
+                "classroom": "203/4"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Анализ социально-политической среды в ГиМУ  (ЭКЗАМЕН)",
+                "teacher": "Мухин А.А.",
+                "classroom": "203/4"
+              },
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ОБ-Вт-380304-31",
+        "days": [
+          {
+            "date": "15.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "16.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Маркетинг территорий",
+                "teacher": "Сидоров В.П.",
+                "classroom": "203/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Маркетинг территорий  (ЭКЗАМЕН)",
+                "teacher": "Сидоров В.П.",
+                "classroom": "203/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Региональное управление и территориальное планирование",
+                "teacher": "Сидоров В.П.",
+                "classroom": "203/4"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Региональное управление и территориальное планирование",
+                "teacher": "Сидоров В.П.",
+                "classroom": "203/4"
+              },
+              null,
+              null
+            ]
+          },
+          {
+            "date": "17.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              {
+                "time": "17:15-18:45",
+                "discipline": "Инновационный менеджмент",
+                "teacher": "Загуляев Д.Г.",
+                "classroom": "14/1"
+              },
+              null
+            ]
+          },
+          {
+            "date": "18.05.2023",
+            "lessons": [
+              {
+                "time": "8:20-9:50",
+                "discipline": "9.00 Теория страхования",
+                "teacher": "Сергеев Н.Н.",
+                "classroom": "101/4"
+              },
+              {
+                "time": "10:00-11:30",
+                "discipline": "Теория страхования",
+                "teacher": "Сергеев Н.Н.",
+                "classroom": "101/4"
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "19.05.2023",
+            "lessons": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "date": "20.05.2023",
+            "lessons": [
+              null,
+              {
+                "time": "10:00-11:30",
+                "discipline": "Теория страхования",
+                "teacher": "Сергеев Н.Н.",
+                "classroom": "205/4"
+              },
+              {
+                "time": "12:10-13:40",
+                "discipline": "Теория страхования",
+                "teacher": "Сергеев Н.Н.",
+                "classroom": "205/4"
+              },
+              {
+                "time": "13:50-15:20",
+                "discipline": "Инновационный менеджмент",
+                "teacher": "Загуляев Д.Г.",
+                "classroom": "101/4"
+              },
+              {
+                "time": "15:40-17:10",
+                "discipline": "Инновационный менеджмент",
+                "teacher": "Загуляев Д.Г.",
+                "classroom": "101/4"
+              },
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

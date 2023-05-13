@@ -158,9 +158,16 @@ public class UdSUVoTimetableParser extends ExcelTimetableParser {
 
     private String parseLessonDiscipline(String value) {
         if (value == null) return null;
+        value = value.trim();
         if (value.matches(".*/.*")) {
             String[] splittedString = value.split("/");
-            return removeNewLineCharacters(splittedString[0] + " / " + splittedString[1]).trim();
+            if (splittedString.length <= 1 || splittedString[1].isEmpty()) {
+                value = splittedString[0].trim();
+            } else if (splittedString[0].isEmpty()) {
+                value = splittedString[1].trim();
+            } else {
+                return removeNewLineCharacters(splittedString[0] + " / " + splittedString[1]).trim();
+            }
         }
         return removeNewLineCharacters(value).trim();
     }

@@ -61,15 +61,25 @@ public class UdSUVoTimetableParserTests {
         Compare.compareWeeks(expected.get(0), actual);
     }
 
+    @Test
+    public void whenValidExcelFileAndHasHasDisciplineEndingSlashThenReturnValidWeek() throws IOException {
+        List<Week> expected = JsonFileHelper.loadFromFile(getParsedTimetablePath(1, 0),
+                new TypeToken<List<Week>>(){}.getType());
+        Week actual = createParser(LocalDate.parse("2023-05-13"), 7)
+                .parseTimetable(getClass().getResourceAsStream(getTimetablePath(1))).get(0);
+        Assert.assertEquals(1, expected.size());
+        Compare.compareWeeks(expected.get(0), actual);
+    }
+
     private static UdSUVoTimetableParser createParser(LocalDate date, int days) {
         return new UdSUVoTimetableParser(days, () -> date);
     }
 
-    private static String getTimetablePath(@SuppressWarnings("SameParameterValue") int index) {
+    private static String getTimetablePath(int index) {
         return "/timetable-parser/udsu/udsu-" + index + ".xlsx";
     }
 
-    private static String getParsedTimetablePath(@SuppressWarnings("SameParameterValue") int index, int subIndex) {
+    private static String getParsedTimetablePath(int index, int subIndex) {
         return ResourceHelper.getFullPathToResource("/timetable-parser/udsu/timetable-parsed-" +
                 index + "-" + subIndex + ".json").toString();
     }
