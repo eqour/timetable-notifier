@@ -9,8 +9,49 @@ import java.util.Objects;
 
 public class ChangesFormatter {
 
+    public static String formatChangesStringForGroup(List<Day[]> differences) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Изменения в расписании:\n\n");
+        for (Day[] pair : differences) {
+            Day day = pair[1];
+            builder.append(day.date).append("\n\n");
+            boolean hasLessons = false;
+            for (int i = 0; i < day.lessons.length; i++) {
+                Lesson lesson = day.lessons[i];
+                if (lesson != null) {
+                    hasLessons = true;
+                    appendLesson(builder, lesson, i + 1);
+                }
+                if (i == day.lessons.length - 1) {
+                    if (!hasLessons) {
+                        builder.append("Занятий нет\n\n");
+                    }
+                }
+            }
+        }
+        return builder.toString();
+    }
+
     public static String formatChangesStringForTeacher(List<Day[]> differences) {
-        return formatChangesStringForGroup(removeSameLessons(differences));
+        differences = removeSameLessons(differences);
+        StringBuilder builder = new StringBuilder();
+        builder.append("Изменения в расписании:\n\n");
+        for (Day[] pair : differences) {
+            Day prev = pair[0];
+            Day next = pair[1];
+            builder.append(next.date).append("\n\n");
+            for (int i = 0; i < next.lessons.length; i++) {
+                Lesson prevLesson = i < prev.lessons.length ? prev.lessons[i] : null;
+                Lesson nextLesson = next.lessons[i];
+                if (prevLesson != null && nextLesson == null) {
+                    builder.append("Отменено занятие:\n");
+                    appendLesson(builder, prevLesson, i + 1);
+                } else if (nextLesson != null) {
+                    appendLesson(builder, nextLesson, i + 1);
+                }
+            }
+        }
+        return builder.toString();
     }
 
     private static List<Day[]> removeSameLessons(List<Day[]> differences) {
@@ -28,37 +69,16 @@ public class ChangesFormatter {
         return ans;
     }
 
-    public static String formatChangesStringForGroup(List<Day[]> differences) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Изменения в расписании:\n\n");
-        for (Day[] pair : differences) {
-            Day day = pair[1];
-            builder.append(day.date).append("\n\n");
-            boolean hasLessons = false;
-            for (int i = 0; i < day.lessons.length; i++) {
-                Lesson lesson = day.lessons[i];
-                if (lesson != null) {
-                    hasLessons = true;
-                    builder.append(i + 1).append(" пара, ").append(lesson.time).append("\n");
-                    builder.append(getStringOrEmptyString(lesson.discipline)).append("\n");
-                    if (Objects.equals(lesson.teacher, lesson.classroom)) {
-                        builder.append(getStringOrEmptyString(lesson.teacher));
-                    } else {
-                        builder.append(getStringOrEmptyString(lesson.teacher)).append(" ")
-                                .append(getStringOrEmptyString(lesson.classroom));
-                    }
-                    if (i != day.lessons.length - 1) {
-                        builder.append("\n\n");
-                    }
-                }
-                if (i == day.lessons.length - 1) {
-                    if (!hasLessons) {
-                        builder.append("Занятий нет\n\n");
-                    }
-                }
-            }
+    private static void appendLesson(StringBuilder builder, Lesson lesson, int lessonNumber) {
+        builder.append(lessonNumber).append(" пара, ").append(lesson.time).append("\n");
+        builder.append(getStringOrEmptyString(lesson.discipline)).append("\n");
+        if (Objects.equals(lesson.teacher, lesson.classroom)) {
+            builder.append(getStringOrEmptyString(lesson.teacher));
+        } else {
+            builder.append(getStringOrEmptyString(lesson.teacher)).append(" ")
+                    .append(getStringOrEmptyString(lesson.classroom));
         }
-        return builder.toString();
+        builder.append("\n\n");
     }
 
     private static String getStringOrEmptyString(String value) {

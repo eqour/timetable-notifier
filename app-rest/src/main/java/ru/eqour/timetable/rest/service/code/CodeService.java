@@ -44,7 +44,7 @@ public class CodeService<T> {
             System.out.println("code " + code + " sent to " + recipient);
         } else {
             try {
-                sender.sendMessage(recipient, new Message("", "Ваш код: " + code));
+                sender.sendMessage(recipient, new Message("Код подтверждения", "Ваш код: " + code));
             } catch (SendMessageException e) {
                 throw new SendCodeException(e);
             }

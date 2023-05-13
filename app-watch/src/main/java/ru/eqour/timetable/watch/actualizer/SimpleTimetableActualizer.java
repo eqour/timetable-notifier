@@ -117,8 +117,8 @@ public class SimpleTimetableActualizer {
         for (Map.Entry<String, List<Day[]>> entry : differences.entrySet()) {
             for (Subscriber subscriber : getSubscribersFunction.apply(entry.getKey())) {
                 for (MessageSender notifier : NotifierFactory.createNotifiersForSubscriber(subscriber, settings)) {
-                    notifications.add(new Notification(notifier, subscriber, new Message("",
-                            changesFormatter.apply(entry.getValue()))));
+                    notifications.add(new Notification(notifier, subscriber,
+                            new Message("Изменения в расписании", changesFormatter.apply(entry.getValue()))));
                 }
             }
         }
