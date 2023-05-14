@@ -21,7 +21,7 @@ public class MongoSubscriberRepository implements SubscriberRepository {
         List<UserAccount> accounts = client.findAllUserAccountsByGroup(groupName);
         List<Subscriber> subscribers = new ArrayList<>();
         for (UserAccount account : accounts) {
-            List<String> groupSubscriptionChannels = account.getSubscriptions().get(SubscriptionType.GROUP.toString()).getChannels();
+            List<String> groupSubscriptionChannels = account.getSubscriptions().get(SubscriptionType.GROUP.getValue()).getChannels();
             subscribers.add(createSubscriber(account, groupSubscriptionChannels));
         }
         return subscribers;
@@ -32,7 +32,7 @@ public class MongoSubscriberRepository implements SubscriberRepository {
         List<UserAccount> accounts = client.findAllUserAccountsByTeacherSubscription(teacherName);
         List<Subscriber> subscribers = new ArrayList<>();
         for (UserAccount account : accounts) {
-            List<String> teacherSubscriptionChannels = account.getSubscriptions().get(SubscriptionType.TEACHER.toString()).getChannels();
+            List<String> teacherSubscriptionChannels = account.getSubscriptions().get(SubscriptionType.TEACHER.getValue()).getChannels();
             subscribers.add(createSubscriber(account, teacherSubscriptionChannels));
         }
         return subscribers;
@@ -42,7 +42,7 @@ public class MongoSubscriberRepository implements SubscriberRepository {
         Subscriber subscriber = new Subscriber();
         subscriber.vkId = getChannelId(account.getChannels(), subscriptionChannels, ChannelType.VK.getValue());
         subscriber.telegramId = getChannelId(account.getChannels(), subscriptionChannels, ChannelType.TELEGRAM.getValue());
-        subscriber.email = getChannelId(account.getChannels(), subscriptionChannels, ChannelType.EMAIL.getValue());
+        subscriber.email = subscriptionChannels.contains(ChannelType.EMAIL.getValue()) ? account.getEmail() : null;
         return subscriber;
     }
 
